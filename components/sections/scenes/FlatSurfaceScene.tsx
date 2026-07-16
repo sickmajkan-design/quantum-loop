@@ -1,7 +1,7 @@
 "use client";
 
 import type { RefObject } from "react";
-import PhotoRevealScene from "./PhotoRevealScene";
+import VideoScene from "./VideoScene";
 
 export default function FlatSurfaceScene({
   rowRef,
@@ -9,11 +9,11 @@ export default function FlatSurfaceScene({
   rowRef: RefObject<HTMLDivElement | null>;
 }) {
   return (
-    <PhotoRevealScene
+    <VideoScene
       rowRef={rowRef}
-      src="/stock/flat-surface.jpg"
-      alt="Ruke nanose foliju na staklenu površinu vozila"
-      glassReflection
+      videoSrc="/stock/flat-surface.mp4"
+      poster="/stock/flat-surface.jpg"
+      alt="Ruke nanose foliju na staklenu površinu"
     />
   );
 }
