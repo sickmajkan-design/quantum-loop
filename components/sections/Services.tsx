@@ -34,6 +34,7 @@ export default function Services() {
           num="01"
           title={t("s1_t")}
           text={t("s1_p")}
+          fullBleed
         >
           <DesignScene rowRef={designRef} />
         </ServiceRow>
