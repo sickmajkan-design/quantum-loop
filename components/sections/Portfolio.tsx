@@ -1,9 +1,44 @@
 "use client";
 
+import { useCallback, useEffect, useState } from "react";
+import Image from "next/image";
+import { AnimatePresence, motion } from "framer-motion";
 import { useI18n } from "@/lib/i18n-context";
+import { collectImages } from "@/content/portfolio";
 
 export default function Portfolio() {
   const { t, d } = useI18n();
+  const images = collectImages(d.tiles);
+  const hasImages = images.length > 0;
+  const [active, setActive] = useState<number | null>(null);
+
+  const close = useCallback(() => setActive(null), []);
+  const step = useCallback(
+    (dir: number) =>
+      setActive((i) =>
+        i === null ? i : (i + dir + images.length) % images.length
+      ),
+    [images.length]
+  );
+
+  useEffect(() => {
+    if (active === null) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close();
+      if (e.key === "ArrowRight") step(1);
+      if (e.key === "ArrowLeft") step(-1);
+    };
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [active, close, step]);
+
+  // Placeholder tiles reuse the localized category labels. Duplicated once so
+  // the marquee can scroll seamlessly.
+  const placeholders = [...d.tiles, ...d.tiles];
 
   return (
     <section
@@ -15,17 +50,112 @@ export default function Portfolio() {
       </div>
       <h2 className="mb-6 text-[clamp(2.2rem,6vw,4.5rem)]">{t("p_title")}</h2>
 
-      <div className="mt-10 grid grid-cols-1 gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
-        {d.tiles.map((tile) => (
-          <div
-            key={tile}
-            className="relative flex h-[190px] items-end overflow-hidden rounded-lg border border-gold/25 bg-linear-to-br from-[#151515] to-[#0d0d0d] p-4 text-[0.85rem] font-semibold tracking-[0.08em] text-gold2 uppercase"
-          >
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(201,162,39,0.15),transparent_60%)]" />
-            <span className="relative">{tile}</span>
+      {hasImages ? (
+        <div className="mt-10 grid grid-cols-1 gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
+          {images.map((img, i) => (
+            <button
+              key={img.src}
+              type="button"
+              onClick={() => setActive(i)}
+              className="group relative h-[220px] overflow-hidden rounded-lg border border-gold/25 bg-black2"
+            >
+              <Image
+                src={img.src}
+                alt={img.label}
+                fill
+                sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 30vw"
+                className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+              />
+              <div className="pointer-events-none absolute inset-0 opacity-0 shadow-[inset_0_0_60px_rgba(201,162,39,0.5)] transition-opacity duration-500 group-hover:opacity-100" />
+              <span className="absolute bottom-3 left-4 text-[0.85rem] font-semibold tracking-[0.08em] text-gold2 uppercase">
+                {img.label}
+              </span>
+            </button>
+          ))}
+        </div>
+      ) : (
+        <div
+          className="group/marquee relative mt-10 overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_8%,#000_92%,transparent)]"
+          aria-label={t("p_title")}
+        >
+          <div className="flex w-max gap-[18px] motion-safe:animate-[marquee_38s_linear_infinite] group-hover/marquee:[animation-play-state:paused]">
+            {placeholders.map((tile, i) => (
+              <div
+                key={`${tile}-${i}`}
+                className="relative flex h-[200px] w-[300px] shrink-0 items-end overflow-hidden rounded-lg border border-gold/25 bg-linear-to-br from-[#151515] to-[#0d0d0d] p-4 text-[0.85rem] font-semibold tracking-[0.08em] text-gold2 uppercase"
+              >
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(201,162,39,0.15),transparent_60%)]" />
+                <span className="relative">{tile}</span>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      )}
+
+      <AnimatePresence>
+        {active !== null && images[active] && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={close}
+            className="fixed inset-0 z-200 flex items-center justify-center bg-black/92 p-6 backdrop-blur-sm"
+            role="dialog"
+            aria-modal="true"
+            aria-label={images[active].label}
+          >
+            <button
+              type="button"
+              aria-label="Zatvori"
+              onClick={close}
+              className="absolute top-5 right-6 text-3xl text-white/70 hover:text-gold"
+            >
+              ✕
+            </button>
+            <button
+              type="button"
+              aria-label="Prethodna"
+              onClick={(e) => {
+                e.stopPropagation();
+                step(-1);
+              }}
+              className="absolute left-4 text-4xl text-white/60 hover:text-gold md:left-10"
+            >
+              ‹
+            </button>
+            <motion.div
+              key={images[active].src}
+              initial={{ scale: 0.94, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.25 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative h-[76vh] w-[86vw] max-w-[1100px]"
+            >
+              <Image
+                src={images[active].src}
+                alt={images[active].label}
+                fill
+                sizes="86vw"
+                className="rounded-lg object-contain"
+              />
+              <span className="absolute -bottom-8 left-0 text-[0.85rem] tracking-[0.08em] text-gold2 uppercase">
+                {images[active].label}
+              </span>
+            </motion.div>
+            <button
+              type="button"
+              aria-label="Sljedeća"
+              onClick={(e) => {
+                e.stopPropagation();
+                step(1);
+              }}
+              className="absolute right-4 text-4xl text-white/60 hover:text-gold md:right-10"
+            >
+              ›
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
