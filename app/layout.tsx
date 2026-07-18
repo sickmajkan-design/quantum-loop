@@ -132,6 +132,7 @@ const jsonLd = {
   currenciesAccepted: "BAM, EUR",
   telephone: business.phones[0].display,
   email: business.email,
+  sameAs: [business.instagram],
   contactPoint: business.phones.map((p) => ({
     "@type": "ContactPoint",
     telephone: p.display,
@@ -148,8 +149,8 @@ const jsonLd = {
   },
   geo: {
     "@type": "GeoCoordinates",
-    latitude: 44.9769,
-    longitude: 17.9109,
+    latitude: business.geo.lat,
+    longitude: business.geo.lng,
   },
   areaServed: [
     { "@type": "City", name: "Derventa" },

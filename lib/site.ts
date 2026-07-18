@@ -17,9 +17,13 @@ export const business = {
   postalCode: "74400",
   countryCode: "BA",
   email: "quantumloopbih@gmail.com",
+  instagram: "https://www.instagram.com/quantumloopbih/",
   // Display label + tel: URL (E.164, no spaces) per region.
   phones: [
     { region: "BiH", display: "+387 65 577 672", tel: "+38765577672" },
     { region: "AT", display: "+43 667 336 1966", tel: "+436673361966" },
   ],
+  // Exact coordinates from the verified Google Business listing (see the CID
+  // pin wired into the contact map), not an approximate address geocode.
+  geo: { lat: 44.9842752, lng: 17.8894742 },
 } as const;

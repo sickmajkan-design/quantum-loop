@@ -1,6 +1,7 @@
 "use client";
 
 import { useI18n } from "@/lib/i18n-context";
+import { business } from "@/lib/site";
 
 export default function Footer() {
   const { t } = useI18n();
@@ -11,7 +12,17 @@ export default function Footer() {
       <div>
         © {year} Quantum Loop s.p. — Derventa, BiH
       </div>
-      <div>{t("f_tag")}</div>
+      <div className="flex items-center gap-5">
+        <a
+          href={business.instagram}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-grey hover:text-gold2"
+        >
+          Instagram
+        </a>
+        <span>{t("f_tag")}</span>
+      </div>
     </footer>
   );
 }

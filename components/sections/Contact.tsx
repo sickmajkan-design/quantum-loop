@@ -93,6 +93,16 @@ export default function Contact() {
             >
               {business.email}
             </a>
+            <br />
+            📷{" "}
+            <a
+              href={business.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gold2 underline-offset-2 hover:underline"
+            >
+              @quantumloopbih
+            </a>
           </p>
 
           <div className="mt-6 overflow-hidden rounded-lg border border-gold/20">
