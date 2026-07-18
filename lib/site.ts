@@ -16,5 +16,10 @@ export const business = {
   city: "Derventa",
   postalCode: "74400",
   countryCode: "BA",
-  // Phone/email are intentionally omitted — they remain [TODO] until confirmed.
+  email: "quantumloopbih@gmail.com",
+  // Display label + tel: URL (E.164, no spaces) per region.
+  phones: [
+    { region: "BiH", display: "+387 65 577 672", tel: "+38765577672" },
+    { region: "AT", display: "+43 667 336 1966", tel: "+436673361966" },
+  ],
 } as const;

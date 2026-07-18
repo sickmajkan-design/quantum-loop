@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useI18n } from "@/lib/i18n-context";
+import { business } from "@/lib/site";
 
 // TODO: set NEXT_PUBLIC_FORMSPREE_ENDPOINT (e.g. https://formspree.io/f/xxxxxxx) once a form ID exists.
 // Until then, submissions are not sent anywhere and the form only shows the confirmation message.
@@ -65,11 +66,29 @@ export default function Contact() {
             74400 Derventa, BiH
             <br />
             <span>{t("c_soon")}</span>
-            <br />
-            <br />
-            📞 <span className="text-gold2">[TODO: telefon]</span>
-            <br />
-            ✉️ <span className="text-gold2">[TODO: email]</span>
+          </p>
+
+          <p className="my-5 leading-[2.1] text-[#cfcabc]">
+            {business.phones.map((p) => (
+              <span key={p.tel}>
+                📞{" "}
+                <a
+                  href={`tel:${p.tel}`}
+                  className="text-gold2 underline-offset-2 hover:underline"
+                >
+                  {p.display}
+                </a>{" "}
+                <span className="text-grey">({p.region})</span>
+                <br />
+              </span>
+            ))}
+            ✉️{" "}
+            <a
+              href={`mailto:${business.email}`}
+              className="text-gold2 underline-offset-2 hover:underline"
+            >
+              {business.email}
+            </a>
           </p>
 
           <div className="mt-6 overflow-hidden rounded-lg border border-gold/20">

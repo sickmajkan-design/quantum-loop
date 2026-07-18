@@ -130,6 +130,15 @@ const jsonLd = {
   logo: `${SITE_URL}/og.png`,
   priceRange: "$$",
   currenciesAccepted: "BAM, EUR",
+  telephone: business.phones[0].display,
+  email: business.email,
+  contactPoint: business.phones.map((p) => ({
+    "@type": "ContactPoint",
+    telephone: p.display,
+    contactType: "customer service",
+    areaServed: p.region === "AT" ? "AT" : "BA",
+    availableLanguage: ["sr", "de", "en"],
+  })),
   address: {
     "@type": "PostalAddress",
     streetAddress: business.street,
