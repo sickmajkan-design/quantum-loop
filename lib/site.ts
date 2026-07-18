@@ -12,7 +12,7 @@ export const SITE_URL = (
 
 export const business = {
   name: "Quantum Loop s.p.",
-  street: "Vojvode Stepe Stepanovića 56",
+  street: "Vojvode Stepe Stepanovića 55",
   city: "Derventa",
   postalCode: "74400",
   countryCode: "BA",

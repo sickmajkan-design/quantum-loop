@@ -8,7 +8,7 @@ import { useI18n } from "@/lib/i18n-context";
 const FORM_ENDPOINT = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT;
 
 const MAP_SRC =
-  "https://www.google.com/maps?q=Vojvode+Stepe+Stepanovi%C4%87a+56%2C+74400+Derventa%2C+Bosnia+and+Herzegovina&output=embed";
+  "https://www.google.com/maps?q=Vojvode+Stepe+Stepanovi%C4%87a+55%2C+74400+Derventa%2C+Bosnia+and+Herzegovina&z=17&output=embed";
 
 type Status = "idle" | "sending" | "success" | "error";
 
@@ -60,7 +60,7 @@ export default function Contact() {
           <p className="my-5 leading-[2] text-[#cfcabc]">
             <b className="text-gold2">Quantum Loop s.p.</b>
             <br />
-            Vojvode Stepe Stepanovića 56
+            Vojvode Stepe Stepanovića 55
             <br />
             74400 Derventa, BiH
             <br />
