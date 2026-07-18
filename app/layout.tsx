@@ -68,11 +68,20 @@ export const metadata: Metadata = {
     url: SITE_URL,
     locale: "sr_Latn",
     alternateLocale: ["de_DE", "en_US"],
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "Quantum Loop — Dizajn koji se lijepi.",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: TITLE,
     description: DESCRIPTION,
+    images: ["/og.png"],
   },
   robots: {
     index: true,
