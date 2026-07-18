@@ -61,9 +61,13 @@ swapped the same way — replace the file, keep the name.
 - **`NEXT_PUBLIC_SITE_URL`** — production origin (no trailing slash), used for
   canonical URLs, OpenGraph, `sitemap.xml`, `robots.txt` and JSON-LD. Set it in
   the deploy environment; it defaults to `http://localhost:3000` for local dev.
-- **`NEXT_PUBLIC_FORMSPREE_ENDPOINT`** — optional. When set, the contact form
-  POSTs to it (e.g. a Formspree form URL). Until then the form shows the
-  confirmation message without sending anywhere.
+- **Contact form** — by default the form emails submissions to
+  `quantumloopbih@gmail.com` via [FormSubmit](https://formsubmit.co) (no backend,
+  no account). **One-time activation:** the first submission triggers a
+  confirmation email from FormSubmit to that inbox — click its link once and all
+  later submissions are delivered. To use a different provider, set
+  **`NEXT_PUBLIC_FORM_ENDPOINT`** (or the legacy `NEXT_PUBLIC_FORMSPREE_ENDPOINT`)
+  to that provider's endpoint URL; the address lives in `lib/site.ts`.
 
 ## SEO & AI discoverability
 

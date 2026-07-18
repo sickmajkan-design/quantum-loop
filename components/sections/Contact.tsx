@@ -4,9 +4,15 @@ import { useState } from "react";
 import { useI18n } from "@/lib/i18n-context";
 import { business } from "@/lib/site";
 
-// TODO: set NEXT_PUBLIC_FORMSPREE_ENDPOINT (e.g. https://formspree.io/f/xxxxxxx) once a form ID exists.
-// Until then, submissions are not sent anywhere and the form only shows the confirmation message.
-const FORM_ENDPOINT = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT;
+// The form posts to a no-backend email service. By default it uses FormSubmit
+// (https://formsubmit.co) targeting the business email — no account needed; the
+// address just has to confirm once via the activation email FormSubmit sends on
+// the first submission. To switch providers (Formspree, Web3Forms, …) set
+// NEXT_PUBLIC_FORM_ENDPOINT to that provider's endpoint URL.
+const FORM_ENDPOINT =
+  process.env.NEXT_PUBLIC_FORM_ENDPOINT ??
+  process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT ??
+  `https://formsubmit.co/ajax/${business.email}`;
 
 const MAP_SRC =
   "https://www.google.com/maps?q=Vojvode+Stepe+Stepanovi%C4%87a+56%2C+74400+Derventa%2C+Bosnia+and+Herzegovina&z=17&output=embed";
@@ -21,12 +27,6 @@ export default function Contact() {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
-
-    if (!FORM_ENDPOINT) {
-      setStatus("success");
-      form.reset();
-      return;
-    }
 
     setStatus("sending");
     try {
@@ -105,6 +105,23 @@ export default function Contact() {
         </div>
 
         <form onSubmit={handleSubmit} className="grid gap-3.5">
+          {/* FormSubmit control fields */}
+          <input
+            type="hidden"
+            name="_subject"
+            value="Novi upit sa sajta — Quantum Loop"
+          />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_captcha" value="false" />
+          {/* honeypot — bots fill it, humans never see it */}
+          <input
+            type="text"
+            name="_honey"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            className="hidden"
+          />
           <input
             required
             type="text"
