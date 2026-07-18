@@ -65,11 +65,34 @@ swapped the same way — replace the file, keep the name.
   POSTs to it (e.g. a Formspree form URL). Until then the form shows the
   confirmation message without sending anywhere.
 
-## SEO
+## SEO & AI discoverability
 
-Per-page metadata, hreflang alternates, OpenGraph + Twitter tags and a
-`LocalBusiness` JSON-LD block are defined in `app/layout.tsx`. `app/sitemap.ts`
+Per-page metadata, hreflang alternates, OpenGraph + Twitter tags (with the
+`public/og.png` share card) and a rich `LocalBusiness` JSON-LD block (services,
+geo, offer catalog, languages) are defined in `app/layout.tsx`. `app/sitemap.ts`
 and `app/robots.ts` generate `sitemap.xml` / `robots.txt` at build time.
+
+To be found and surfaced by **AI assistants / answer engines** as well as search
+engines:
+
+- `app/robots.ts` explicitly allows the major AI crawlers (GPTBot, OAI-SearchBot,
+  ClaudeBot, PerplexityBot, Google-Extended, Applebot, Bingbot, …) in addition to
+  `*`.
+- `public/llms.txt` is a curated, trilingual summary of the business for LLMs
+  (served at `/llms.txt`) — keep it in sync with the services/contact copy.
+- The section copy is server-rendered into the static HTML, so crawlers that
+  don't run JavaScript still read the full content.
+
+**Set `NEXT_PUBLIC_SITE_URL` before the production build** — canonical, hreflang,
+OG image, sitemap, robots and the JSON-LD `@id`/URLs all depend on it.
+
+## Roadmap (after launch)
+
+- **AI chat assistant** — a trilingual on-brand chat widget that answers
+  questions about the services and guides visitors to request a quote. It needs
+  a small serverless function to keep the Claude API key server-side (the site
+  is a static export, so the key must never ship in the frontend). Planned for
+  after the site is published and a host + API key are in place.
 
 ## Accessibility & motion
 

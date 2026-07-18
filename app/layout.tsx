@@ -89,13 +89,47 @@ export const metadata: Metadata = {
   },
 };
 
+const SERVICES: { name: string; description: string }[] = [
+  {
+    name: "Grafički dizajn",
+    description:
+      "Logotipi, vizuelni identiteti i pripreme za štampu — dizajn koji brend čini prepoznatljivim.",
+  },
+  {
+    name: "Reklame i svjetleće reklame",
+    description:
+      "Svijetleće reklame, 3D slova, baneri, table i unutrašnje brendiranje kompanija — od proizvodnje do montaže.",
+  },
+  {
+    name: "Brendiranje vozila",
+    description:
+      "Kompletno i djelimično oblaganje vozila folijom — automobili, kombiji, kamioni.",
+  },
+  {
+    name: "Folije na sve površine",
+    description:
+      "Nanošenje folije na izloge, staklene površine, zidove i fasade — precizna montaža bez mjehurića.",
+  },
+  {
+    name: "Zatamnjivanje stakala",
+    description:
+      "Profesionalno zatamnjivanje stakala vozila i objekata — atestirane folije.",
+  },
+];
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
+  "@id": `${SITE_URL}/#business`,
   name: business.name,
+  legalName: business.name,
   description: DESCRIPTION,
+  slogan: "Dizajn koji se lijepi.",
   url: SITE_URL,
-  image: `${SITE_URL}/favicon.ico`,
+  image: `${SITE_URL}/og.png`,
+  logo: `${SITE_URL}/og.png`,
+  priceRange: "$$",
+  currenciesAccepted: "BAM, EUR",
   address: {
     "@type": "PostalAddress",
     streetAddress: business.street,
@@ -103,16 +137,46 @@ const jsonLd = {
     postalCode: business.postalCode,
     addressCountry: business.countryCode,
   },
-  areaServed: ["Derventa", "Bosnia and Herzegovina", "Salzburg", "Austria"],
-  slogan: "Dizajn koji se lijepi.",
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: 44.9769,
+    longitude: 17.9109,
+  },
+  areaServed: [
+    { "@type": "City", name: "Derventa" },
+    { "@type": "Country", name: "Bosna i Hercegovina" },
+    { "@type": "City", name: "Salzburg" },
+    { "@type": "Country", name: "Austrija" },
+  ],
   knowsLanguage: ["sr", "de", "en"],
-  makesOffer: [
-    "Grafički dizajn",
-    "Reklame i svjetleće reklame",
-    "Brendiranje vozila",
-    "Folije na sve površine",
-    "Zatamnjivanje stakala",
-  ].map((name) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name } })),
+  knowsAbout: [
+    "grafički dizajn",
+    "svjetleće reklame",
+    "3D slova",
+    "brendiranje vozila",
+    "auto folije",
+    "zatamnjivanje stakala",
+    "folije na staklo",
+    "vizuelni identitet",
+  ],
+  makesOffer: SERVICES.map((s) => ({
+    "@type": "Offer",
+    itemOffered: {
+      "@type": "Service",
+      name: s.name,
+      description: s.description,
+      areaServed: ["Derventa", "Bosna i Hercegovina", "Salzburg", "Austrija"],
+      provider: { "@id": `${SITE_URL}/#business` },
+    },
+  })),
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Usluge — Quantum Loop",
+    itemListElement: SERVICES.map((s) => ({
+      "@type": "Offer",
+      itemOffered: { "@type": "Service", name: s.name, description: s.description },
+    })),
+  },
 };
 
 export default function RootLayout({
