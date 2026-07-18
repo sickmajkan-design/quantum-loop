@@ -14,6 +14,7 @@ Each scene (`components/sections/scenes/*Scene.tsx`) points at a fixed pair:
 | Vehicle wrap     | `vehicle-wrap.mp4`          | `vehicle-wrap.jpg`           |
 | Flat surfaces    | `flat-surface.mp4`          | `flat-surface.jpg`           |
 | Window tinting   | `window-tint.mp4`           | `window-tint.jpg`            |
+| Signage          | `signage.mp4`               | `signage.jpg`                |
 
 - The `.jpg` shows immediately and stays as the static fallback under
   `prefers-reduced-motion` and until the matching `.mp4` is present, so a
@@ -36,11 +37,20 @@ path below (overwrite any placeholder) and commit:
   (`graphic-design.jpg` currently holds a temporary locally-generated placeholder.)
 - Vehicle wrap — gloved hands squeegeeing vinyl onto a car panel.
   Image job `b9fd0502` → `vehicle-wrap.jpg`; video job `0cdc2aff` → `vehicle-wrap.mp4`.
-- Flat surfaces — hands applying vinyl to a glass shop window.
-  Image job `03d92970` → `flat-surface.jpg`; video job `4c0cb8e4` → `flat-surface.mp4`.
+- Flat surfaces — hands using a felt-edge squeegee to apply vinyl to a glass
+  shop window. Image job `df94b263` → `flat-surface.jpg`; video job `fdf4c2bf`
+  → `flat-surface.mp4`. (Regenerated 2026-07-18 — the first pass `03d92970`/
+  `4c0cb8e4` had a wrong tool and a rippling film; discarded.)
 - Window tinting — hands squeegeeing tint film onto a car window (VLT counter
   overlays 70 → 15 in the scene).
   Image job `172ed0bb` → `window-tint.jpg`; video job `5d706e48` → `window-tint.mp4`.
+
+- Signage — large outdoor illuminated pylon sign that lights up then rotates to
+  reveal its aluminium side/back. Image job `32c9b14c` → `signage.jpg`; video job
+  `8790ba9a` → `signage.mp4`. (`signage.jpg` currently holds a temporary
+  locally-generated placeholder.) The earlier CSS 3D lightbox is preserved in
+  `components/sections/scenes/SignageScene3D.tsx` — import it from Services to
+  revert.
 
 The previous Pexels stock stills that `vehicle-wrap.jpg` / `flat-surface.jpg` /
 `window-tint.jpg` used to hold are being replaced by the AI images above; swap
