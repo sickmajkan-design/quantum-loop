@@ -14,8 +14,12 @@ const FORM_ENDPOINT =
   process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT ??
   `https://formsubmit.co/ajax/${business.email}`;
 
-const MAP_SRC =
-  "https://www.google.com/maps?q=Vojvode+Stepe+Stepanovi%C4%87a+56%2C+74400+Derventa%2C+Bosnia+and+Herzegovina&z=17&output=embed";
+// Pinned to the real "Quantum loop" Google Business listing (CID, decoded from
+// its maps.google.com place URL) rather than a geocoded address string — the
+// address-text embed kept drifting to the wrong building (see git history).
+const MAPS_CID = "11305872248226432655";
+const MAP_SRC = `https://www.google.com/maps?cid=${MAPS_CID}&z=17&output=embed`;
+const MAPS_VIEW_URL = `https://maps.google.com/?cid=${MAPS_CID}`;
 
 type Status = "idle" | "sending" | "success" | "error";
 
@@ -102,6 +106,14 @@ export default function Contact() {
               referrerPolicy="no-referrer-when-downgrade"
             />
           </div>
+          <a
+            href={MAPS_VIEW_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2 inline-block text-sm text-gold2 underline-offset-2 hover:underline"
+          >
+            Otvori u Google Maps →
+          </a>
         </div>
 
         <form onSubmit={handleSubmit} className="grid gap-3.5">
