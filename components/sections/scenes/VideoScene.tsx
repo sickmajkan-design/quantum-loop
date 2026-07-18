@@ -29,10 +29,14 @@ export default function VideoScene({
   const wrapRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const vltRef = useRef<HTMLSpanElement>(null);
+  const darkenRef = useRef<HTMLDivElement>(null);
+  const raysRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (prefersReducedMotion()) {
       if (vltRef.current) vltRef.current.textContent = "15";
+      if (darkenRef.current) darkenRef.current.style.opacity = "0.72";
+      if (raysRef.current) raysRef.current.style.opacity = "0";
       return;
     }
     if (!rowRef.current) return;
@@ -59,6 +63,12 @@ export default function VideoScene({
                   vlt.v = 70 - 55 * self.progress;
                   if (vltRef.current) {
                     vltRef.current.textContent = String(Math.round(vlt.v));
+                  }
+                  if (darkenRef.current) {
+                    darkenRef.current.style.opacity = String(0.72 * self.progress);
+                  }
+                  if (raysRef.current) {
+                    raysRef.current.style.opacity = String(0.5 * (1 - self.progress));
                   }
                 }
               : undefined,
@@ -87,9 +97,31 @@ export default function VideoScene({
       </div>
 
       {vltCounter && (
-        <div className="pointer-events-none absolute right-4 bottom-4 rounded border border-gold/40 bg-black/60 px-3 py-1.5 font-display text-lg text-gold2">
-          VLT <span ref={vltRef}>70</span>%
-        </div>
+        <>
+          <div
+            ref={raysRef}
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0"
+            style={{ mixBlendMode: "overlay" }}
+          >
+            <svg className="h-full w-full" preserveAspectRatio="none">
+              <g stroke="#fff" strokeOpacity="0.35" strokeWidth="18">
+                <line x1="-10%" y1="0" x2="30%" y2="100%" />
+                <line x1="15%" y1="0" x2="55%" y2="100%" />
+                <line x1="60%" y1="0" x2="100%" y2="100%" />
+                <line x1="85%" y1="0" x2="125%" y2="100%" />
+              </g>
+            </svg>
+          </div>
+          <div
+            ref={darkenRef}
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-black opacity-0"
+          />
+          <div className="pointer-events-none absolute right-4 bottom-4 rounded border border-gold/40 bg-black/60 px-3 py-1.5 font-display text-lg text-gold2">
+            VLT <span ref={vltRef}>70</span>%
+          </div>
+        </>
       )}
     </div>
   );
