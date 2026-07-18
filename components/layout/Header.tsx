@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useI18n } from "@/lib/i18n-context";
 import LangSwitcher from "./LangSwitcher";
+import Magnetic from "@/components/ui/Magnetic";
 
 const navItems = [
   { href: "#services", key: "nav_services" as const },
@@ -64,12 +65,14 @@ export default function Header() {
           </a>
         ))}
         <LangSwitcher />
-        <a
-          href="#contact"
-          className="rounded bg-linear-to-br from-gold to-gold2 px-5 py-2.5 font-bold text-black whitespace-nowrap opacity-100 hover:brightness-110"
-        >
-          {t("nav_cta")}
-        </a>
+        <Magnetic strength={0.5}>
+          <a
+            href="#contact"
+            className="inline-block rounded bg-linear-to-br from-gold to-gold2 px-5 py-2.5 font-bold text-black whitespace-nowrap opacity-100 hover:brightness-110"
+          >
+            {t("nav_cta")}
+          </a>
+        </Magnetic>
       </nav>
 
       <AnimatePresence>

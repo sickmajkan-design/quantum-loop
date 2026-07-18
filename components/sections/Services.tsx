@@ -15,6 +15,7 @@ export default function Services() {
   const wrapRef = useRef<HTMLDivElement>(null);
   const flatRef = useRef<HTMLDivElement>(null);
   const tintRef = useRef<HTMLDivElement>(null);
+  const signRef = useRef<HTMLDivElement>(null);
 
   return (
     <section
@@ -33,6 +34,7 @@ export default function Services() {
           num="01"
           title={t("s1_t")}
           text={t("s1_p")}
+          fullBleed
         >
           <DesignScene rowRef={designRef} />
         </ServiceRow>
@@ -72,8 +74,15 @@ export default function Services() {
           <TintScene rowRef={tintRef} />
         </ServiceRow>
 
-        <ServiceRow id="sc-sign" num="05" title={t("s5_t")} text={t("s5_p")}>
-          <SignageScene />
+        <ServiceRow
+          ref={signRef}
+          id="sc-sign"
+          num="05"
+          title={t("s5_t")}
+          text={t("s5_p")}
+          fullBleed
+        >
+          <SignageScene rowRef={signRef} />
         </ServiceRow>
       </div>
     </section>

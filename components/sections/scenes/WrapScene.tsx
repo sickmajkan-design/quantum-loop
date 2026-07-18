@@ -1,7 +1,7 @@
 "use client";
 
 import type { RefObject } from "react";
-import PhotoRevealScene from "./PhotoRevealScene";
+import VideoScene from "./VideoScene";
 
 export default function WrapScene({
   rowRef,
@@ -9,10 +9,11 @@ export default function WrapScene({
   rowRef: RefObject<HTMLDivElement | null>;
 }) {
   return (
-    <PhotoRevealScene
+    <VideoScene
       rowRef={rowRef}
-      src="/stock/vehicle-wrap.jpg"
-      alt="Ruke u rukavicama nanose zlatnu foliju na haubu vozila"
+      videoSrc="/stock/vehicle-wrap.mp4"
+      poster="/stock/vehicle-wrap.jpg"
+      alt="Ruke nanose foliju na karoseriju vozila"
     />
   );
 }

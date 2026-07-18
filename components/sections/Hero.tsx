@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useI18n } from "@/lib/i18n-context";
 import { gsap, prefersReducedMotion } from "@/lib/gsap";
+import Magnetic from "@/components/ui/Magnetic";
 
 const PARTICLE_COUNT = 22;
 
@@ -145,18 +146,22 @@ export default function Hero() {
           ref={ctasRef}
           className="mt-[38px] flex flex-wrap gap-4 opacity-0 motion-reduce:opacity-100"
         >
-          <a
-            href="#contact"
-            className="rounded bg-linear-to-br from-gold to-gold2 px-[30px] py-[15px] text-[0.95rem] font-bold tracking-[0.04em] text-black"
-          >
-            {t("hero_cta1")}
-          </a>
-          <a
-            href="#services"
-            className="rounded border border-white/35 px-[30px] py-[15px] text-[0.95rem] font-bold tracking-[0.04em] text-white hover:border-gold"
-          >
-            {t("hero_cta2")}
-          </a>
+          <Magnetic>
+            <a
+              href="#contact"
+              className="inline-block rounded bg-linear-to-br from-gold to-gold2 px-[30px] py-[15px] text-[0.95rem] font-bold tracking-[0.04em] text-black transition-[filter] hover:brightness-110"
+            >
+              {t("hero_cta1")}
+            </a>
+          </Magnetic>
+          <Magnetic>
+            <a
+              href="#services"
+              className="inline-block rounded border border-white/35 px-[30px] py-[15px] text-[0.95rem] font-bold tracking-[0.04em] text-white transition-colors hover:border-gold"
+            >
+              {t("hero_cta2")}
+            </a>
+          </Magnetic>
         </div>
       </div>
     </section>
