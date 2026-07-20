@@ -68,7 +68,6 @@ const de: Dictionary = {
     "Tönung",
     "Logodesign",
     "3D-Buchstaben",
-    "Innenfolie",
   ],
 };
 
