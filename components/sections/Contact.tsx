@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { Phone, Mail } from "lucide-react";
 import { useI18n } from "@/lib/i18n-context";
 import { business } from "@/lib/site";
+import InstagramIcon from "@/components/ui/InstagramIcon";
 
 // The form posts to a no-backend email service. By default it uses FormSubmit
 // (https://formsubmit.co) targeting the business email — no account needed; the
@@ -72,38 +74,40 @@ export default function Contact() {
             <span>{t("c_soon")}</span>
           </p>
 
-          <p className="my-5 leading-[2.1] text-[#cfcabc]">
+          <div className="my-5 grid gap-2.5 text-[#cfcabc]">
             {business.phones.map((p) => (
-              <span key={p.tel}>
-                📞{" "}
+              <div key={p.tel} className="flex items-center gap-2.5">
+                <Phone className="size-4 shrink-0 text-gold2" aria-hidden="true" />
                 <a
                   href={`tel:${p.tel}`}
                   className="text-gold2 underline-offset-2 hover:underline"
                 >
                   {p.display}
-                </a>{" "}
+                </a>
                 <span className="text-grey">({p.region})</span>
-                <br />
-              </span>
+              </div>
             ))}
-            ✉️{" "}
-            <a
-              href={`mailto:${business.email}`}
-              className="text-gold2 underline-offset-2 hover:underline"
-            >
-              {business.email}
-            </a>
-            <br />
-            📷{" "}
-            <a
-              href={business.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gold2 underline-offset-2 hover:underline"
-            >
-              @quantumloopbih
-            </a>
-          </p>
+            <div className="flex items-center gap-2.5">
+              <Mail className="size-4 shrink-0 text-gold2" aria-hidden="true" />
+              <a
+                href={`mailto:${business.email}`}
+                className="text-gold2 underline-offset-2 hover:underline"
+              >
+                {business.email}
+              </a>
+            </div>
+            <div className="flex items-center gap-2.5">
+              <InstagramIcon className="size-4 shrink-0 text-gold2" />
+              <a
+                href={business.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gold2 underline-offset-2 hover:underline"
+              >
+                @quantumloopbih
+              </a>
+            </div>
+          </div>
 
           <div className="mt-6 overflow-hidden rounded-lg border border-gold/20">
             <iframe

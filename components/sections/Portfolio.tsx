@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { useI18n } from "@/lib/i18n-context";
 import { collectImages } from "@/content/portfolio";
 
@@ -108,9 +109,9 @@ export default function Portfolio() {
               type="button"
               aria-label="Zatvori"
               onClick={close}
-              className="absolute top-5 right-6 text-3xl text-white/70 hover:text-gold"
+              className="absolute top-5 right-6 text-white/70 hover:text-gold"
             >
-              ✕
+              <X className="size-8" />
             </button>
             <button
               type="button"
@@ -119,9 +120,9 @@ export default function Portfolio() {
                 e.stopPropagation();
                 step(-1);
               }}
-              className="absolute left-4 text-4xl text-white/60 hover:text-gold md:left-10"
+              className="absolute left-4 text-white/60 hover:text-gold md:left-10"
             >
-              ‹
+              <ChevronLeft className="size-10" />
             </button>
             <motion.div
               key={images[active].src}
@@ -149,9 +150,9 @@ export default function Portfolio() {
                 e.stopPropagation();
                 step(1);
               }}
-              className="absolute right-4 text-4xl text-white/60 hover:text-gold md:right-10"
+              className="absolute right-4 text-white/60 hover:text-gold md:right-10"
             >
-              ›
+              <ChevronRight className="size-10" />
             </button>
           </motion.div>
         )}

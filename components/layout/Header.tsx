@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { Menu, X } from "lucide-react";
 import { useI18n } from "@/lib/i18n-context";
 import LangSwitcher from "./LangSwitcher";
 import Magnetic from "@/components/ui/Magnetic";
@@ -49,9 +50,9 @@ export default function Header() {
         aria-label="Meni"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
-        className="z-101 block text-2xl text-white lg:hidden"
+        className="z-101 block text-white lg:hidden"
       >
-        {open ? "✕" : "☰"}
+        {open ? <X className="size-6" /> : <Menu className="size-6" />}
       </button>
 
       <nav className="hidden items-center gap-5 lg:flex">

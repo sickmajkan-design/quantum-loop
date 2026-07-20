@@ -2,6 +2,7 @@
 
 import { useI18n } from "@/lib/i18n-context";
 import { business } from "@/lib/site";
+import InstagramIcon from "@/components/ui/InstagramIcon";
 
 export default function Footer() {
   const { t } = useI18n();
@@ -17,8 +18,10 @@ export default function Footer() {
           href={business.instagram}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-grey hover:text-gold2"
+          aria-label="Instagram"
+          className="flex items-center gap-1.5 text-grey hover:text-gold2"
         >
+          <InstagramIcon className="size-4" />
           Instagram
         </a>
         <span>{t("f_tag")}</span>
