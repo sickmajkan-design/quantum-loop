@@ -36,10 +36,7 @@ export const portfolio: PortfolioCategory[] = [
   {
     slug: "tinting",
     labelIndex: 3,
-    images: [
-      "01-restaurant-window-tint-install.jpg",
-      "02-restaurant-window-tint-install-2.jpg",
-    ],
+    images: ["01-restaurant-window-tint-install.jpg"],
   },
   { slug: "logo", labelIndex: 4, images: [] },
   {
