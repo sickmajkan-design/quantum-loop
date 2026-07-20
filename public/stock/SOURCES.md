@@ -11,7 +11,7 @@ Each scene (`components/sections/scenes/*Scene.tsx`) points at a fixed pair:
 | Scene            | Video (`.mp4`)              | Poster / fallback (`.jpg`)   |
 | ---------------- | --------------------------- | ---------------------------- |
 | Graphic design   | `graphic-design.mp4`        | `graphic-design.jpg`         |
-| Vehicle wrap     | `vehicle-wrap.mp4`          | `vehicle-wrap.jpg`           |
+| Vehicle wrap     | *(still only, see below)*   | `vehicle-wrap.jpg`           |
 | Flat surfaces    | `flat-surface.mp4`          | `flat-surface.jpg`           |
 | Window tinting   | `window-tint.mp4`           | `window-tint.jpg`            |
 | Signage          | `signage.mp4`               | `signage.jpg`                |
@@ -35,8 +35,12 @@ path below (overwrite any placeholder) and commit:
 - Graphic design — designer at a multi-monitor workstation building a logo.
   Image job `8ad3f62b` → `graphic-design.jpg`; video job `e58dacb2` → `graphic-design.mp4`.
   (`graphic-design.jpg` currently holds a temporary locally-generated placeholder.)
-- Vehicle wrap — gloved hands squeegeeing vinyl onto a car panel.
-  Image job `b9fd0502` → `vehicle-wrap.jpg`; video job `0cdc2aff` → `vehicle-wrap.mp4`.
+- Vehicle wrap — no video. The install-technique clip and the close-up
+  installer stills both read poorly (wrinkled film, no sense of the finished
+  product), so the scene now shows the *result* instead: a car's side profile
+  with a black/gold branded wrap graphic. `WrapScene.tsx` renders this as a
+  plain fading-in still (no `VideoScene`). `vehicle-wrap.jpg` — z_image,
+  regenerated 2026-07-20.
 - Flat surfaces — hands using a felt-edge squeegee to apply vinyl to a glass
   shop window. Image job `df94b263` → `flat-surface.jpg`; video job `fdf4c2bf`
   → `flat-surface.mp4`. (Regenerated 2026-07-18 — the first pass `03d92970`/
