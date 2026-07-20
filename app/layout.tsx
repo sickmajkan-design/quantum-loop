@@ -196,7 +196,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="sr" className={`${anton.variable} ${inter.variable}`}>
-      <body>
+      <body suppressHydrationWarning>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
