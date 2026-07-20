@@ -12,7 +12,7 @@ Each scene (`components/sections/scenes/*Scene.tsx`) points at a fixed pair:
 | ---------------- | --------------------------- | ---------------------------- |
 | Graphic design   | `graphic-design.mp4`        | `graphic-design.jpg`         |
 | Vehicle wrap     | *(still only, see below)*   | `vehicle-wrap.jpg`           |
-| Flat surfaces    | `flat-surface.mp4`          | `flat-surface.jpg`           |
+| Flat surfaces    | *(collage, see below)*      | `flat-surface.jpg`           |
 | Window tinting   | `window-tint.mp4`           | `window-tint.jpg`            |
 | Signage          | `signage.mp4`               | `signage.jpg`                |
 
@@ -41,10 +41,17 @@ path below (overwrite any placeholder) and commit:
   with a black/gold branded wrap graphic. `WrapScene.tsx` renders this as a
   plain fading-in still (no `VideoScene`). `vehicle-wrap.jpg` — z_image,
   regenerated 2026-07-20.
-- Flat surfaces — hands using a felt-edge squeegee to apply vinyl to a glass
-  shop window. Image job `df94b263` → `flat-surface.jpg`; video job `fdf4c2bf`
-  → `flat-surface.mp4`. (Regenerated 2026-07-18 — the first pass `03d92970`/
-  `4c0cb8e4` had a wrong tool and a rippling film; discarded.)
+- Flat surfaces — no video. The client does high volume in surface film work
+  that a single install close-up doesn't represent, so `FlatSurfaceScene.tsx`
+  is now a 3-panel collage: shop windows/glass (existing `flat-surface.jpg`),
+  building sun-protection film, and vehicle PPF (paint-protection film — the
+  clear protective kind, distinct from the decorative wrap graphic in the
+  vehicle-wrap scene). The latter two are placeholder panels (icon + label)
+  pending Higgsfield renders — generation was unavailable when this was built.
+  When ready: generate a building-facade shot with gold/bronze-tinted windows
+  → save as `sun-protection.jpg`, and a car body with clear PPF film →
+  `ppf.jpg`, then swap the two placeholder `<div>` blocks in
+  `FlatSurfaceScene.tsx` for `<Image>` tags pointing at them.
 - Window tinting — hands squeegeeing tint film onto a car window (VLT counter
   overlays 70 → 15 in the scene).
   Image job `172ed0bb` → `window-tint.jpg`; video job `5d706e48` → `window-tint.mp4`.
