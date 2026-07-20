@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Anton, Inter } from "next/font/google";
 import "./globals.css";
 import { I18nProvider } from "@/lib/i18n-context";
-import { SITE_URL, business } from "@/lib/site";
+import { SITE_URL, IS_PREVIEW, business } from "@/lib/site";
 import NoiseOverlay from "@/components/layout/NoiseOverlay";
 import SmoothScroll from "@/components/layout/SmoothScroll";
 import Ribbon from "@/components/layout/Ribbon";
@@ -83,10 +83,9 @@ export const metadata: Metadata = {
     description: DESCRIPTION,
     images: ["/og.png"],
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: IS_PREVIEW
+    ? { index: false, follow: false }
+    : { index: true, follow: true },
 };
 
 const SERVICES: { name: string; description: string }[] = [

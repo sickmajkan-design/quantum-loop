@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { SITE_URL } from "@/lib/site";
+import { SITE_URL, IS_PREVIEW } from "@/lib/site";
 
 export const dynamic = "force-static";
 
@@ -27,6 +27,11 @@ const AI_BOTS = [
 ];
 
 export default function robots(): MetadataRoute.Robots {
+  // Preview/staging: keep every crawler out so only the production domain ranks.
+  if (IS_PREVIEW) {
+    return { rules: [{ userAgent: "*", disallow: "/" }] };
+  }
+
   return {
     rules: [
       { userAgent: "*", allow: "/" },

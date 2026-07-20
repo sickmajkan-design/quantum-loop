@@ -1,0 +1,61 @@
+# Builds the static export and publishes it to GitHub Pages as a *preview*.
+#
+# The preview is served from a project subpath (…github.io/quantum-loop), so the
+# build sets NEXT_PUBLIC_BASE_PATH accordingly, and NEXT_PUBLIC_PREVIEW=1 keeps
+# it out of search engines (noindex + robots Disallow). For the real production
+# launch, point this at the final domain and drop the preview flag.
+#
+# One-time setup: repo Settings → Pages → Build and deployment → Source:
+# "GitHub Actions".
+name: Deploy preview to GitHub Pages
+
+on:
+  push:
+    branches: [claude/website-dev-continuation-7cgkii]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Let a newer run supersede an in-progress one; don't cancel a live deploy.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_BASE_PATH: /quantum-loop
+      NEXT_PUBLIC_SITE_URL: https://sickmajkan-design.github.io/quantum-loop
+      NEXT_PUBLIC_PREVIEW: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      # Static export writes to ./out; .nojekyll stops Pages stripping _next/.
+      - run: touch out/.nojekyll
+      - uses: actions/configure-pages@v5
+        with:
+          # Turn Pages on via the API on first run (needs the pages: write token
+          # granted above), so no manual Settings toggle is required.
+          enablement: true
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

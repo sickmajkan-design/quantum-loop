@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, type RefObject } from "react";
 import { gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/gsap";
+import { asset } from "@/lib/asset";
 
 /**
  * A video scene. The clip carries its own motion, so the scene keeps its own
@@ -92,8 +93,8 @@ export default function VideoScene({
       <video
         ref={videoRef}
         className="h-full w-full object-cover"
-        src={videoSrc}
-        poster={poster}
+        src={asset(videoSrc)}
+        poster={asset(poster)}
         muted
         loop
         playsInline
