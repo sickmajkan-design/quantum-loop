@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, type RefObject } from "react";
 import { gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/gsap";
+import { asset } from "@/lib/asset";
 
 /**
  * Window tinting scene — a "before / after" split over the installer clip.
@@ -127,8 +128,8 @@ export default function TintScene({
       <video
         ref={videoRef}
         className="h-full w-full object-cover"
-        src={VIDEO_SRC}
-        poster={POSTER}
+        src={asset(VIDEO_SRC)}
+        poster={asset(POSTER)}
         muted
         loop
         playsInline

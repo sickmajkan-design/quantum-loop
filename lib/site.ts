@@ -10,6 +10,11 @@ export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
 ).replace(/\/$/, "");
 
+// A preview deployment (e.g. the GitHub Pages staging URL) must not be indexed
+// by search engines or AI crawlers — only the real production domain should.
+// The Pages workflow sets NEXT_PUBLIC_PREVIEW=1 for staging builds.
+export const IS_PREVIEW = process.env.NEXT_PUBLIC_PREVIEW === "1";
+
 export const business = {
   name: "Quantum Loop s.p.",
   street: "Vojvode Stepe Stepanovića 56",
