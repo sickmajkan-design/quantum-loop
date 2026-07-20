@@ -30,11 +30,17 @@ export const portfolio: PortfolioCategory[] = [
     images: [
       "01-hm-lacoste-orsay-storefront.jpg",
       "02-magic-star-wide.jpg",
-      "03-magic-star-corner.jpg",
-      "04-lacoste-closeup.jpg",
+      "03-lacoste-closeup.jpg",
     ],
   },
-  { slug: "tinting", labelIndex: 3, images: [] },
+  {
+    slug: "tinting",
+    labelIndex: 3,
+    images: [
+      "01-restaurant-window-tint-install.jpg",
+      "02-restaurant-window-tint-install-2.jpg",
+    ],
+  },
   { slug: "logo", labelIndex: 4, images: [] },
   {
     slug: "letters-3d",
