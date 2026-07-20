@@ -19,11 +19,56 @@ export interface PortfolioCategory {
 
 export const portfolio: PortfolioCategory[] = [
   { slug: "vehicle-wrap", labelIndex: 0, images: [] },
-  { slug: "signage", labelIndex: 1, images: [] },
-  { slug: "window-vinyl", labelIndex: 2, images: [] },
-  { slug: "tinting", labelIndex: 3, images: [] },
+  {
+    slug: "signage",
+    labelIndex: 1,
+    images: [
+      "01-kort-caffe-restaurant.jpg",
+      "02-adblue-paspalj-pump.jpg",
+      "03-pet-city-sign-closeup.jpg",
+      "04-pet-city-storefront.jpg",
+    ],
+  },
+  {
+    slug: "window-vinyl",
+    labelIndex: 2,
+    images: [
+      "01-tape-application.jpg",
+      "02-hm-lacoste-orsay-storefront.jpg",
+      "03-magic-star-wide.jpg",
+      "04-magic-star-corner.jpg",
+      "05-lacoste-closeup.jpg",
+      "06-hours-lettering-application.jpg",
+    ],
+  },
+  {
+    slug: "tinting",
+    labelIndex: 3,
+    images: [
+      "01-restaurant-window-tint-install.jpg",
+      "02-restaurant-window-tint-install-2.jpg",
+      "03-restaurant-glass-wall-setup.jpg",
+    ],
+  },
   { slug: "logo", labelIndex: 4, images: [] },
-  { slug: "letters-3d", labelIndex: 5, images: [] },
+  {
+    slug: "letters-3d",
+    labelIndex: 5,
+    images: ["01-limitless-wall-letters.jpg"],
+  },
+  {
+    slug: "interior-foil",
+    labelIndex: 6,
+    images: [
+      "01-white-kitchen-wide.jpg",
+      "02-white-kitchen-close.jpg",
+      "03-red-kitchen-wide.jpg",
+      "04-red-kitchen-close.jpg",
+      "05-mountain-backsplash-wide.jpg",
+      "06-mountain-backsplash-close.jpg",
+      "07-joker-wall-decal.jpg",
+    ],
+  },
 ];
 
 export interface PortfolioImage {

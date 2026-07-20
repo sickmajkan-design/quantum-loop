@@ -68,6 +68,7 @@ const sr: Dictionary = {
     "Zatamnjivanje",
     "Logo dizajn",
     "3D slova",
+    "Enterijer folija",
   ],
 };
 

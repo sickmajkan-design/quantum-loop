@@ -68,6 +68,7 @@ const en: Dictionary = {
     "Tinting",
     "Logo design",
     "3D letters",
+    "Interior foil",
   ],
 };
 
