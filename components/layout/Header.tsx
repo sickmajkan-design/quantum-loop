@@ -34,47 +34,53 @@ export default function Header() {
   }, [open]);
 
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-100 flex items-center justify-between px-[5vw] py-[18px] transition-[background,box-shadow] duration-400 ${
-        solid
-          ? "bg-black/92 shadow-[0_1px_0_rgba(201,162,39,0.25)] backdrop-blur-md"
-          : ""
-      }`}
-    >
-      <a href="#hero" className="font-display text-[1.35rem] tracking-[0.05em] text-white">
-        QUANTUM<span className="text-gold">LOOP</span>
-      </a>
-
-      <button
-        aria-label="Meni"
-        aria-expanded={open}
-        onClick={() => setOpen((v) => !v)}
-        className="z-101 -m-2.5 block p-2.5 text-white lg:hidden"
+    <>
+      <header
+        className={`fixed inset-x-0 top-0 z-100 flex items-center justify-between px-[5vw] py-[18px] transition-[background,box-shadow] duration-400 ${
+          solid
+            ? "bg-black/92 shadow-[0_1px_0_rgba(201,162,39,0.25)] backdrop-blur-md"
+            : ""
+        }`}
       >
-        {open ? <X className="size-6" /> : <Menu className="size-6" />}
-      </button>
+        <a href="#hero" className="font-display text-[1.35rem] tracking-[0.05em] text-white">
+          QUANTUM<span className="text-gold">LOOP</span>
+        </a>
 
-      <nav className="hidden items-center gap-5 lg:flex">
-        {navItems.map((item) => (
-          <a
-            key={item.key}
-            href={item.href}
-            className="text-[0.85rem] font-medium tracking-[0.06em] text-white uppercase opacity-80 transition-colors hover:text-gold2 hover:opacity-100 whitespace-nowrap"
-          >
-            {t(item.key)}
-          </a>
-        ))}
-        <LangSwitcher />
-        <Magnetic strength={0.5}>
-          <a
-            href="#contact"
-            className="inline-block rounded bg-linear-to-br from-gold to-gold2 px-5 py-2.5 font-bold text-black whitespace-nowrap opacity-100 hover:brightness-110"
-          >
-            {t("nav_cta")}
-          </a>
-        </Magnetic>
-      </nav>
+        <button
+          aria-label="Meni"
+          aria-expanded={open}
+          onClick={() => setOpen((v) => !v)}
+          className="z-101 -m-2.5 block p-2.5 text-white lg:hidden"
+        >
+          {open ? <X className="size-6" /> : <Menu className="size-6" />}
+        </button>
 
+        <nav className="hidden items-center gap-5 lg:flex">
+          {navItems.map((item) => (
+            <a
+              key={item.key}
+              href={item.href}
+              className="text-[0.85rem] font-medium tracking-[0.06em] text-white uppercase opacity-80 transition-colors hover:text-gold2 hover:opacity-100 whitespace-nowrap"
+            >
+              {t(item.key)}
+            </a>
+          ))}
+          <LangSwitcher />
+          <Magnetic strength={0.5}>
+            <a
+              href="#contact"
+              className="inline-block rounded bg-linear-to-br from-gold to-gold2 px-5 py-2.5 font-bold text-black whitespace-nowrap opacity-100 hover:brightness-110"
+            >
+              {t("nav_cta")}
+            </a>
+          </Magnetic>
+        </nav>
+      </header>
+
+      {/* Rendered outside <header> so scroll-triggered backdrop-blur on the
+          header (a backdrop-filter, like transform, creates a new containing
+          block) never re-anchors this fixed overlay to the header's small
+          box instead of the viewport. */}
       <nav
         aria-hidden={!open}
         inert={!open}
@@ -101,6 +107,6 @@ export default function Header() {
           {t("nav_cta")}
         </a>
       </nav>
-    </header>
+    </>
   );
 }
