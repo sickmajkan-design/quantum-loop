@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
@@ -20,7 +20,13 @@ export default function Portfolio() {
     .filter((cat) => cat.images.length === 0)
     .map((cat) => d.tiles[cat.labelIndex] ?? cat.slug);
   const [active, setActive] = useState<number | null>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLElement | null>(null);
 
+  const openAt = useCallback((i: number, trigger: HTMLElement) => {
+    triggerRef.current = trigger;
+    setActive(i);
+  }, []);
   const close = useCallback(() => setActive(null), []);
   const step = useCallback(
     (dir: number) =>
@@ -31,11 +37,37 @@ export default function Portfolio() {
   );
 
   useEffect(() => {
-    if (active === null) return;
+    if (active === null) {
+      // Return focus to whichever tile opened the lightbox once it closes,
+      // so keyboard users land back where they were instead of at the top.
+      triggerRef.current?.focus();
+      triggerRef.current = null;
+      return;
+    }
+
+    const focusables = () =>
+      Array.from(
+        modalRef.current?.querySelectorAll<HTMLElement>("button") ?? []
+      );
+    focusables()[0]?.focus();
+
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") close();
       if (e.key === "ArrowRight") step(1);
       if (e.key === "ArrowLeft") step(-1);
+      if (e.key === "Tab") {
+        const els = focusables();
+        if (els.length === 0) return;
+        const first = els[0];
+        const last = els[els.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     };
     document.body.style.overflow = "hidden";
     window.addEventListener("keydown", onKey);
@@ -65,7 +97,7 @@ export default function Portfolio() {
             <button
               key={img.src}
               type="button"
-              onClick={() => setActive(i)}
+              onClick={(e) => openAt(i, e.currentTarget)}
               className="group relative h-[220px] overflow-hidden rounded-lg border border-gold/25 bg-black2"
             >
               <Image
@@ -167,6 +199,7 @@ export default function Portfolio() {
       <AnimatePresence>
         {active !== null && images[active] && (
           <motion.div
+            ref={modalRef}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
