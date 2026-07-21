@@ -38,6 +38,9 @@ const en: Dictionary = {
 
   p_eyebrow: "Work",
   p_title: "Our work speaks for itself.",
+  p_insta_title: "Follow us on Instagram",
+  p_insta_text: "Videos, reels and stories from every job — see the process live.",
+  p_insta_cta: "Open Instagram",
 
   sz_eyebrow: "New",
   sz_title: "Coming soon to Salzburg.",

@@ -6,6 +6,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { useI18n } from "@/lib/i18n-context";
 import { collectImages } from "@/content/portfolio";
+import { business } from "@/lib/site";
+import InstagramIcon from "@/components/ui/InstagramIcon";
 
 export default function Portfolio() {
   const { t, d } = useI18n();
@@ -92,6 +94,30 @@ export default function Portfolio() {
           </div>
         </div>
       )}
+
+      <a
+        href={business.instagram}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group mt-10 flex flex-col items-start gap-5 rounded-lg border border-gold/25 bg-linear-to-br from-[#151515] to-[#0d0d0d] p-8 transition-colors hover:border-gold/60 sm:flex-row sm:items-center sm:justify-between"
+      >
+        <div className="flex items-center gap-4">
+          <span className="flex size-12 shrink-0 items-center justify-center rounded-full border border-gold/40 text-gold2">
+            <InstagramIcon className="size-6" />
+          </span>
+          <div>
+            <div className="text-[1.1rem] font-bold text-white">
+              {t("p_insta_title")}
+            </div>
+            <p className="mt-1 max-w-md text-[0.9rem] text-grey">
+              {t("p_insta_text")}
+            </p>
+          </div>
+        </div>
+        <span className="inline-block shrink-0 rounded bg-linear-to-br from-gold to-gold2 px-5 py-2.5 font-bold whitespace-nowrap text-black transition-transform group-hover:scale-105">
+          {t("p_insta_cta")}
+        </span>
+      </a>
 
       <AnimatePresence>
         {active !== null && images[active] && (

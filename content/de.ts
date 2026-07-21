@@ -38,6 +38,10 @@ const de: Dictionary = {
 
   p_eyebrow: "Referenzen",
   p_title: "Unsere Arbeit spricht für uns.",
+  p_insta_title: "Folge uns auf Instagram",
+  p_insta_text:
+    "Videos, Reels und Storys von jedem Projekt — sieh dir an, wie wir arbeiten.",
+  p_insta_cta: "Instagram öffnen",
 
   sz_eyebrow: "Neu",
   sz_title: "Bald in Salzburg.",

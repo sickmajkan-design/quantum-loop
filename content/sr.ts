@@ -38,6 +38,10 @@ const sr: Dictionary = {
 
   p_eyebrow: "Radovi",
   p_title: "Naš rad govori umjesto nas.",
+  p_insta_title: "Prati nas na Instagramu",
+  p_insta_text:
+    "Video, reels i storyji sa svakog projekta — pogledaj kako radimo, uživo.",
+  p_insta_cta: "Otvori Instagram",
 
   sz_eyebrow: "Novo",
   sz_title: "Uskoro u Salzburgu.",

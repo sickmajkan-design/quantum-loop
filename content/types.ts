@@ -37,6 +37,9 @@ export interface Dictionary {
 
   p_eyebrow: string;
   p_title: string;
+  p_insta_title: string;
+  p_insta_text: string;
+  p_insta_cta: string;
 
   sz_eyebrow: string;
   sz_title: string;
