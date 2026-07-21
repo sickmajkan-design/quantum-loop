@@ -84,10 +84,15 @@ export default function Portfolio() {
           {emptyLabels.map((label) => (
             <div
               key={label}
-              className="relative flex h-[220px] items-end overflow-hidden rounded-lg border border-gold/25 bg-linear-to-br from-[#151515] to-[#0d0d0d] p-4 text-[0.85rem] font-semibold tracking-[0.08em] text-gold2 uppercase"
+              className="relative flex h-[220px] flex-col items-start justify-end overflow-hidden rounded-lg border border-gold/25 bg-linear-to-br from-[#151515] to-[#0d0d0d] p-4"
             >
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(201,162,39,0.15),transparent_60%)]" />
-              <span className="relative">{label}</span>
+              <span className="relative text-[0.85rem] font-semibold tracking-[0.08em] text-gold2 uppercase">
+                {label}
+              </span>
+              <span className="relative mt-1 text-[0.78rem] normal-case text-grey">
+                {t("p_soon")}
+              </span>
             </div>
           ))}
         </div>
@@ -100,10 +105,15 @@ export default function Portfolio() {
             {placeholders.map((tile, i) => (
               <div
                 key={`${tile}-${i}`}
-                className="relative flex h-[200px] w-[300px] shrink-0 items-end overflow-hidden rounded-lg border border-gold/25 bg-linear-to-br from-[#151515] to-[#0d0d0d] p-4 text-[0.85rem] font-semibold tracking-[0.08em] text-gold2 uppercase"
+                className="relative flex h-[200px] w-[300px] shrink-0 flex-col items-start justify-end overflow-hidden rounded-lg border border-gold/25 bg-linear-to-br from-[#151515] to-[#0d0d0d] p-4"
               >
                 <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(201,162,39,0.15),transparent_60%)]" />
-                <span className="relative">{tile}</span>
+                <span className="relative text-[0.85rem] font-semibold tracking-[0.08em] text-gold2 uppercase">
+                  {tile}
+                </span>
+                <span className="relative mt-1 text-[0.78rem] normal-case text-grey">
+                  {t("p_soon")}
+                </span>
               </div>
             ))}
           </div>

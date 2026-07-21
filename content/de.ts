@@ -42,6 +42,7 @@ const de: Dictionary = {
   p_insta_text:
     "Videos, Reels und Storys von jedem Projekt — sieh dir an, wie wir arbeiten.",
   p_insta_cta: "Instagram öffnen",
+  p_soon: "Bilder folgen in Kürze",
 
   sz_eyebrow: "Neu",
   sz_title: "Bald in Salzburg.",

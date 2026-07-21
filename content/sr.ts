@@ -42,6 +42,7 @@ const sr: Dictionary = {
   p_insta_text:
     "Video, reels i storyji sa svakog projekta — pogledaj kako radimo, uživo.",
   p_insta_cta: "Otvori Instagram",
+  p_soon: "Slike uskoro na sajtu",
 
   sz_eyebrow: "Novo",
   sz_title: "Uskoro u Salzburgu.",
