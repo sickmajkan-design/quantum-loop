@@ -50,7 +50,7 @@ export default function Header() {
         aria-label="Meni"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
-        className="z-101 block text-white lg:hidden"
+        className="z-101 -m-2.5 block p-2.5 text-white lg:hidden"
       >
         {open ? <X className="size-6" /> : <Menu className="size-6" />}
       </button>

@@ -12,7 +12,9 @@ const nextConfig: NextConfig = {
   },
   ...(basePath ? { basePath, assetPrefix: basePath } : {}),
   // Allows testing the dev server from a phone on the same local network.
-  allowedDevOrigins: ["192.168.1.5"],
+  // Update this if the machine's LAN IP changes (router reassigns DHCP
+  // leases on reboot) — check with `ipconfig` (Windows) or `ifconfig`.
+  allowedDevOrigins: ["192.168.1.11"],
 };
 
 export default nextConfig;
