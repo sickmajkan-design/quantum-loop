@@ -5,7 +5,7 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { useI18n } from "@/lib/i18n-context";
-import { collectImages } from "@/content/portfolio";
+import { portfolio, collectImages } from "@/content/portfolio";
 import { business } from "@/lib/site";
 import InstagramIcon from "@/components/ui/InstagramIcon";
 
@@ -13,6 +13,12 @@ export default function Portfolio() {
   const { t, d } = useI18n();
   const images = collectImages(d.tiles);
   const hasImages = images.length > 0;
+  // Categories without a real photo yet still get a styled placeholder tile
+  // in the grid, so all services stay represented once any category has
+  // real photos (which otherwise fully replace the all-placeholder marquee).
+  const emptyLabels = portfolio
+    .filter((cat) => cat.images.length === 0)
+    .map((cat) => d.tiles[cat.labelIndex] ?? cat.slug);
   const [active, setActive] = useState<number | null>(null);
 
   const close = useCallback(() => setActive(null), []);
@@ -75,6 +81,15 @@ export default function Portfolio() {
               </span>
             </button>
           ))}
+          {emptyLabels.map((label) => (
+            <div
+              key={label}
+              className="relative flex h-[220px] items-end overflow-hidden rounded-lg border border-gold/25 bg-linear-to-br from-[#151515] to-[#0d0d0d] p-4 text-[0.85rem] font-semibold tracking-[0.08em] text-gold2 uppercase"
+            >
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(201,162,39,0.15),transparent_60%)]" />
+              <span className="relative">{label}</span>
+            </div>
+          ))}
         </div>
       ) : (
         <div
@@ -114,6 +129,26 @@ export default function Portfolio() {
             </p>
           </div>
         </div>
+
+        {images.length > 0 && (
+          <div className="flex -space-x-3">
+            {images.slice(0, 4).map((img) => (
+              <div
+                key={img.src}
+                className="relative size-13 shrink-0 overflow-hidden rounded-full border-2 border-[#151515] ring-1 ring-gold/40"
+              >
+                <Image
+                  src={img.src}
+                  alt=""
+                  fill
+                  sizes="52px"
+                  className="object-cover"
+                />
+              </div>
+            ))}
+          </div>
+        )}
+
         <span className="inline-block shrink-0 rounded bg-linear-to-br from-gold to-gold2 px-5 py-2.5 font-bold whitespace-nowrap text-black transition-transform group-hover:scale-105">
           {t("p_insta_cta")}
         </span>
