@@ -80,11 +80,14 @@ export default function Header() {
       {/* Rendered outside <header> so scroll-triggered backdrop-blur on the
           header (a backdrop-filter, like transform, creates a new containing
           block) never re-anchors this fixed overlay to the header's small
-          box instead of the viewport. */}
+          box instead of the viewport. z-90 (below header's z-100) keeps the
+          header — and its close button — painted on top while this is open,
+          since as a sibling it no longer benefits from the button's local
+          z-101 stacking inside header. */}
       <nav
         aria-hidden={!open}
         inert={!open}
-        className={`fixed inset-0 z-100 flex flex-col items-center justify-center gap-8 bg-black/97 transition-transform duration-350 ease-in-out lg:hidden ${
+        className={`fixed inset-0 z-90 flex flex-col items-center justify-center gap-8 bg-black/97 transition-transform duration-350 ease-in-out lg:hidden ${
           open ? "translate-x-0" : "pointer-events-none translate-x-full"
         }`}
       >
