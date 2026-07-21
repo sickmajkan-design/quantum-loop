@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { useI18n } from "@/lib/i18n-context";
 import LangSwitcher from "./LangSwitcher";
@@ -76,36 +75,32 @@ export default function Header() {
         </Magnetic>
       </nav>
 
-      <AnimatePresence>
-        {open && (
-          <motion.nav
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ duration: 0.35, ease: "easeInOut" }}
-            className="fixed inset-0 z-100 flex flex-col items-center justify-center gap-8 bg-black/97 lg:hidden"
+      <nav
+        aria-hidden={!open}
+        inert={!open}
+        className={`fixed inset-0 z-100 flex flex-col items-center justify-center gap-8 bg-black/97 transition-transform duration-350 ease-in-out lg:hidden ${
+          open ? "translate-x-0" : "pointer-events-none translate-x-full"
+        }`}
+      >
+        {navItems.map((item) => (
+          <a
+            key={item.key}
+            href={item.href}
+            onClick={() => setOpen(false)}
+            className="text-xl text-white uppercase tracking-[0.06em]"
           >
-            {navItems.map((item) => (
-              <a
-                key={item.key}
-                href={item.href}
-                onClick={() => setOpen(false)}
-                className="text-xl text-white uppercase tracking-[0.06em]"
-              >
-                {t(item.key)}
-              </a>
-            ))}
-            <LangSwitcher />
-            <a
-              href="#contact"
-              onClick={() => setOpen(false)}
-              className="rounded bg-linear-to-br from-gold to-gold2 px-6 py-3 font-bold text-black"
-            >
-              {t("nav_cta")}
-            </a>
-          </motion.nav>
-        )}
-      </AnimatePresence>
+            {t(item.key)}
+          </a>
+        ))}
+        <LangSwitcher />
+        <a
+          href="#contact"
+          onClick={() => setOpen(false)}
+          className="rounded bg-linear-to-br from-gold to-gold2 px-6 py-3 font-bold text-black"
+        >
+          {t("nav_cta")}
+        </a>
+      </nav>
     </header>
   );
 }
