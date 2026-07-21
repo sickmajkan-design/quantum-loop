@@ -19,11 +19,7 @@ export interface PortfolioCategory {
 
 export const portfolio: PortfolioCategory[] = [
   { slug: "vehicle-wrap", labelIndex: 0, images: [] },
-  {
-    slug: "signage",
-    labelIndex: 1,
-    images: ["01-kort-caffe-restaurant.jpg"],
-  },
+  { slug: "signage", labelIndex: 1, images: [] },
   {
     slug: "window-vinyl",
     labelIndex: 2,
@@ -36,7 +32,10 @@ export const portfolio: PortfolioCategory[] = [
   {
     slug: "tinting",
     labelIndex: 3,
-    images: ["01-restaurant-window-tint-install.jpg"],
+    images: [
+      "01-restaurant-window-tint-install.jpg",
+      "02-kort-caffe-restaurant-tinted.jpg",
+    ],
   },
   { slug: "logo", labelIndex: 4, images: [] },
   {
