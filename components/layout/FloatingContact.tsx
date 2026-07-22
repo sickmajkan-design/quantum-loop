@@ -20,7 +20,13 @@ export default function FloatingContact() {
   const whatsappHref = `https://wa.me/${phone.replace("+", "")}?text=${encodeURIComponent(
     GREETING[lang] ?? GREETING.sr
   )}`;
-  const viberHref = `viber://chat?number=${encodeURIComponent(phone)}`;
+  // Unlike wa.me's officially supported `text` param, Viber's `chat` URI
+  // scheme has no documented pre-fill support — `text` here is a best-effort
+  // add-on some app versions honor; if not, it's silently ignored and the
+  // chat still opens normally.
+  const viberHref = `viber://chat?number=${encodeURIComponent(phone)}&text=${encodeURIComponent(
+    GREETING[lang] ?? GREETING.sr
+  )}`;
 
   return (
     <div className="fixed right-5 bottom-6 z-40 flex flex-col gap-3">
