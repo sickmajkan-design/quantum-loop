@@ -9,6 +9,7 @@ import Ribbon from "@/components/layout/Ribbon";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import FloatingContact from "@/components/layout/FloatingContact";
+import StickyMobileCta from "@/components/layout/StickyMobileCta";
 
 const anton = Anton({
   variable: "--font-anton",
@@ -209,6 +210,7 @@ export default function RootLayout({
           <main>{children}</main>
           <Footer />
           <FloatingContact />
+          <StickyMobileCta />
         </I18nProvider>
       </body>
     </html>

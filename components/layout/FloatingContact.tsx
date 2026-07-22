@@ -29,7 +29,7 @@ export default function FloatingContact() {
   )}`;
 
   return (
-    <div className="fixed right-5 bottom-6 z-40 flex flex-col gap-3">
+    <div className="fixed right-5 bottom-21 z-40 flex flex-col gap-3 lg:bottom-6">
       <a
         href={viberHref}
         aria-label="Viber"
