@@ -48,6 +48,23 @@ const de: Dictionary = {
   sz_title: "Bald in Salzburg.",
   sz_p: "In Bosnien bewährte Qualität kommt nach Österreich. Quantum Loop öffnet bald auch für Kunden in Salzburg und Umgebung.",
 
+  faq_eyebrow: "Fragen",
+  faq_title: "Häufig gestellte Fragen.",
+  faq1_q: "Wie lange dauert Herstellung und Montage?",
+  faq1_a:
+    "Das hängt vom Umfang ab — einfache Aufkleber und kleinere Werbeschilder sind in wenigen Tagen fertig, eine komplette Fahrzeugfolierung oder große Fassadenfolien können ein bis zwei Wochen dauern. Die genaue Frist erhalten Sie mit dem Angebot.",
+  faq2_q: "Geben Sie Garantie auf die ausgeführte Arbeit?",
+  faq2_a: "Ja — schriftliche Garantie auf Material und Montage, bei jedem Auftrag ohne Ausnahme.",
+  faq3_q: "Kommen Sie vor Ort zum Ausmessen und zur Montage?",
+  faq3_a:
+    "Ja, wir sind vor Ort in Derventa und Umgebung (bald auch in Salzburg) — Ausmessen, Montage und alles Nötige erledigen wir direkt bei Ihnen.",
+  faq4_q: "Welche Gebiete decken Sie ab?",
+  faq4_a:
+    "Unser Sitz ist in Derventa (Bosnien und Herzegowina), wir arbeiten in ganz BiH, und bald öffnen wir auch für Kunden in Salzburg und Umgebung, Österreich.",
+  faq5_q: "Übernehmen Sie auch kleinere Aufträge, oder nur große Projekte?",
+  faq5_a:
+    "Wir machen alles, vom einzelnen Aufkleber oder Schild bis zur kompletten Fahrzeug- und Fassadenfolierung — kein Auftrag ist zu klein.",
+
   c_eyebrow: "Kontakt",
   c_title: "Fordern Sie ein kostenloses Angebot an.",
   c_soon: "Bald: Salzburg, Österreich",

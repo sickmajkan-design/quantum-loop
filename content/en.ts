@@ -47,6 +47,23 @@ const en: Dictionary = {
   sz_title: "Coming soon to Salzburg.",
   sz_p: "Quality proven in Bosnia is coming to Austria. Quantum Loop will soon serve clients in Salzburg and the surrounding area.",
 
+  faq_eyebrow: "Questions",
+  faq_title: "Frequently asked questions.",
+  faq1_q: "How long does production and installation take?",
+  faq1_a:
+    "It depends on the scope — simple stickers and smaller signage are ready in a few days, while a full vehicle wrap or larger facade vinyl can take one to two weeks. You'll get an exact timeline with your quote.",
+  faq2_q: "Do you guarantee the finished work?",
+  faq2_a: "Yes — a written warranty on materials and installation, on every job, no exceptions.",
+  faq3_q: "Do you come on-site for measuring and installation?",
+  faq3_a:
+    "Yes, we come to you in Derventa and the surrounding area (soon in Salzburg too) — measuring, installation, and everything else happens on location.",
+  faq4_q: "Which areas do you cover?",
+  faq4_a:
+    "We're based in Derventa, Bosnia and Herzegovina, work across all of BiH, and will soon also serve clients in Salzburg and the surrounding area, Austria.",
+  faq5_q: "Do you take on smaller jobs, or only big projects?",
+  faq5_a:
+    "We do it all, from a single sticker or sign to a complete vehicle or facade wrap — no job is too small.",
+
   c_eyebrow: "Contact",
   c_title: "Request a free quote.",
   c_soon: "Soon: Salzburg, Austria",

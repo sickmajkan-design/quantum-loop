@@ -48,6 +48,23 @@ const sr: Dictionary = {
   sz_title: "Uskoro u Salzburgu.",
   sz_p: "Kvalitet dokazan u BiH stiže u Austriju. Quantum Loop uskoro otvara vrata i klijentima u Salzburgu i okolini.",
 
+  faq_eyebrow: "Pitanja",
+  faq_title: "Često postavljana pitanja.",
+  faq1_q: "Koliko traje izrada i montaža?",
+  faq1_a:
+    "Zavisi od obima posla — jednostavne naljepnice i manje reklame gotove su za par dana, dok kompletno brendiranje vozila ili veće fasadne folije mogu trajati sedmicu do dvije. Tačan rok dobijate uz ponudu.",
+  faq2_q: "Da li dajete garanciju na urađen posao?",
+  faq2_a: "Da — pisana garancija na materijal i montažu za svaki posao, bez izuzetka.",
+  faq3_q: "Da li dolazite na teren za mjerenje i montažu?",
+  faq3_a:
+    "Da, izlazimo na teren u Derventi i okolini (uskoro i u Salzburgu) — mjerenje, montaža i sve što je potrebno radimo na licu mjesta.",
+  faq4_q: "Koje oblasti pokrivate?",
+  faq4_a:
+    "Sjedište nam je u Derventi (Bosna i Hercegovina), radimo širom BiH, a uskoro otvaramo i za klijente u Salzburgu i okolini, Austrija.",
+  faq5_q: "Radite li i manje poslove, ili samo veće projekte?",
+  faq5_a:
+    "Radimo sve, od pojedinačne naljepnice ili table do kompletnog brendiranja vozila i fasada — nema posla koji je premali.",
+
   c_eyebrow: "Kontakt",
   c_title: "Zatražite besplatnu ponudu.",
   c_soon: "Uskoro: Salzburg, Austrija",

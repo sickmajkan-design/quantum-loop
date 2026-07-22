@@ -3,6 +3,7 @@ import Services from "@/components/sections/Services";
 import Guarantee from "@/components/sections/Guarantee";
 import Portfolio from "@/components/sections/Portfolio";
 import Salzburg from "@/components/sections/Salzburg";
+import FAQ from "@/components/sections/FAQ";
 import Contact from "@/components/sections/Contact";
 
 export default function Home() {
@@ -13,6 +14,7 @@ export default function Home() {
       <Guarantee />
       <Portfolio />
       <Salzburg />
+      <FAQ />
       <Contact />
     </>
   );

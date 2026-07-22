@@ -46,6 +46,19 @@ export interface Dictionary {
   sz_title: string;
   sz_p: string;
 
+  faq_eyebrow: string;
+  faq_title: string;
+  faq1_q: string;
+  faq1_a: string;
+  faq2_q: string;
+  faq2_a: string;
+  faq3_q: string;
+  faq3_a: string;
+  faq4_q: string;
+  faq4_a: string;
+  faq5_q: string;
+  faq5_a: string;
+
   c_eyebrow: string;
   c_title: string;
   c_soon: string;
