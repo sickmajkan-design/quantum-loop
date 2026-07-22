@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { useI18n } from "@/lib/i18n-context";
+import Reveal from "@/components/ui/Reveal";
 
 const items: {
   qKey: "faq1_q" | "faq2_q" | "faq3_q" | "faq4_q" | "faq5_q";
@@ -24,12 +25,14 @@ export default function FAQ() {
       id="faq"
       className="relative z-2 mx-auto max-w-[1300px] px-[5vw] py-[14vh]"
     >
-      <div className="mb-4 text-center text-[0.8rem] font-bold tracking-[0.25em] text-gold uppercase sm:text-left">
-        {t("faq_eyebrow")}
-      </div>
-      <h2 className="mb-10 text-center text-[clamp(2.2rem,6vw,4.5rem)] sm:text-left">
-        {t("faq_title")}
-      </h2>
+      <Reveal>
+        <div className="mb-4 text-center text-[0.8rem] font-bold tracking-[0.25em] text-gold uppercase sm:text-left">
+          {t("faq_eyebrow")}
+        </div>
+        <h2 className="mb-10 text-center text-[clamp(2.2rem,6vw,4.5rem)] sm:text-left">
+          {t("faq_title")}
+        </h2>
+      </Reveal>
 
       <div className="mx-auto max-w-180 sm:mx-0">
         {items.map((item, i) => {

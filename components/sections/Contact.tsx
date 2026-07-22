@@ -5,6 +5,7 @@ import { Phone, Mail } from "lucide-react";
 import { useI18n } from "@/lib/i18n-context";
 import { business } from "@/lib/site";
 import InstagramIcon from "@/components/ui/InstagramIcon";
+import Reveal from "@/components/ui/Reveal";
 
 // The form posts to a no-backend email service. By default it uses FormSubmit
 // (https://formsubmit.co) targeting the business email — no account needed; the
@@ -57,12 +58,14 @@ export default function Contact() {
       id="contact"
       className="relative z-2 mx-auto max-w-[1300px] px-[5vw] py-[14vh]"
     >
-      <div className="mb-4 text-center text-[0.8rem] font-bold tracking-[0.25em] text-gold uppercase sm:text-left">
-        {t("c_eyebrow")}
-      </div>
-      <h2 className="mb-6 text-center text-[clamp(2.2rem,6vw,4.5rem)] sm:text-left">
-        {t("c_title")}
-      </h2>
+      <Reveal>
+        <div className="mb-4 text-center text-[0.8rem] font-bold tracking-[0.25em] text-gold uppercase sm:text-left">
+          {t("c_eyebrow")}
+        </div>
+        <h2 className="mb-6 text-center text-[clamp(2.2rem,6vw,4.5rem)] sm:text-left">
+          {t("c_title")}
+        </h2>
+      </Reveal>
 
       <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-[6vw]">
         <div>

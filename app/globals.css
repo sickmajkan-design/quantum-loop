@@ -74,6 +74,29 @@ summary:focus-visible {
   animation: shimmer 1.5s linear infinite;
 }
 
+/* Shared section-header reveal (see Reveal.tsx). Distance + easing match the
+   scenes' gsap entrance so every section enters the page consistently. */
+.reveal {
+  opacity: 0;
+  transform: translateY(34px);
+  transition:
+    opacity 0.9s cubic-bezier(0.16, 0.84, 0.44, 1),
+    transform 0.9s cubic-bezier(0.16, 0.84, 0.44, 1);
+}
+
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 /* grain / noise overlay */
 .noise-overlay {
   content: "";
