@@ -58,19 +58,32 @@ export default function FlatSurfaceScene({
         </span>
       </div>
 
-      <div className="relative flex flex-col items-center justify-center gap-2 overflow-hidden border border-gold/15 bg-black2/60 text-center">
-        <Sun className="size-6 text-gold/50" aria-hidden="true" />
-        <span className="px-2 text-[0.7rem] tracking-[0.06em] text-grey uppercase">
-          Sun protection — fasade
-        </span>
-      </div>
-
-      <div className="relative flex flex-col items-center justify-center gap-2 overflow-hidden border border-gold/15 bg-black2/60 text-center">
-        <ShieldCheck className="size-6 text-gold/50" aria-hidden="true" />
-        <span className="px-2 text-[0.7rem] tracking-[0.06em] text-grey uppercase">
-          PPF zaštita vozila
-        </span>
-      </div>
+      {[
+        { Icon: Sun, label: "Sun protection — fasade" },
+        { Icon: ShieldCheck, label: "PPF zaštita vozila" },
+      ].map(({ Icon, label }) => (
+        <div
+          key={label}
+          className="relative flex flex-col items-center justify-center gap-2 overflow-hidden border border-gold/15 bg-black2/60 text-center"
+        >
+          {/* matching gold hairline texture so the panels read as intentional */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 opacity-[0.06]"
+            style={{
+              backgroundImage:
+                "repeating-linear-gradient(135deg, transparent 0 11px, var(--color-gold) 11px 12px)",
+            }}
+          />
+          <Icon className="relative size-6 text-gold/50" aria-hidden="true" />
+          <span className="relative px-2 text-[0.7rem] tracking-[0.06em] text-grey uppercase">
+            {label}
+          </span>
+          <span className="relative mt-0.5 rounded-full border border-gold/30 px-2 py-[1px] text-[0.55rem] font-semibold tracking-[0.16em] text-gold2/70 uppercase">
+            Uskoro
+          </span>
+        </div>
+      ))}
     </div>
   );
 }

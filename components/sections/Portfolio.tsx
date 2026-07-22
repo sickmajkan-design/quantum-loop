@@ -4,11 +4,33 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  X,
+  ChevronLeft,
+  ChevronRight,
+  Car,
+  PanelTop,
+  AppWindow,
+  SunDim,
+  PenTool,
+  Type,
+  type LucideIcon,
+} from "lucide-react";
 import { useI18n } from "@/lib/i18n-context";
 import { portfolio, collectImages } from "@/content/portfolio";
 import { business } from "@/lib/site";
 import InstagramIcon from "@/components/ui/InstagramIcon";
+
+// A quiet line icon per service, shown on the "coming soon" tiles so an empty
+// category still reads as a real, intentional part of the set.
+const CATEGORY_ICON: Record<string, LucideIcon> = {
+  "vehicle-wrap": Car,
+  signage: PanelTop,
+  "window-vinyl": AppWindow,
+  tinting: SunDim,
+  logo: PenTool,
+  "letters-3d": Type,
+};
 
 export default function Portfolio() {
   const { t, d } = useI18n();
@@ -17,9 +39,12 @@ export default function Portfolio() {
   // Categories without a real photo yet still get a styled placeholder tile
   // in the grid, so all services stay represented once any category has
   // real photos (which otherwise fully replace the all-placeholder marquee).
-  const emptyLabels = portfolio
+  const emptyCats = portfolio
     .filter((cat) => cat.images.length === 0)
-    .map((cat) => d.tiles[cat.labelIndex] ?? cat.slug);
+    .map((cat) => ({
+      slug: cat.slug,
+      label: d.tiles[cat.labelIndex] ?? cat.slug,
+    }));
   const [active, setActive] = useState<number | null>(null);
   const modalRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
@@ -116,20 +141,37 @@ export default function Portfolio() {
               </span>
             </button>
           ))}
-          {emptyLabels.map((label) => (
-            <div
-              key={label}
-              className="relative flex h-[220px] flex-col items-start justify-end overflow-hidden rounded-lg border border-gold/25 bg-linear-to-br from-[#151515] to-[#0d0d0d] p-4"
-            >
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(201,162,39,0.15),transparent_60%)]" />
-              <span className="relative text-[0.85rem] font-semibold tracking-[0.08em] text-gold2 uppercase">
-                {label}
-              </span>
-              <span className="relative mt-1 text-[0.78rem] normal-case text-grey">
-                {t("p_soon")}
-              </span>
-            </div>
-          ))}
+          {emptyCats.map(({ slug, label }) => {
+            const Icon = CATEGORY_ICON[slug] ?? AppWindow;
+            return (
+              <div
+                key={slug}
+                className="relative flex h-[220px] flex-col justify-between overflow-hidden rounded-lg border border-gold/20 bg-black2"
+              >
+                {/* diagonal gold hairlines — a nod to the site's gold thread */}
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 opacity-[0.07]"
+                  style={{
+                    backgroundImage:
+                      "repeating-linear-gradient(135deg, transparent 0 13px, var(--color-gold) 13px 14px)",
+                  }}
+                />
+                <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/70 to-transparent" />
+                <div className="relative flex items-start justify-between p-4">
+                  <Icon className="size-6 text-gold/45" aria-hidden="true" />
+                  <span className="rounded-full border border-gold/35 px-2.5 py-0.5 text-[0.6rem] font-semibold tracking-[0.16em] text-gold2/80 uppercase">
+                    {t("p_soon_short")}
+                  </span>
+                </div>
+                <div className="relative p-4">
+                  <span className="text-[0.85rem] font-semibold tracking-[0.08em] text-gold2 uppercase">
+                    {label}
+                  </span>
+                </div>
+              </div>
+            );
+          })}
         </div>
       ) : (
         <div

@@ -42,6 +42,7 @@ const en: Dictionary = {
   p_insta_text: "Videos, reels and stories from every job — see the process live.",
   p_insta_cta: "Open Instagram",
   p_soon: "Photos coming soon",
+  p_soon_short: "Soon",
 
   sz_eyebrow: "New",
   sz_title: "Coming soon to Salzburg.",
