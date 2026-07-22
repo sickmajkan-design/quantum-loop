@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
@@ -198,19 +199,26 @@ export default function Portfolio() {
         </span>
       </a>
 
-      <AnimatePresence>
-        {active !== null && images[active] && (
-          <motion.div
-            ref={modalRef}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={close}
-            className="fixed inset-0 z-200 flex items-center justify-center bg-black/92 p-6 backdrop-blur-sm"
-            role="dialog"
-            aria-modal="true"
-            aria-label={images[active].label}
-          >
+      {/* Portalled to <body> so the fixed overlay escapes this section's
+          `z-2` stacking context — otherwise the z-100 header would paint over
+          the lightbox (incl. its close button). Guarded on `document` for the
+          static-export/SSR pass; the modal is always closed on first render,
+          so nothing is portalled during hydration. */}
+      {typeof document !== "undefined" &&
+        createPortal(
+          <AnimatePresence>
+            {active !== null && images[active] && (
+              <motion.div
+                ref={modalRef}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={close}
+                className="fixed inset-0 z-200 flex items-center justify-center bg-black/92 p-6 backdrop-blur-sm"
+                role="dialog"
+                aria-modal="true"
+                aria-label={images[active].label}
+              >
             <button
               type="button"
               aria-label="Zatvori"
@@ -260,9 +268,11 @@ export default function Portfolio() {
             >
               <ChevronRight className="size-10" />
             </button>
-          </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body
         )}
-      </AnimatePresence>
     </section>
   );
 }
