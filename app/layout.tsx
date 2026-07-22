@@ -8,6 +8,7 @@ import SmoothScroll from "@/components/layout/SmoothScroll";
 import Ribbon from "@/components/layout/Ribbon";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import FloatingContact from "@/components/layout/FloatingContact";
 
 const anton = Anton({
   variable: "--font-anton",
@@ -207,6 +208,7 @@ export default function RootLayout({
           <Header />
           <main>{children}</main>
           <Footer />
+          <FloatingContact />
         </I18nProvider>
       </body>
     </html>
