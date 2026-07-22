@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Anton, Inter } from "next/font/google";
 import "./globals.css";
 import { I18nProvider } from "@/lib/i18n-context";
@@ -94,6 +94,13 @@ export const metadata: Metadata = {
   robots: IS_PREVIEW
     ? { index: false, follow: false }
     : { index: true, follow: true },
+};
+
+// Matches the body background — colors the mobile browser's UI chrome
+// (address bar / status bar) to match the site instead of default white/grey.
+export const viewport: Viewport = {
+  themeColor: "#0a0a0a",
+  colorScheme: "dark",
 };
 
 const SERVICES: { name: string; description: string }[] = [
