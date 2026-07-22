@@ -164,6 +164,18 @@ export default function Hero() {
           </Magnetic>
         </div>
       </div>
+
+      {/* Scroll cue — a thin gold line that reads as the start of the gold
+          thread threading the page. Desktop only (mobile scrolls naturally);
+          reduced motion keeps a static line without the travelling highlight. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute bottom-6 left-1/2 hidden -translate-x-1/2 opacity-0 [animation:cue-in_0.6s_ease_1.4s_forwards] motion-reduce:opacity-100 motion-reduce:[animation:none] sm:block"
+      >
+        <span className="relative block h-14 w-px overflow-hidden bg-linear-to-b from-transparent via-gold/40 to-gold/70">
+          <span className="absolute inset-x-0 top-0 h-4 bg-gold2 [animation:scroll-cue_1.9s_ease-in-out_infinite] motion-reduce:hidden" />
+        </span>
+      </div>
     </section>
   );
 }
