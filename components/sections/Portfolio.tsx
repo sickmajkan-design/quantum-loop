@@ -20,6 +20,7 @@ import { useI18n } from "@/lib/i18n-context";
 import { portfolio, collectImages } from "@/content/portfolio";
 import { business } from "@/lib/site";
 import InstagramIcon from "@/components/ui/InstagramIcon";
+import FadeImage from "@/components/ui/FadeImage";
 
 // A quiet line icon per service, shown on the "coming soon" tiles so an empty
 // category still reads as a real, intentional part of the set.
@@ -128,7 +129,7 @@ export default function Portfolio() {
               onClick={(e) => openAt(i, e.currentTarget)}
               className="group relative h-[220px] overflow-hidden rounded-lg border border-gold/25 bg-black2"
             >
-              <Image
+              <FadeImage
                 src={img.src}
                 alt={img.label}
                 fill
@@ -288,7 +289,7 @@ export default function Portfolio() {
               onClick={(e) => e.stopPropagation()}
               className="relative h-[76vh] w-[86vw] max-w-[1100px]"
             >
-              <Image
+              <FadeImage
                 src={images[active].src}
                 alt={images[active].label}
                 fill

@@ -42,6 +42,38 @@ h3,
   color: var(--color-black);
 }
 
+/* Keyboard focus only (mouse clicks stay clean): a clear gold ring so keyboard
+   users always see where they are. Inputs keep their own in-component focus. */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--color-gold2);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Loading shimmer for images (see FadeImage). */
+@keyframes shimmer {
+  0% {
+    background-position: -180% 0;
+  }
+  100% {
+    background-position: 180% 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(
+    100deg,
+    #141414 28%,
+    #1e1b12 50%,
+    #141414 72%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s linear infinite;
+}
+
 /* grain / noise overlay */
 .noise-overlay {
   content: "";
@@ -114,6 +146,7 @@ h3,
   .dust-particle,
   .sz-pulse,
   .sz-ring,
+  .skeleton,
   [class*="animate-"] {
     animation: none !important;
   }
