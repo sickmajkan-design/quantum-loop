@@ -3,6 +3,7 @@
 import { useEffect, useRef, type RefObject } from "react";
 import Image from "next/image";
 import { gsap, prefersReducedMotion } from "@/lib/gsap";
+import { asset } from "@/lib/asset";
 
 /**
  * Vehicle-wrap scene — still image showing the finished result: a black/gold
@@ -39,7 +40,7 @@ export default function WrapScene({
       className="relative h-full w-full overflow-hidden rounded-md bg-black2"
     >
       <Image
-        src="/stock/vehicle-wrap.jpg"
+        src={asset("/stock/vehicle-wrap.jpg")}
         alt="Bok vozila sa crno-zlatnim brendiranim wrap dizajnom"
         fill
         sizes="(max-width: 768px) 90vw, 45vw"

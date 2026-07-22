@@ -4,6 +4,7 @@ import { useEffect, useRef, type RefObject } from "react";
 import Image from "next/image";
 import { Sun, ShieldCheck } from "lucide-react";
 import { gsap, prefersReducedMotion } from "@/lib/gsap";
+import { asset } from "@/lib/asset";
 
 /**
  * "Folije na sve površine" scene — a collage of the surface types this
@@ -46,7 +47,7 @@ export default function FlatSurfaceScene({
     >
       <div className="relative row-span-2 overflow-hidden">
         <Image
-          src="/stock/flat-surface.jpg"
+          src={asset("/stock/flat-surface.jpg")}
           alt="Ruke nanose foliju na staklenu izlog površinu"
           fill
           sizes="(max-width: 768px) 45vw, 23vw"

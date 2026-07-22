@@ -1,3 +1,5 @@
+import { asset } from "@/lib/asset";
+
 /**
  * Portfolio drop-in manifest.
  *
@@ -57,7 +59,7 @@ export function collectImages(labels: string[]): PortfolioImage[] {
   for (const cat of portfolio) {
     for (const file of cat.images) {
       out.push({
-        src: `/portfolio/${cat.slug}/${file}`,
+        src: asset(`/portfolio/${cat.slug}/${file}`),
         label: labels[cat.labelIndex] ?? cat.slug,
         slug: cat.slug,
       });
