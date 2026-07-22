@@ -137,9 +137,24 @@ export default function Portfolio() {
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
               />
               <div className="pointer-events-none absolute inset-0 opacity-0 shadow-[inset_0_0_60px_rgba(201,162,39,0.5)] transition-opacity duration-500 group-hover:opacity-100" />
-              <span className="absolute bottom-3 left-4 text-[0.85rem] font-semibold tracking-[0.08em] text-gold2 uppercase">
-                {img.label}
-              </span>
+              {/* scrim keeps the caption legible over any photo */}
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-linear-to-t from-black/85 via-black/35 to-transparent" />
+              <div className="absolute inset-x-4 bottom-3">
+                {img.title ? (
+                  <>
+                    <span className="block text-[0.62rem] font-semibold tracking-[0.16em] text-gold2/90 uppercase">
+                      {img.label}
+                    </span>
+                    <span className="mt-0.5 block text-[0.98rem] font-semibold text-white">
+                      {img.title}
+                    </span>
+                  </>
+                ) : (
+                  <span className="block text-[0.85rem] font-semibold tracking-[0.08em] text-gold2 uppercase">
+                    {img.label}
+                  </span>
+                )}
+              </div>
             </button>
           ))}
           {emptyCats.map(({ slug, label }) => {
@@ -296,9 +311,16 @@ export default function Portfolio() {
                 sizes="86vw"
                 className="rounded-lg object-contain"
               />
-              <span className="absolute -bottom-8 left-0 text-[0.85rem] tracking-[0.08em] text-gold2 uppercase">
-                {images[active].label}
-              </span>
+              <div className="absolute -bottom-9 left-0 flex flex-wrap items-baseline gap-x-2">
+                {images[active].title && (
+                  <span className="text-[1rem] font-semibold text-white">
+                    {images[active].title}
+                  </span>
+                )}
+                <span className="text-[0.8rem] tracking-[0.08em] text-gold2 uppercase">
+                  {images[active].label}
+                </span>
+              </div>
             </motion.div>
             <button
               type="button"
