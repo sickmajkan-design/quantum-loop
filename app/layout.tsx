@@ -23,6 +23,12 @@ const inter = Inter({
   weight: ["400", "500", "600", "700"],
 });
 
+// Cookieless, GDPR-friendly visit counter (no banner needed). Free at
+// goatcounter.com — sign up, pick a site code, then set
+// NEXT_PUBLIC_GOATCOUNTER_CODE to it (e.g. in the Pages workflow's env
+// block). Left unset by default, so nothing loads until configured.
+const GOATCOUNTER_CODE = process.env.NEXT_PUBLIC_GOATCOUNTER_CODE;
+
 const TITLE = "Quantum Loop — Dizajn koji se lijepi";
 const DESCRIPTION =
   "Grafički dizajn, reklame, brendiranje vozila, folije i zatamnjivanje stakala. 20+ godina iskustva. Derventa · uskoro Salzburg.";
@@ -202,6 +208,13 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        {GOATCOUNTER_CODE && (
+          <script
+            data-goatcounter={`https://${GOATCOUNTER_CODE}.goatcounter.com/count`}
+            async
+            src="https://gc.zgo.at/count.js"
+          />
+        )}
         <I18nProvider>
           <SmoothScroll />
           <NoiseOverlay />
