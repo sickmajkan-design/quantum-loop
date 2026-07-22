@@ -116,12 +116,14 @@ export default function Salzburg() {
           </svg>
         </div>
 
-        <div>
+        <div className="text-center md:text-left">
           <div className="mb-4 text-[0.8rem] font-bold tracking-[0.25em] text-gold uppercase">
             {t("sz_eyebrow")}
           </div>
           <h3 className="text-[clamp(2rem,5vw,3.4rem)]">{t("sz_title")}</h3>
-          <p className="mt-3.5 max-w-[460px] text-[#cfcabc]">{t("sz_p")}</p>
+          <p className="mx-auto mt-3.5 max-w-[460px] text-[#cfcabc] md:mx-0">
+            {t("sz_p")}
+          </p>
         </div>
       </div>
     </section>

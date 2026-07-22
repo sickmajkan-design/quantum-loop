@@ -22,10 +22,12 @@ export default function Services() {
       id="services"
       className="relative z-2 mx-auto max-w-[1300px] px-[5vw] py-[14vh]"
     >
-      <div className="mb-4 text-[0.8rem] font-bold tracking-[0.25em] text-gold uppercase">
+      <div className="mb-4 text-center text-[0.8rem] font-bold tracking-[0.25em] text-gold uppercase sm:text-left">
         {t("s_eyebrow")}
       </div>
-      <h2 className="mb-6 text-[clamp(2.2rem,6vw,4.5rem)]">{t("s_title")}</h2>
+      <h2 className="mb-6 text-center text-[clamp(2.2rem,6vw,4.5rem)] sm:text-left">
+        {t("s_title")}
+      </h2>
 
       <div className="mt-16 grid grid-cols-1 gap-24">
         <ServiceRow

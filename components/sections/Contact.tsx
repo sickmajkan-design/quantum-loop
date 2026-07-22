@@ -57,10 +57,12 @@ export default function Contact() {
       id="contact"
       className="relative z-2 mx-auto max-w-[1300px] px-[5vw] py-[14vh]"
     >
-      <div className="mb-4 text-[0.8rem] font-bold tracking-[0.25em] text-gold uppercase">
+      <div className="mb-4 text-center text-[0.8rem] font-bold tracking-[0.25em] text-gold uppercase sm:text-left">
         {t("c_eyebrow")}
       </div>
-      <h2 className="mb-6 text-[clamp(2.2rem,6vw,4.5rem)]">{t("c_title")}</h2>
+      <h2 className="mb-6 text-center text-[clamp(2.2rem,6vw,4.5rem)] sm:text-left">
+        {t("c_title")}
+      </h2>
 
       <div className="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-[6vw]">
         <div>

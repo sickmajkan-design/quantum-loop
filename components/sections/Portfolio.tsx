@@ -86,10 +86,12 @@ export default function Portfolio() {
       id="portfolio"
       className="relative z-2 mx-auto max-w-[1300px] px-[5vw] py-[14vh]"
     >
-      <div className="mb-4 text-[0.8rem] font-bold tracking-[0.25em] text-gold uppercase">
+      <div className="mb-4 text-center text-[0.8rem] font-bold tracking-[0.25em] text-gold uppercase sm:text-left">
         {t("p_eyebrow")}
       </div>
-      <h2 className="mb-6 text-[clamp(2.2rem,6vw,4.5rem)]">{t("p_title")}</h2>
+      <h2 className="mb-6 text-center text-[clamp(2.2rem,6vw,4.5rem)] sm:text-left">
+        {t("p_title")}
+      </h2>
 
       {hasImages ? (
         <div className="mt-10 grid grid-cols-1 gap-[18px] sm:grid-cols-2 lg:grid-cols-3">
@@ -156,9 +158,9 @@ export default function Portfolio() {
         href={business.instagram}
         target="_blank"
         rel="noopener noreferrer"
-        className="group mt-10 flex flex-col items-start gap-5 rounded-lg border border-gold/25 bg-linear-to-br from-[#151515] to-[#0d0d0d] p-8 transition-colors hover:border-gold/60 sm:flex-row sm:items-center sm:justify-between"
+        className="group mt-10 flex flex-col items-center gap-5 rounded-lg border border-gold/25 bg-linear-to-br from-[#151515] to-[#0d0d0d] p-8 text-center transition-colors hover:border-gold/60 sm:flex-row sm:items-center sm:justify-between sm:text-left"
       >
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col items-center gap-3 sm:flex-row sm:gap-4">
           <span className="flex size-12 shrink-0 items-center justify-center rounded-full border border-gold/40 text-gold2">
             <InstagramIcon className="size-6" />
           </span>
@@ -166,7 +168,7 @@ export default function Portfolio() {
             <div className="text-[1.1rem] font-bold text-white">
               {t("p_insta_title")}
             </div>
-            <p className="mt-1 max-w-md text-[0.9rem] text-grey">
+            <p className="mx-auto mt-1 max-w-md text-[0.9rem] text-grey sm:mx-0">
               {t("p_insta_text")}
             </p>
           </div>
