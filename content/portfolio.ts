@@ -21,7 +21,11 @@ export interface PortfolioCategory {
 
 export const portfolio: PortfolioCategory[] = [
   { slug: "vehicle-wrap", labelIndex: 0, images: [] },
-  { slug: "signage", labelIndex: 1, images: [] },
+  {
+    slug: "signage",
+    labelIndex: 1,
+    images: ["01-3p-service-cafe-signage.jpg"],
+  },
   {
     slug: "window-vinyl",
     labelIndex: 2,
