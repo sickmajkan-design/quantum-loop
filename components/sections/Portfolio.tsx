@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
@@ -49,19 +49,30 @@ export default function Portfolio() {
   const [active, setActive] = useState<number | null>(null);
   const modalRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
+  const touchStartX = useRef<number | null>(null);
 
-  const openAt = useCallback((i: number, trigger: HTMLElement) => {
+  // Plain handlers — the React Compiler memoizes them; manual useCallback here
+  // conflicted with its inference (stable setActive) and disabled optimization.
+  const openAt = (i: number, trigger: HTMLElement) => {
     triggerRef.current = trigger;
     setActive(i);
-  }, []);
-  const close = useCallback(() => setActive(null), []);
-  const step = useCallback(
-    (dir: number) =>
-      setActive((i) =>
-        i === null ? i : (i + dir + images.length) % images.length
-      ),
-    [images.length]
-  );
+  };
+  const close = () => setActive(null);
+  const step = (dir: number) =>
+    setActive((i) =>
+      i === null ? i : (i + dir + images.length) % images.length
+    );
+
+  // Horizontal swipe navigates prev/next in the lightbox (mobile).
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    if (Math.abs(dx) > 45) step(dx < 0 ? 1 : -1);
+    touchStartX.current = null;
+  };
 
   useEffect(() => {
     if (active === null) {
@@ -78,10 +89,13 @@ export default function Portfolio() {
       );
     focusables()[0]?.focus();
 
+    const len = images.length;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close();
-      if (e.key === "ArrowRight") step(1);
-      if (e.key === "ArrowLeft") step(-1);
+      if (e.key === "Escape") setActive(null);
+      if (e.key === "ArrowRight")
+        setActive((i) => (i === null ? i : (i + 1) % len));
+      if (e.key === "ArrowLeft")
+        setActive((i) => (i === null ? i : (i - 1 + len) % len));
       if (e.key === "Tab") {
         const els = focusables();
         if (els.length === 0) return;
@@ -102,7 +116,7 @@ export default function Portfolio() {
       document.body.style.overflow = "";
       window.removeEventListener("keydown", onKey);
     };
-  }, [active, close, step]);
+  }, [active, images.length]);
 
   // Placeholder tiles reuse the localized category labels. Duplicated once so
   // the marquee can scroll seamlessly.
@@ -272,67 +286,121 @@ export default function Portfolio() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={close}
-                className="fixed inset-0 z-200 flex items-center justify-center bg-black/92 p-6 backdrop-blur-sm"
+                onTouchStart={onTouchStart}
+                onTouchEnd={onTouchEnd}
+                className="fixed inset-0 z-200 flex flex-col bg-black/92 p-4 backdrop-blur-sm sm:p-6"
                 role="dialog"
                 aria-modal="true"
                 aria-label={images[active].label}
               >
-            <button
-              type="button"
-              aria-label="Zatvori"
-              onClick={close}
-              className="absolute top-5 right-6 text-white/70 hover:text-gold"
-            >
-              <X className="size-8" />
-            </button>
-            <button
-              type="button"
-              aria-label="Prethodna"
-              onClick={(e) => {
-                e.stopPropagation();
-                step(-1);
-              }}
-              className="absolute left-4 text-white/60 hover:text-gold md:left-10"
-            >
-              <ChevronLeft className="size-10" />
-            </button>
-            <motion.div
-              key={images[active].src}
-              initial={{ scale: 0.94, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.25 }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative h-[76vh] w-[86vw] max-w-[1100px]"
-            >
-              <FadeImage
-                src={images[active].src}
-                alt={images[active].label}
-                fill
-                sizes="86vw"
-                className="rounded-lg object-contain"
-              />
-              <div className="absolute -bottom-9 left-0 flex flex-wrap items-baseline gap-x-2">
-                {images[active].title && (
-                  <span className="text-[1rem] font-semibold text-white">
-                    {images[active].title}
+                {/* top bar: position counter + close */}
+                <div
+                  className="flex shrink-0 items-center justify-between"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <span className="text-sm font-semibold tracking-[0.1em] text-white/55">
+                    <span className="text-gold2">
+                      {String(active + 1).padStart(2, "0")}
+                    </span>{" "}
+                    / {String(images.length).padStart(2, "0")}
                   </span>
-                )}
-                <span className="text-[0.8rem] tracking-[0.08em] text-gold2 uppercase">
-                  {images[active].label}
-                </span>
-              </div>
-            </motion.div>
-            <button
-              type="button"
-              aria-label="Sljedeća"
-              onClick={(e) => {
-                e.stopPropagation();
-                step(1);
-              }}
-              className="absolute right-4 text-white/60 hover:text-gold md:right-10"
-            >
-              <ChevronRight className="size-10" />
-            </button>
+                  <button
+                    type="button"
+                    aria-label="Zatvori"
+                    onClick={close}
+                    className="text-white/70 hover:text-gold"
+                  >
+                    <X className="size-8" />
+                  </button>
+                </div>
+
+                {/* image area — arrows + the current photo */}
+                <div className="relative flex min-h-0 flex-1 items-center justify-center">
+                  <button
+                    type="button"
+                    aria-label="Prethodna"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      step(-1);
+                    }}
+                    className="absolute left-0 z-10 text-white/60 hover:text-gold md:left-4"
+                  >
+                    <ChevronLeft className="size-10" />
+                  </button>
+                  <motion.div
+                    key={images[active].src}
+                    initial={{ scale: 0.94, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.25 }}
+                    onClick={(e) => e.stopPropagation()}
+                    className="relative h-full w-[78vw] max-w-[1100px]"
+                  >
+                    <FadeImage
+                      src={images[active].src}
+                      alt={images[active].label}
+                      fill
+                      sizes="86vw"
+                      className="rounded-lg object-contain"
+                    />
+                  </motion.div>
+                  <button
+                    type="button"
+                    aria-label="Sljedeća"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      step(1);
+                    }}
+                    className="absolute right-0 z-10 text-white/60 hover:text-gold md:right-4"
+                  >
+                    <ChevronRight className="size-10" />
+                  </button>
+                </div>
+
+                {/* caption + thumbnail strip */}
+                <div
+                  className="mt-3 flex shrink-0 flex-col items-center gap-3"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div className="flex flex-wrap items-baseline justify-center gap-x-2">
+                    {images[active].title && (
+                      <span className="text-[1rem] font-semibold text-white">
+                        {images[active].title}
+                      </span>
+                    )}
+                    <span className="text-[0.8rem] tracking-[0.08em] text-gold2 uppercase">
+                      {images[active].label}
+                    </span>
+                  </div>
+                  {images.length > 1 && (
+                    <div className="flex max-w-full gap-2 overflow-x-auto pb-1">
+                      {images.map((img, i) => (
+                        <button
+                          key={img.src}
+                          type="button"
+                          aria-label={img.title ?? img.label}
+                          aria-current={i === active}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setActive(i);
+                          }}
+                          className={`relative h-11 w-16 shrink-0 overflow-hidden rounded border transition ${
+                            i === active
+                              ? "border-gold2 opacity-100"
+                              : "border-white/15 opacity-50 hover:opacity-90"
+                          }`}
+                        >
+                          <Image
+                            src={img.src}
+                            alt=""
+                            fill
+                            sizes="64px"
+                            className="object-cover"
+                          />
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </motion.div>
             )}
           </AnimatePresence>,
