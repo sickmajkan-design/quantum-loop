@@ -36,7 +36,7 @@ jobs:
       # Cookieless visit stats (GoatCounter). Sign up at goatcounter.com, pick a
       # site code, and put it here to turn it on — dashboard lives at
       # https://<code>.goatcounter.com. Empty = analytics off.
-      NEXT_PUBLIC_GOATCOUNTER_CODE: ""
+      NEXT_PUBLIC_GOATCOUNTER_CODE: "quantum-loop"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
