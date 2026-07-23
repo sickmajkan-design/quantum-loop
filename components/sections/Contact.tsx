@@ -135,7 +135,7 @@ export default function Contact() {
           </a>
         </div>
 
-        <form onSubmit={handleSubmit} className="grid gap-3.5">
+        <form onSubmit={handleSubmit} className="contact-form grid gap-3.5">
           {/* FormSubmit control fields */}
           <input
             type="hidden"

@@ -3,6 +3,7 @@ import { Anton, Inter } from "next/font/google";
 import "./globals.css";
 import { I18nProvider } from "@/lib/i18n-context";
 import { SITE_URL, IS_PREVIEW, business } from "@/lib/site";
+import { asset } from "@/lib/asset";
 import NoiseOverlay from "@/components/layout/NoiseOverlay";
 import SmoothScroll from "@/components/layout/SmoothScroll";
 import Ribbon from "@/components/layout/Ribbon";
@@ -94,6 +95,15 @@ export const metadata: Metadata = {
   robots: IS_PREVIEW
     ? { index: false, follow: false }
     : { index: true, follow: true },
+  icons: {
+    // asset() prefixes the base path — Next does NOT auto-prefix these icon
+    // hrefs (unlike the manifest link), so on the Pages subpath they'd 404.
+    icon: [
+      { url: asset("/icon-192.png"), sizes: "192x192", type: "image/png" },
+      { url: asset("/icon-512.png"), sizes: "512x512", type: "image/png" },
+    ],
+    apple: [{ url: asset("/apple-icon.png"), sizes: "180x180" }],
+  },
 };
 
 // Matches the body background — colors the mobile browser's UI chrome

@@ -97,6 +97,18 @@ summary:focus-visible {
   }
 }
 
+/* Inline contact-form validation. `:user-invalid` only matches after the user
+   has interacted with a field, so nothing is flagged red on first load. */
+.contact-form input:user-invalid,
+.contact-form textarea:user-invalid {
+  border-color: #f87171;
+}
+
+.contact-form input:user-invalid:focus,
+.contact-form textarea:user-invalid:focus {
+  outline-color: #f87171;
+}
+
 /* grain / noise overlay */
 .noise-overlay {
   content: "";
