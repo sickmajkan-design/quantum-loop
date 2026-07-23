@@ -74,6 +74,7 @@ const sr: Dictionary = {
   f_email: "Email",
   f_phone: "Telefon (opcionalno)",
   f_service: "Usluga",
+  f_message: "Poruka",
   f_msg: "Opišite šta vam treba...",
   f_send: "Pošalji upit",
   form_ok: "Hvala! Javićemo vam se uskoro.",

@@ -26,6 +26,17 @@ const MAPS_VIEW_URL = `https://maps.google.com/?cid=${MAPS_CID}`;
 
 type Status = "idle" | "sending" | "success" | "error";
 
+// Floating-label fields: the label sits over an empty field like a placeholder,
+// then shrinks up to the top edge once the field is focused or filled — so the
+// label never disappears (accessible) and the form stays uncluttered.
+const FIELD =
+  "peer w-full rounded-md border border-white/20 bg-black2 px-3.5 pt-6 pb-2 font-sans text-[0.95rem] text-white focus:border-transparent focus:outline focus:outline-2 focus:outline-gold";
+const FLOAT =
+  "pointer-events-none absolute left-3.5 top-4 text-[0.95rem] text-grey transition-all duration-200 peer-focus:top-1.5 peer-focus:text-[0.62rem] peer-focus:font-semibold peer-focus:tracking-[0.12em] peer-focus:text-gold2 peer-focus:uppercase peer-[:not(:placeholder-shown)]:top-1.5 peer-[:not(:placeholder-shown)]:text-[0.62rem] peer-[:not(:placeholder-shown)]:font-semibold peer-[:not(:placeholder-shown)]:tracking-[0.12em] peer-[:not(:placeholder-shown)]:uppercase";
+// A <select> always has a value, so its label stays in the floated position.
+const FLOAT_STATIC =
+  "pointer-events-none absolute left-3.5 top-1.5 text-[0.62rem] font-semibold tracking-[0.12em] text-grey uppercase";
+
 export default function Contact() {
   const { t, d } = useI18n();
   const [status, setStatus] = useState<Status>("idle");
@@ -153,46 +164,73 @@ export default function Contact() {
             aria-hidden="true"
             className="hidden"
           />
-          <input
-            required
-            type="text"
-            name="name"
-            placeholder={t("f_name")}
-            aria-label={t("f_name")}
-            className="rounded-md border border-white/20 bg-black2 p-3.5 font-sans text-[0.95rem] text-white focus:border-transparent focus:outline focus:outline-2 focus:outline-gold"
-          />
-          <input
-            required
-            type="email"
-            name="email"
-            placeholder={t("f_email")}
-            aria-label={t("f_email")}
-            className="rounded-md border border-white/20 bg-black2 p-3.5 font-sans text-[0.95rem] text-white focus:border-transparent focus:outline focus:outline-2 focus:outline-gold"
-          />
-          <input
-            type="tel"
-            name="phone"
-            inputMode="tel"
-            autoComplete="tel"
-            placeholder={t("f_phone")}
-            aria-label={t("f_phone")}
-            className="rounded-md border border-white/20 bg-black2 p-3.5 font-sans text-[0.95rem] text-white focus:border-transparent focus:outline focus:outline-2 focus:outline-gold"
-          />
-          <select
-            name="service"
-            aria-label={t("f_service")}
-            className="rounded-md border border-white/20 bg-black2 p-3.5 font-sans text-[0.95rem] text-white focus:border-transparent focus:outline focus:outline-2 focus:outline-gold"
-          >
-            {d.svc.map((s) => (
-              <option key={s}>{s}</option>
-            ))}
-          </select>
-          <textarea
-            name="message"
-            placeholder={t("f_msg")}
-            aria-label={t("f_msg")}
-            className="min-h-[120px] resize-y rounded-md border border-white/20 bg-black2 p-3.5 font-sans text-[0.95rem] text-white focus:border-transparent focus:outline focus:outline-2 focus:outline-gold"
-          />
+          <div className="relative">
+            <input
+              required
+              type="text"
+              id="cf-name"
+              name="name"
+              autoComplete="name"
+              placeholder=" "
+              className={FIELD}
+            />
+            <label htmlFor="cf-name" className={FLOAT}>
+              {t("f_name")}
+            </label>
+          </div>
+
+          <div className="relative">
+            <input
+              required
+              type="email"
+              id="cf-email"
+              name="email"
+              autoComplete="email"
+              placeholder=" "
+              className={FIELD}
+            />
+            <label htmlFor="cf-email" className={FLOAT}>
+              {t("f_email")}
+            </label>
+          </div>
+
+          <div className="relative">
+            <input
+              type="tel"
+              id="cf-phone"
+              name="phone"
+              inputMode="tel"
+              autoComplete="tel"
+              placeholder=" "
+              className={FIELD}
+            />
+            <label htmlFor="cf-phone" className={FLOAT}>
+              {t("f_phone")}
+            </label>
+          </div>
+
+          <div className="relative">
+            <select id="cf-service" name="service" className={FIELD}>
+              {d.svc.map((s) => (
+                <option key={s}>{s}</option>
+              ))}
+            </select>
+            <label htmlFor="cf-service" className={FLOAT_STATIC}>
+              {t("f_service")}
+            </label>
+          </div>
+
+          <div className="relative">
+            <textarea
+              id="cf-message"
+              name="message"
+              placeholder=" "
+              className={`${FIELD} min-h-[130px] resize-y`}
+            />
+            <label htmlFor="cf-message" className={FLOAT}>
+              {t("f_message")}
+            </label>
+          </div>
           <button
             type="submit"
             disabled={status === "sending"}

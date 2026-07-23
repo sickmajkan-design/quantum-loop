@@ -73,6 +73,7 @@ const en: Dictionary = {
   f_email: "Email",
   f_phone: "Phone (optional)",
   f_service: "Service",
+  f_message: "Message",
   f_msg: "Describe what you need...",
   f_send: "Send inquiry",
   form_ok: "Thank you! We'll get back to you shortly.",

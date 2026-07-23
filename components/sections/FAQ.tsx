@@ -20,11 +20,27 @@ export default function FAQ() {
   const { t } = useI18n();
   const [open, setOpen] = useState<number | null>(0);
 
+  // FAQPage structured data (in the current page language) so search engines
+  // can show these questions as a rich result. Rendered server-side per route.
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: t(item.qKey),
+      acceptedAnswer: { "@type": "Answer", text: t(item.aKey) },
+    })),
+  };
+
   return (
     <section
       id="faq"
       className="relative z-2 mx-auto max-w-[1300px] px-[5vw] py-[14vh]"
     >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
       <Reveal>
         <div className="mb-4 text-center text-[0.8rem] font-bold tracking-[0.25em] text-gold uppercase sm:text-left">
           {t("faq_eyebrow")}

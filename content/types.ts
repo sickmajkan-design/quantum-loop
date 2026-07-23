@@ -68,6 +68,7 @@ export interface Dictionary {
   f_email: string;
   f_phone: string;
   f_service: string;
+  f_message: string;
   f_msg: string;
   f_send: string;
   form_ok: string;
