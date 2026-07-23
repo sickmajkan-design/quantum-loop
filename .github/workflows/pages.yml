@@ -1,13 +1,14 @@
-# Builds the static export and publishes it to GitHub Pages as a *preview*.
+# Builds the static export and publishes it to GitHub Pages under the
+# quantum-loop.net custom domain (see public/CNAME). Served from the domain
+# root, so no NEXT_PUBLIC_BASE_PATH is needed anymore.
 #
-# The preview is served from a project subpath (…github.io/quantum-loop), so the
-# build sets NEXT_PUBLIC_BASE_PATH accordingly, and NEXT_PUBLIC_PREVIEW=1 keeps
-# it out of search engines (noindex + robots Disallow). For the real production
-# launch, point this at the final domain and drop the preview flag.
+# NEXT_PUBLIC_PREVIEW gates search-engine indexing (noindex + robots Disallow
+# when "1") — flip it to "0" once the site is ready to actually show up in
+# Google.
 #
 # One-time setup: repo Settings → Pages → Build and deployment → Source:
-# "GitHub Actions".
-name: Deploy preview to GitHub Pages
+# "GitHub Actions". Custom domain field: quantum-loop.net (once DNS is live).
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -28,8 +29,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      NEXT_PUBLIC_BASE_PATH: /quantum-loop
-      NEXT_PUBLIC_SITE_URL: https://sickmajkan-design.github.io/quantum-loop
+      NEXT_PUBLIC_SITE_URL: https://quantum-loop.net
       NEXT_PUBLIC_PREVIEW: "1"
     steps:
       - uses: actions/checkout@v4
