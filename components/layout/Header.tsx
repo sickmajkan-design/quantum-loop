@@ -68,7 +68,7 @@ export default function Header() {
           <LangSwitcher />
           <Magnetic strength={0.5}>
             <a
-              href="#contact"
+              href="#upit"
               className="inline-block rounded bg-linear-to-br from-gold to-gold2 px-5 py-2.5 font-bold text-black whitespace-nowrap opacity-100 hover:brightness-110"
             >
               {t("nav_cta")}
@@ -102,7 +102,7 @@ export default function Header() {
         ))}
         <LangSwitcher />
         <a
-          href="#contact"
+          href="#upit"
           onClick={() => setOpen(false)}
           className="rounded bg-linear-to-br from-gold to-gold2 px-6 py-3 font-bold text-black"
         >

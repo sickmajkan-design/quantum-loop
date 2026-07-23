@@ -26,7 +26,7 @@ export default function StickyMobileCta() {
       }`}
     >
       <a
-        href="#contact"
+        href="#upit"
         className="block rounded bg-linear-to-br from-gold to-gold2 py-3 text-center font-bold text-black"
       >
         {t("nav_cta")}

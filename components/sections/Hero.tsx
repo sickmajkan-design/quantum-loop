@@ -148,7 +148,7 @@ export default function Hero() {
         >
           <Magnetic>
             <a
-              href="#contact"
+              href="#upit"
               className="inline-block rounded bg-linear-to-br from-gold to-gold2 px-[30px] py-[15px] text-[0.95rem] font-bold tracking-[0.04em] text-black transition-[filter] hover:brightness-110"
             >
               {t("hero_cta1")}
