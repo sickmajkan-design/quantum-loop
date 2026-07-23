@@ -11,6 +11,9 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
   ...(basePath ? { basePath, assetPrefix: basePath } : {}),
+  // Emit each route as a folder/index.html (e.g. /de/index.html) so GitHub
+  // Pages serves the language routes reliably for both /de and /de/.
+  trailingSlash: true,
   // Allows testing the dev server from a phone on the same local network.
   // Update this if the machine's LAN IP changes (router reassigns DHCP
   // leases on reboot) — check with `ipconfig` (Windows) or `ifconfig`.

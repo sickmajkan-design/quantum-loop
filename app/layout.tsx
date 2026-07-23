@@ -1,16 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import { Anton, Inter } from "next/font/google";
 import "./globals.css";
-import { I18nProvider } from "@/lib/i18n-context";
 import { SITE_URL, IS_PREVIEW, business } from "@/lib/site";
 import { asset } from "@/lib/asset";
 import NoiseOverlay from "@/components/layout/NoiseOverlay";
 import SmoothScroll from "@/components/layout/SmoothScroll";
 import Ribbon from "@/components/layout/Ribbon";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import FloatingContact from "@/components/layout/FloatingContact";
-import StickyMobileCta from "@/components/layout/StickyMobileCta";
 
 const anton = Anton({
   variable: "--font-anton",
@@ -60,38 +55,8 @@ export const metadata: Metadata = {
     "window tinting",
     "signage",
   ],
-  alternates: {
-    canonical: "/",
-    languages: {
-      "sr-Latn": "/",
-      de: "/",
-      en: "/",
-      "x-default": "/",
-    },
-  },
-  openGraph: {
-    type: "website",
-    siteName: "Quantum Loop s.p.",
-    title: TITLE,
-    description: DESCRIPTION,
-    url: SITE_URL,
-    locale: "sr_Latn",
-    alternateLocale: ["de_DE", "en_US"],
-    images: [
-      {
-        url: "/og.png",
-        width: 1200,
-        height: 630,
-        alt: "Quantum Loop — Dizajn koji se lijepi.",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: TITLE,
-    description: DESCRIPTION,
-    images: ["/og.png"],
-  },
+  // Per-language title/description/canonical/hreflang/OG are set on each page
+  // via buildMetadata() (lib/seo.ts), since every language is its own route.
   robots: IS_PREVIEW
     ? { index: false, follow: false }
     : { index: true, follow: true },
@@ -232,16 +197,14 @@ export default function RootLayout({
             src="https://gc.zgo.at/count.js"
           />
         )}
-        <I18nProvider>
-          <SmoothScroll />
-          <NoiseOverlay />
-          <Ribbon />
-          <Header />
-          <main>{children}</main>
-          <Footer />
-          <FloatingContact />
-          <StickyMobileCta />
-        </I18nProvider>
+        {/* Language-independent chrome. The translated header/footer/floating
+            chrome and the I18nProvider live in each page's SiteChrome, so the
+            per-language routes (/, /de, /en) render server-side in their own
+            language. */}
+        <SmoothScroll />
+        <NoiseOverlay />
+        <Ribbon />
+        {children}
       </body>
     </html>
   );
