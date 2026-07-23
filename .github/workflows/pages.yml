@@ -30,7 +30,13 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NEXT_PUBLIC_SITE_URL: https://quantum-loop.net
-      NEXT_PUBLIC_PREVIEW: "1"
+      # Live: indexed by search engines / AI crawlers. Set to "1" to hide from
+      # indexing again (e.g. a staging deploy).
+      NEXT_PUBLIC_PREVIEW: "0"
+      # Cookieless visit stats (GoatCounter). Sign up at goatcounter.com, pick a
+      # site code, and put it here to turn it on — dashboard lives at
+      # https://<code>.goatcounter.com. Empty = analytics off.
+      NEXT_PUBLIC_GOATCOUNTER_CODE: ""
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

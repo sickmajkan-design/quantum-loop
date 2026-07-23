@@ -6,6 +6,7 @@ import { asset } from "@/lib/asset";
 import NoiseOverlay from "@/components/layout/NoiseOverlay";
 import SmoothScroll from "@/components/layout/SmoothScroll";
 import Ribbon from "@/components/layout/Ribbon";
+import GoatCounter from "@/components/analytics/GoatCounter";
 
 const anton = Anton({
   variable: "--font-anton",
@@ -190,13 +191,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        {GOATCOUNTER_CODE && (
-          <script
-            data-goatcounter={`https://${GOATCOUNTER_CODE}.goatcounter.com/count`}
-            async
-            src="https://gc.zgo.at/count.js"
-          />
-        )}
+        {GOATCOUNTER_CODE && <GoatCounter code={GOATCOUNTER_CODE} />}
         {/* Language-independent chrome. The translated header/footer/floating
             chrome and the I18nProvider live in each page's SiteChrome, so the
             per-language routes (/, /de, /en) render server-side in their own
