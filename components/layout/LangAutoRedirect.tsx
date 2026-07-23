@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { langs, type Lang } from "@/content";
 
 const STORAGE_KEY = "ql_lang";
@@ -39,8 +38,6 @@ function isLang(value: string | null): value is Lang {
  * always treated as deliberate and left alone, never redirected elsewhere.
  */
 export default function LangAutoRedirect({ lang }: { lang: Lang }) {
-  const router = useRouter();
-
   useEffect(() => {
     if (lang !== "sr") {
       window.localStorage.setItem(STORAGE_KEY, lang);
@@ -50,8 +47,11 @@ export default function LangAutoRedirect({ lang }: { lang: Lang }) {
     const saved = window.localStorage.getItem(STORAGE_KEY);
     const target = isLang(saved) ? saved : detectLang();
     if (!isLang(saved)) window.localStorage.setItem(STORAGE_KEY, target);
-    if (target !== "sr") router.replace(HREF[target]);
-  }, [lang, router]);
+    // A hard navigation (not the client router) so the target language loads as
+    // a fresh document: no client-side focus management landing on the skip
+    // link and flashing it over the logo for de/en visitors.
+    if (target !== "sr") window.location.replace(HREF[target]);
+  }, [lang]);
 
   return null;
 }
