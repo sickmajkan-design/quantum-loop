@@ -72,9 +72,12 @@ const sr: Dictionary = {
 
   f_name: "Ime i prezime",
   f_email: "Email",
+  f_phone: "Telefon (opcionalno)",
+  f_service: "Usluga",
   f_msg: "Opišite šta vam treba...",
   f_send: "Pošalji upit",
   form_ok: "Hvala! Javićemo vam se uskoro.",
+  form_err: "Greška — pokušajte ponovo kasnije.",
   f_tag: "Dizajn · Reklame · Folije · Zatamnjivanje",
 
   svc: [

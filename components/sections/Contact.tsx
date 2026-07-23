@@ -169,9 +169,18 @@ export default function Contact() {
             aria-label={t("f_email")}
             className="rounded-md border border-white/20 bg-black2 p-3.5 font-sans text-[0.95rem] text-white focus:border-transparent focus:outline focus:outline-2 focus:outline-gold"
           />
+          <input
+            type="tel"
+            name="phone"
+            inputMode="tel"
+            autoComplete="tel"
+            placeholder={t("f_phone")}
+            aria-label={t("f_phone")}
+            className="rounded-md border border-white/20 bg-black2 p-3.5 font-sans text-[0.95rem] text-white focus:border-transparent focus:outline focus:outline-2 focus:outline-gold"
+          />
           <select
             name="service"
-            aria-label={t("f_name")}
+            aria-label={t("f_service")}
             className="rounded-md border border-white/20 bg-black2 p-3.5 font-sans text-[0.95rem] text-white focus:border-transparent focus:outline focus:outline-2 focus:outline-gold"
           >
             {d.svc.map((s) => (
@@ -199,7 +208,7 @@ export default function Contact() {
           )}
           {status === "error" && (
             <p role="alert" className="text-sm text-red-400">
-              Greška — pokušajte ponovo kasnije.
+              {t("form_err")}
             </p>
           )}
         </form>

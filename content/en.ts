@@ -71,9 +71,12 @@ const en: Dictionary = {
 
   f_name: "Full name",
   f_email: "Email",
+  f_phone: "Phone (optional)",
+  f_service: "Service",
   f_msg: "Describe what you need...",
   f_send: "Send inquiry",
   form_ok: "Thank you! We'll get back to you shortly.",
+  form_err: "Something went wrong — please try again later.",
   f_tag: "Design · Signage · Vinyl · Tinting",
 
   svc: [

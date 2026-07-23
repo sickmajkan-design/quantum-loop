@@ -72,9 +72,12 @@ const de: Dictionary = {
 
   f_name: "Vor- und Nachname",
   f_email: "E-Mail",
+  f_phone: "Telefon (optional)",
+  f_service: "Leistung",
   f_msg: "Beschreiben Sie Ihr Projekt...",
   f_send: "Anfrage senden",
   form_ok: "Danke! Wir melden uns in Kürze.",
+  form_err: "Fehler — bitte versuchen Sie es später erneut.",
   f_tag: "Design · Werbetechnik · Folien · Tönung",
 
   svc: [
