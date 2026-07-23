@@ -179,6 +179,13 @@ const jsonLd = {
   },
 };
 
+// First-visit language routing, inline so it runs during HTML parse — before
+// the Serbian root renders/hydrates. This makes the de/en redirect instant
+// (good LCP, no wasted render) and, because the root never hydrates for those
+// visitors, avoids focus landing on the skip link. Only acts on the root path;
+// /de and /en are left alone. LangAutoRedirect just remembers the language.
+const LANG_REDIRECT = `(function(){try{if(location.pathname!=='/')return;var k='ql_lang',t=localStorage.getItem(k);if(t!=='sr'&&t!=='de'&&t!=='en'){var L=navigator.languages||[navigator.language],i,c;t='en';for(i=0;i<L.length;i++){c=(L[i]||'').toLowerCase().slice(0,2);if(c==='de'){t='de';break;}if(c==='sr'||c==='bs'||c==='hr'){t='sr';break;}}localStorage.setItem(k,t);}if(t==='de')location.replace('/de/');else if(t==='en')location.replace('/en/');}catch(e){}})();`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -187,6 +194,7 @@ export default function RootLayout({
   return (
     <html lang="sr" className={`${anton.variable} ${inter.variable}`}>
       <body suppressHydrationWarning>
+        <script dangerouslySetInnerHTML={{ __html: LANG_REDIRECT }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

@@ -86,6 +86,7 @@ export default function Header() {
           z-101 stacking inside header. */}
       <nav
         aria-hidden={!open}
+        inert={!open}
         className={`fixed inset-0 z-90 flex flex-col items-center justify-center gap-8 bg-black/97 transition-transform duration-350 ease-in-out lg:hidden ${
           open ? "translate-x-0" : "pointer-events-none translate-x-full"
         }`}

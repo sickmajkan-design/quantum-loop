@@ -141,6 +141,48 @@ summary:focus-visible {
   }
 }
 
+/* Hero entrance — CSS-driven (not JS) so the heading (the LCP element) paints
+   and animates immediately, without waiting for the animation JS bundle to
+   download and run under throttling. */
+@keyframes hero-rise {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.hero-rise {
+  transform: translateY(110%);
+  animation: hero-rise 0.9s cubic-bezier(0.16, 0.84, 0.44, 1) both;
+}
+
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.hero-fade-up {
+  opacity: 0;
+  animation: hero-fade-up 0.8s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-rise,
+  .hero-fade-up {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* Hero scroll cue: a highlight travelling down the line, and the cue's fade-in. */
 @keyframes scroll-cue {
   0% {

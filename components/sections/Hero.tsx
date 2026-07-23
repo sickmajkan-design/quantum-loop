@@ -7,7 +7,7 @@ import Magnetic from "@/components/ui/Magnetic";
 
 const PARTICLE_COUNT = 22;
 
-function renderWords(text: string, gold: boolean) {
+function renderWords(text: string, gold: boolean, startIndex: number) {
   return text
     .trim()
     .split(" ")
@@ -17,7 +17,10 @@ function renderWords(text: string, gold: boolean) {
         key={`${gold ? "g" : "w"}-${i}-${w}`}
         className={`hero-word inline-block overflow-hidden align-top ${gold ? "text-gold" : ""}`}
       >
-        <i className="inline-block translate-y-[110%] not-italic motion-reduce:translate-y-0">
+        <i
+          className="hero-rise inline-block not-italic"
+          style={{ animationDelay: `${0.15 + (startIndex + i) * 0.08}s` }}
+        >
           {w}
         </i>
         &nbsp;
@@ -30,11 +33,10 @@ export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
   const peelRef = useRef<HTMLDivElement>(null);
-  const subRef = useRef<HTMLParagraphElement>(null);
-  const ctasRef = useRef<HTMLDivElement>(null);
   const particlesRef = useRef<HTMLDivElement>(null);
 
   const [before, after] = t("hero_title").split("|");
+  const beforeCount = before.trim().split(/\s+/).filter(Boolean).length;
 
   useEffect(() => {
     if (prefersReducedMotion() || !particlesRef.current) return;
@@ -56,26 +58,15 @@ export default function Hero() {
     if (prefersReducedMotion() || !sectionRef.current) return;
 
     const ctx = gsap.context(() => {
-      gsap.to(".hero-word i", {
-        y: 0,
-        duration: 0.9,
-        ease: "power4.out",
-        stagger: 0.08,
-        delay: 0.15,
-      });
+      // The word / sub / CTA entrances are CSS-driven now (so the heading paints
+      // immediately for LCP instead of waiting on this bundle). GSAP only drives
+      // the decorative light-sweep and the scroll parallax here.
       gsap.to(peelRef.current, {
         xPercent: 200,
         duration: 1.6,
         ease: "power2.inOut",
         delay: 0.3,
       });
-      gsap.to(subRef.current, {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        delay: 0.8,
-      });
-      gsap.to(ctasRef.current, { opacity: 1, duration: 0.8, delay: 1.05 });
 
       gsap.to(innerRef.current, {
         yPercent: 18,
@@ -131,20 +122,20 @@ export default function Hero() {
         </div>
 
         <h1 className="text-[clamp(3rem,11vw,9.5rem)] overflow-hidden">
-          {renderWords(before, false)}
-          {renderWords(after, true)}
+          {renderWords(before, false, 0)}
+          {renderWords(after, true, beforeCount)}
         </h1>
 
         <p
-          ref={subRef}
-          className="mt-[26px] max-w-[520px] translate-y-2 text-[1.1rem] text-[#cfcabc] opacity-0 motion-reduce:translate-y-0 motion-reduce:opacity-100"
+          className="hero-fade-up mt-[26px] max-w-[520px] text-[1.1rem] text-[#cfcabc]"
+          style={{ animationDelay: "0.8s" }}
         >
           {t("hero_sub")}
         </p>
 
         <div
-          ref={ctasRef}
-          className="mt-[38px] flex flex-wrap gap-4 opacity-0 motion-reduce:opacity-100"
+          className="hero-fade-up mt-[38px] flex flex-wrap gap-4"
+          style={{ animationDelay: "1.05s" }}
         >
           <Magnetic>
             <a
