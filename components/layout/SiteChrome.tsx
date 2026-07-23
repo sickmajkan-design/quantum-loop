@@ -5,6 +5,7 @@ import Footer from "@/components/layout/Footer";
 import FloatingContact from "@/components/layout/FloatingContact";
 import StickyMobileCta from "@/components/layout/StickyMobileCta";
 import HtmlLang from "@/components/layout/HtmlLang";
+import SkipLink from "@/components/layout/SkipLink";
 
 // Per-language shell: provides the fixed language to everything below and wraps
 // the page in the translated header/footer/floating chrome. Used by each
@@ -19,8 +20,9 @@ export default function SiteChrome({
   return (
     <I18nProvider lang={lang}>
       <HtmlLang lang={lang} />
+      <SkipLink />
       <Header />
-      <main>{children}</main>
+      <main id="main">{children}</main>
       <Footer />
       <FloatingContact />
       <StickyMobileCta />

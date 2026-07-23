@@ -71,8 +71,10 @@ export interface Dictionary {
   f_message: string;
   f_msg: string;
   f_send: string;
+  f_sending: string;
   form_ok: string;
   form_err: string;
+  skip: string;
   f_tag: string;
 
   svc: string[];

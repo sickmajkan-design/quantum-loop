@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Phone, Mail } from "lucide-react";
+import { Phone, Mail, Loader2 } from "lucide-react";
 import { useI18n } from "@/lib/i18n-context";
 import { business } from "@/lib/site";
 import InstagramIcon from "@/components/ui/InstagramIcon";
@@ -234,9 +234,12 @@ export default function Contact() {
           <button
             type="submit"
             disabled={status === "sending"}
-            className="justify-self-start rounded bg-linear-to-br from-gold to-gold2 px-[30px] py-[15px] text-[0.95rem] font-bold tracking-[0.04em] text-black disabled:opacity-60"
+            className="inline-flex items-center justify-center gap-2 justify-self-start rounded bg-linear-to-br from-gold to-gold2 px-[30px] py-[15px] text-[0.95rem] font-bold tracking-[0.04em] text-black disabled:opacity-70"
           >
-            {t("f_send")}
+            {status === "sending" && (
+              <Loader2 className="size-4 animate-spin" aria-hidden="true" />
+            )}
+            {status === "sending" ? t("f_sending") : t("f_send")}
           </button>
 
           {status === "success" && (
