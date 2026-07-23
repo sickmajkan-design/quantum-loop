@@ -28,11 +28,21 @@ export interface PortfolioCategory {
 }
 
 export const portfolio: PortfolioCategory[] = [
-  { slug: "vehicle-wrap", labelIndex: 0, images: [] },
+  {
+    slug: "vehicle-wrap",
+    labelIndex: 0,
+    images: [
+      { file: "01-tehpro-van-side.jpg", title: "TEHPRO CNC-Proizvodnja" },
+      { file: "02-tehpro-van-rear.jpg", title: "TEHPRO CNC-Proizvodnja" },
+    ],
+  },
   {
     slug: "signage",
     labelIndex: 1,
-    images: [{ file: "01-3p-service-cafe-signage.jpg", title: "3P Service Café" }],
+    images: [
+      { file: "01-3p-service-cafe-signage.jpg", title: "3P Service Café" },
+      { file: "02-3p-service-install.jpg", title: "3P Service Café" },
+    ],
   },
   {
     slug: "window-vinyl",
