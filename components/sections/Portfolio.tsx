@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
 import {
   X,
   ChevronLeft,
@@ -281,17 +280,13 @@ export default function Portfolio() {
           so nothing is portalled during hydration. */}
       {typeof document !== "undefined" &&
         createPortal(
-          <AnimatePresence>
-            {active !== null && images[active] && (
-              <motion.div
-                ref={modalRef}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
+          active !== null && images[active] ? (
+            <div
+              ref={modalRef}
                 onClick={close}
                 onTouchStart={onTouchStart}
                 onTouchEnd={onTouchEnd}
-                className="fixed inset-0 z-200 flex flex-col bg-black/92 p-4 backdrop-blur-sm sm:p-6"
+                className="fixed inset-0 z-200 flex animate-[lightbox-in_0.2s_ease] flex-col bg-black/92 p-4 backdrop-blur-sm sm:p-6"
                 role="dialog"
                 aria-modal="true"
                 aria-label={images[active].label}
@@ -330,13 +325,10 @@ export default function Portfolio() {
                   >
                     <ChevronLeft className="size-10" />
                   </button>
-                  <motion.div
+                  <div
                     key={images[active].src}
-                    initial={{ scale: 0.94, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.25 }}
                     onClick={(e) => e.stopPropagation()}
-                    className="relative h-full w-[78vw] max-w-[1100px]"
+                    className="relative h-full w-[78vw] max-w-[1100px] animate-[lightbox-pop_0.25s_ease]"
                   >
                     <FadeImage
                       src={images[active].src}
@@ -345,7 +337,7 @@ export default function Portfolio() {
                       sizes="86vw"
                       className="rounded-lg object-contain"
                     />
-                  </motion.div>
+                  </div>
                   <button
                     type="button"
                     aria-label="Sljedeća"
@@ -404,9 +396,8 @@ export default function Portfolio() {
                     </div>
                   )}
                 </div>
-              </motion.div>
-            )}
-          </AnimatePresence>,
+              </div>
+            ) : null,
           document.body
         )}
     </section>

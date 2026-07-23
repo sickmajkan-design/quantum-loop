@@ -205,6 +205,22 @@ summary:focus-visible {
   }
 }
 
+/* Portfolio lightbox (replaces Framer Motion): overlay fade + image pop. Base
+   styles are the final visible state, so reduced motion (which disables
+   [class*="animate-"]) simply shows them instantly. */
+@keyframes lightbox-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes lightbox-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+}
+
 /* Salzburg destination marker */
 @keyframes sz-pulse {
   0%,
