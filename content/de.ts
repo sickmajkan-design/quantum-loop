@@ -24,6 +24,8 @@ const de: Dictionary = {
   s3_p: "Schaufenster, Glasflächen, Wände und Fassaden. Präzise, blasenfreie Montage auf jeder ebenen Fläche.",
   s4_t: "Scheibentönung",
   s4_p: "Professionelle Tönung für Fahrzeuge und Gebäude. Sonnenschutz, Privatsphäre und moderner Look — mit geprüften Folien.",
+  s4_before: "Klar",
+  s4_after: "Getönt",
   s5_t: "Werbetechnik aller Art",
   s5_p: "Leuchtreklamen, 3D-Buchstaben, Banner, Schilder und Innenbranding. Von der Produktion bis zur Montage.",
 

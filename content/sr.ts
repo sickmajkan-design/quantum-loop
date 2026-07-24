@@ -24,6 +24,8 @@ const sr: Dictionary = {
   s3_p: "Izlozi, staklene površine, zidovi i fasade. Precizna montaža bez mjehurića — na bilo kojoj ravnoj površini.",
   s4_t: "Zatamnjivanje stakala",
   s4_p: "Profesionalno zatamnjivanje stakala vozila i objekata. Zaštita od sunca, privatnost i moderan izgled — atestirane folije.",
+  s4_before: "Čisto",
+  s4_after: "Zatamnjeno",
   s5_t: "Reklame svih vrsta",
   s5_p: "Svijetleće reklame, 3D slova, baneri, table i unutrašnje brendiranje kompanija. Od proizvodnje do montaže.",
 

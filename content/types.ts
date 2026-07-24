@@ -23,6 +23,8 @@ export interface Dictionary {
   s3_p: string;
   s4_t: string;
   s4_p: string;
+  s4_before: string;
+  s4_after: string;
   s5_t: string;
   s5_p: string;
 

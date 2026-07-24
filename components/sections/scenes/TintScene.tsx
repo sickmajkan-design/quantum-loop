@@ -3,6 +3,7 @@
 import { useEffect, useRef, type RefObject } from "react";
 import { gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/gsap";
 import { asset } from "@/lib/asset";
+import { useI18n } from "@/lib/i18n-context";
 
 /**
  * Window tinting scene — a "before / after" split over the installer clip.
@@ -31,6 +32,7 @@ export default function TintScene({
 }: {
   rowRef: RefObject<HTMLDivElement | null>;
 }) {
+  const { t } = useI18n();
   const cardRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const filmRef = useRef<HTMLDivElement>(null);
@@ -158,10 +160,10 @@ export default function TintScene({
 
       {/* before / after labels */}
       <span className="pointer-events-none absolute top-3 left-3 rounded bg-black/45 px-2 py-0.5 text-[0.62rem] font-semibold tracking-[0.14em] text-white/85 uppercase">
-        Čisto
+        {t("s4_before")}
       </span>
       <span className="pointer-events-none absolute top-3 right-3 rounded bg-black/45 px-2 py-0.5 text-[0.62rem] font-semibold tracking-[0.14em] text-gold2 uppercase">
-        Zatamnjeno
+        {t("s4_after")}
       </span>
 
       {/* mobile-only tap-to-play affordance */}

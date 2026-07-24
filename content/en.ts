@@ -24,6 +24,8 @@ const en: Dictionary = {
   s3_p: "Shop windows, glass, walls and facades. Precise, bubble-free installation on any flat surface.",
   s4_t: "Window tinting",
   s4_p: "Professional tinting for vehicles and buildings. Sun protection, privacy and a modern look — certified films.",
+  s4_before: "Clear",
+  s4_after: "Tinted",
   s5_t: "Signage of all kinds",
   s5_p: "Illuminated signs, 3D letters, banners, boards and interior branding. From production to installation.",
 
