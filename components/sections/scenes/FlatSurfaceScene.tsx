@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Sun, ShieldCheck } from "lucide-react";
 import { gsap, prefersReducedMotion } from "@/lib/gsap";
 import { asset } from "@/lib/asset";
+import { useI18n } from "@/lib/i18n-context";
 
 /**
  * "Folije na sve površine" scene — a collage of the surface types this
@@ -21,6 +22,7 @@ export default function FlatSurfaceScene({
 }: {
   rowRef: RefObject<HTMLDivElement | null>;
 }) {
+  const { t } = useI18n();
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -48,19 +50,19 @@ export default function FlatSurfaceScene({
       <div className="relative row-span-2 overflow-hidden">
         <Image
           src={asset("/stock/flat-surface.jpg")}
-          alt="Ruke nanose foliju na staklenu izlog površinu"
+          alt={t("s3_shop_alt")}
           fill
           sizes="(max-width: 768px) 45vw, 23vw"
           className="object-cover"
         />
         <span className="absolute bottom-2 left-2 rounded bg-black/60 px-2 py-1 text-[0.7rem] tracking-[0.06em] text-gold2 uppercase">
-          Izlozi &amp; staklo
+          {t("s3_shop_label")}
         </span>
       </div>
 
       {[
-        { Icon: Sun, label: "Sun protection — fasade" },
-        { Icon: ShieldCheck, label: "PPF zaštita vozila" },
+        { Icon: Sun, label: t("s3_sun_label") },
+        { Icon: ShieldCheck, label: t("s3_ppf_label") },
       ].map(({ Icon, label }) => (
         <div
           key={label}
@@ -80,7 +82,7 @@ export default function FlatSurfaceScene({
             {label}
           </span>
           <span className="relative mt-0.5 rounded-full border border-gold/30 px-2 py-[1px] text-[0.55rem] font-semibold tracking-[0.16em] text-gold2/70 uppercase">
-            Uskoro
+            {t("p_soon_short")}
           </span>
         </div>
       ))}
