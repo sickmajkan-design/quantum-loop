@@ -126,17 +126,11 @@ export default function Hero() {
           {renderWords(after, true, beforeCount)}
         </h1>
 
-        <p
-          className="hero-fade-up mt-[26px] max-w-[520px] text-[1.1rem] text-[#cfcabc]"
-          style={{ animationDelay: "0.8s" }}
-        >
+        <p className="mt-[26px] max-w-[520px] text-[1.1rem] text-[#cfcabc]">
           {t("hero_sub")}
         </p>
 
-        <div
-          className="hero-fade-up mt-[38px] flex flex-wrap gap-4"
-          style={{ animationDelay: "1.05s" }}
-        >
+        <div className="mt-[38px] flex flex-wrap gap-4">
           <Magnetic>
             <a
               href="#upit"

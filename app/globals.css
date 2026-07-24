@@ -158,25 +158,8 @@ summary:focus-visible {
   animation: hero-rise 0.9s cubic-bezier(0.16, 0.84, 0.44, 1) both;
 }
 
-@keyframes hero-fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-.hero-fade-up {
-  opacity: 0;
-  animation: hero-fade-up 0.8s ease both;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .hero-rise,
-  .hero-fade-up {
+  .hero-rise {
     animation: none;
     opacity: 1;
     transform: none;
