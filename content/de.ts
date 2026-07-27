@@ -22,8 +22,14 @@ const de: Dictionary = {
   s2_p: "Voll- und Teilfolierung — PKW, Transporter, LKW. Ihr Fahrzeug wird zur Werbefläche, die rund um die Uhr arbeitet.",
   s3_t: "Folien auf allen Flächen",
   s3_p: "Schaufenster, Glasflächen, Wände und Fassaden. Präzise, blasenfreie Montage auf jeder ebenen Fläche.",
+  s3_shop_label: "Schaufenster & Glas",
+  s3_shop_alt: "Hände bringen Folie auf eine gläserne Schaufensterfläche auf",
+  s3_sun_label: "Sonnenschutz — Fassaden",
+  s3_ppf_label: "PPF-Lackschutz",
   s4_t: "Scheibentönung",
   s4_p: "Professionelle Tönung für Fahrzeuge und Gebäude. Sonnenschutz, Privatsphäre und moderner Look — mit geprüften Folien.",
+  s4_before: "Klar",
+  s4_after: "Getönt",
   s5_t: "Werbetechnik aller Art",
   s5_p: "Leuchtreklamen, 3D-Buchstaben, Banner, Schilder und Innenbranding. Von der Produktion bis zur Montage.",
 
@@ -38,10 +44,33 @@ const de: Dictionary = {
 
   p_eyebrow: "Referenzen",
   p_title: "Unsere Arbeit spricht für uns.",
+  p_insta_title: "Folge uns auf Instagram",
+  p_insta_text:
+    "Videos, Reels und Storys von jedem Projekt — sieh dir an, wie wir arbeiten.",
+  p_insta_cta: "Instagram öffnen",
+  p_soon: "Bilder folgen in Kürze",
+  p_soon_short: "Bald",
 
   sz_eyebrow: "Neu",
   sz_title: "Bald in Salzburg.",
   sz_p: "In Bosnien bewährte Qualität kommt nach Österreich. Quantum Loop öffnet bald auch für Kunden in Salzburg und Umgebung.",
+
+  faq_eyebrow: "Fragen",
+  faq_title: "Häufig gestellte Fragen.",
+  faq1_q: "Wie lange dauert Herstellung und Montage?",
+  faq1_a:
+    "Das hängt vom Umfang ab — einfache Aufkleber und kleinere Werbeschilder sind in wenigen Tagen fertig, eine komplette Fahrzeugfolierung oder große Fassadenfolien können ein bis zwei Wochen dauern. Die genaue Frist erhalten Sie mit dem Angebot.",
+  faq2_q: "Geben Sie Garantie auf die ausgeführte Arbeit?",
+  faq2_a: "Ja — schriftliche Garantie auf Material und Montage, bei jedem Auftrag ohne Ausnahme.",
+  faq3_q: "Kommen Sie vor Ort zum Ausmessen und zur Montage?",
+  faq3_a:
+    "Ja, wir sind vor Ort in Derventa und Umgebung (bald auch in Salzburg) — Ausmessen, Montage und alles Nötige erledigen wir direkt bei Ihnen.",
+  faq4_q: "Welche Gebiete decken Sie ab?",
+  faq4_a:
+    "Unser Sitz ist in Derventa (Bosnien und Herzegowina), wir arbeiten in ganz BiH, und bald öffnen wir auch für Kunden in Salzburg und Umgebung, Österreich.",
+  faq5_q: "Übernehmen Sie auch kleinere Aufträge, oder nur große Projekte?",
+  faq5_a:
+    "Wir machen alles, vom einzelnen Aufkleber oder Schild bis zur kompletten Fahrzeug- und Fassadenfolierung — kein Auftrag ist zu klein.",
 
   c_eyebrow: "Kontakt",
   c_title: "Fordern Sie ein kostenloses Angebot an.",
@@ -49,9 +78,26 @@ const de: Dictionary = {
 
   f_name: "Vor- und Nachname",
   f_email: "E-Mail",
+  f_phone: "Telefon (optional)",
+  f_service: "Leistung",
+  f_dimensions: "Maße (ungefähr)",
+  f_quantity: "Menge",
+  f_deadline: "Frist",
+  f_dl_flexible: "Flexibel",
+  f_dl_2w: "Innerhalb 2 Wochen",
+  f_dl_1w: "Innerhalb 1 Woche",
+  f_dl_asap: "Dringend",
+  f_install: "Montage",
+  f_install_yes: "Ja, benötigt",
+  f_install_no: "Nein, nur Herstellung",
+  f_install_unsure: "Bin mir nicht sicher",
+  f_message: "Nachricht",
   f_msg: "Beschreiben Sie Ihr Projekt...",
   f_send: "Anfrage senden",
+  f_sending: "Wird gesendet…",
   form_ok: "Danke! Wir melden uns in Kürze.",
+  form_err: "Fehler — bitte versuchen Sie es später erneut.",
+  skip: "Zum Inhalt springen",
   f_tag: "Design · Werbetechnik · Folien · Tönung",
 
   svc: [

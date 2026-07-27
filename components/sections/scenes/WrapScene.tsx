@@ -1,19 +1,51 @@
 "use client";
 
-import type { RefObject } from "react";
-import VideoScene from "./VideoScene";
+import { useEffect, useRef, type RefObject } from "react";
+import Image from "next/image";
+import { gsap, prefersReducedMotion } from "@/lib/gsap";
+import { asset } from "@/lib/asset";
 
+/**
+ * Vehicle-wrap scene — still image showing the finished result: a black/gold
+ * branded wrap design on a vehicle's side panel. Self-hosted drop-in at
+ * `public/stock/vehicle-wrap.jpg` (see public/stock/SOURCES.md).
+ */
 export default function WrapScene({
   rowRef,
 }: {
   rowRef: RefObject<HTMLDivElement | null>;
 }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const card = cardRef.current;
+    if (!card || prefersReducedMotion()) return;
+
+    const ctx = gsap.context(() => {
+      gsap.from(card, {
+        autoAlpha: 0,
+        y: 34,
+        duration: 0.9,
+        ease: "power3.out",
+        scrollTrigger: { trigger: rowRef.current ?? card, start: "top 82%", once: true },
+      });
+    }, card);
+
+    return () => ctx.revert();
+  }, [rowRef]);
+
   return (
-    <VideoScene
-      rowRef={rowRef}
-      videoSrc="/stock/vehicle-wrap.mp4"
-      poster="/stock/vehicle-wrap.jpg"
-      alt="Ruke nanose foliju na karoseriju vozila"
-    />
+    <div
+      ref={cardRef}
+      className="relative h-full w-full overflow-hidden rounded-md bg-black2"
+    >
+      <Image
+        src={asset("/stock/vehicle-wrap.jpg")}
+        alt="Bok vozila sa crno-zlatnim brendiranim wrap dizajnom"
+        fill
+        sizes="(max-width: 768px) 90vw, 45vw"
+        className="object-cover"
+      />
+    </div>
   );
 }

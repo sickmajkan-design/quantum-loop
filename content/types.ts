@@ -21,8 +21,14 @@ export interface Dictionary {
   s2_p: string;
   s3_t: string;
   s3_p: string;
+  s3_shop_label: string;
+  s3_shop_alt: string;
+  s3_sun_label: string;
+  s3_ppf_label: string;
   s4_t: string;
   s4_p: string;
+  s4_before: string;
+  s4_after: string;
   s5_t: string;
   s5_p: string;
 
@@ -37,10 +43,28 @@ export interface Dictionary {
 
   p_eyebrow: string;
   p_title: string;
+  p_insta_title: string;
+  p_insta_text: string;
+  p_insta_cta: string;
+  p_soon: string;
+  p_soon_short: string;
 
   sz_eyebrow: string;
   sz_title: string;
   sz_p: string;
+
+  faq_eyebrow: string;
+  faq_title: string;
+  faq1_q: string;
+  faq1_a: string;
+  faq2_q: string;
+  faq2_a: string;
+  faq3_q: string;
+  faq3_a: string;
+  faq4_q: string;
+  faq4_a: string;
+  faq5_q: string;
+  faq5_a: string;
 
   c_eyebrow: string;
   c_title: string;
@@ -48,9 +72,26 @@ export interface Dictionary {
 
   f_name: string;
   f_email: string;
+  f_phone: string;
+  f_service: string;
+  f_dimensions: string;
+  f_quantity: string;
+  f_deadline: string;
+  f_dl_flexible: string;
+  f_dl_2w: string;
+  f_dl_1w: string;
+  f_dl_asap: string;
+  f_install: string;
+  f_install_yes: string;
+  f_install_no: string;
+  f_install_unsure: string;
+  f_message: string;
   f_msg: string;
   f_send: string;
+  f_sending: string;
   form_ok: string;
+  form_err: string;
+  skip: string;
   f_tag: string;
 
   svc: string[];

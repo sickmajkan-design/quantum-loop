@@ -98,10 +98,10 @@ export default function Guarantee() {
             {milestones.map((m) => (
               <div key={m.labelKey} className="flex flex-col items-center">
                 <span className="milestone-dot mb-2 h-2.5 w-2.5 rounded-full bg-gold2 motion-reduce:scale-100" />
-                <span className="font-display text-sm text-gold2">
+                <span className="font-display text-sm text-gold2 [text-shadow:0_1px_4px_rgba(0,0,0,0.8)]">
                   {m.yearKey}
                 </span>
-                <span className="mt-1 text-xs text-grey">
+                <span className="mt-1 text-xs text-grey [text-shadow:0_1px_4px_rgba(0,0,0,0.8)]">
                   {MILESTONE_LABEL[lang]?.[m.labelKey] ?? MILESTONE_LABEL.sr[m.labelKey]}
                 </span>
               </div>

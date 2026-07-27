@@ -1,0 +1,71 @@
+# Builds the static export and publishes it to GitHub Pages under the
+# quantum-loop.net custom domain (see public/CNAME). Served from the domain
+# root, so no NEXT_PUBLIC_BASE_PATH is needed anymore.
+#
+# NEXT_PUBLIC_PREVIEW gates search-engine indexing (noindex + robots Disallow
+# when "1") — flip it to "0" once the site is ready to actually show up in
+# Google.
+#
+# One-time setup: repo Settings → Pages → Build and deployment → Source:
+# "GitHub Actions". Custom domain field: quantum-loop.net (once DNS is live).
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [claude/website-dev-continuation-7cgkii]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Let a newer run supersede an in-progress one; don't cancel a live deploy.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_SITE_URL: https://quantum-loop.net
+      # Live: indexed by search engines / AI crawlers. Set to "1" to hide from
+      # indexing again (e.g. a staging deploy).
+      NEXT_PUBLIC_PREVIEW: "0"
+      # Cookieless visit stats (GoatCounter). Sign up at goatcounter.com, pick a
+      # site code, and put it here to turn it on — dashboard lives at
+      # https://<code>.goatcounter.com. Empty = analytics off.
+      NEXT_PUBLIC_GOATCOUNTER_CODE: "quantum-loop"
+      # Google Apps Script Web App URL (…/exec) that writes each quote request
+      # to a Google Sheet and emails the owner. Paste the deployed /exec URL
+      # here to turn it on. Empty = form falls back to plain email delivery.
+      NEXT_PUBLIC_SHEET_ENDPOINT: "https://script.google.com/macros/s/AKfycbz8MQL-0tkr3eDFcbOjwrpqvh5Jkln-dVZZw28BPYce8LVLSGyxRZRRfDKydkx1rJ5XSw/exec"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      # Static export writes to ./out; .nojekyll stops Pages stripping _next/.
+      - run: touch out/.nojekyll
+      - uses: actions/configure-pages@v5
+        with:
+          # Turn Pages on via the API on first run (needs the pages: write token
+          # granted above), so no manual Settings toggle is required.
+          enablement: true
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

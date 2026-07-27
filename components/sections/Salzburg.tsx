@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useI18n } from "@/lib/i18n-context";
 import { gsap, prefersReducedMotion } from "@/lib/gsap";
+import Reveal from "@/components/ui/Reveal";
 
 export default function Salzburg() {
   const { t } = useI18n();
@@ -116,13 +117,15 @@ export default function Salzburg() {
           </svg>
         </div>
 
-        <div>
+        <Reveal className="text-center md:text-left">
           <div className="mb-4 text-[0.8rem] font-bold tracking-[0.25em] text-gold uppercase">
             {t("sz_eyebrow")}
           </div>
           <h3 className="text-[clamp(2rem,5vw,3.4rem)]">{t("sz_title")}</h3>
-          <p className="mt-3.5 max-w-[460px] text-[#cfcabc]">{t("sz_p")}</p>
-        </div>
+          <p className="mx-auto mt-3.5 max-w-[460px] text-[#cfcabc] md:mx-0">
+            {t("sz_p")}
+          </p>
+        </Reveal>
       </div>
     </section>
   );

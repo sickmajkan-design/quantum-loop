@@ -42,6 +42,73 @@ h3,
   color: var(--color-black);
 }
 
+/* Keyboard focus only (mouse clicks stay clean): a clear gold ring so keyboard
+   users always see where they are. Inputs keep their own in-component focus. */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--color-gold2);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Loading shimmer for images (see FadeImage). */
+@keyframes shimmer {
+  0% {
+    background-position: -180% 0;
+  }
+  100% {
+    background-position: 180% 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(
+    100deg,
+    #141414 28%,
+    #1e1b12 50%,
+    #141414 72%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s linear infinite;
+}
+
+/* Shared section-header reveal (see Reveal.tsx). Distance + easing match the
+   scenes' gsap entrance so every section enters the page consistently. */
+.reveal {
+  opacity: 0;
+  transform: translateY(34px);
+  transition:
+    opacity 0.9s cubic-bezier(0.16, 0.84, 0.44, 1),
+    transform 0.9s cubic-bezier(0.16, 0.84, 0.44, 1);
+}
+
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Inline contact-form validation. `:user-invalid` only matches after the user
+   has interacted with a field, so nothing is flagged red on first load. */
+.contact-form input:user-invalid,
+.contact-form textarea:user-invalid {
+  border-color: #f87171;
+}
+
+.contact-form input:user-invalid:focus,
+.contact-form textarea:user-invalid:focus {
+  outline-color: #f87171;
+}
+
 /* grain / noise overlay */
 .noise-overlay {
   content: "";
@@ -71,6 +138,69 @@ h3,
   }
   to {
     transform: translateX(-50%);
+  }
+}
+
+/* Hero entrance — CSS-driven (not JS) so the heading (the LCP element) paints
+   and animates immediately, without waiting for the animation JS bundle to
+   download and run under throttling. */
+@keyframes hero-rise {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.hero-rise {
+  transform: translateY(110%);
+  animation: hero-rise 0.9s cubic-bezier(0.16, 0.84, 0.44, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-rise {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Hero scroll cue: a highlight travelling down the line, and the cue's fade-in. */
+@keyframes scroll-cue {
+  0% {
+    transform: translateY(-30%);
+    opacity: 0;
+  }
+  25%,
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(260%);
+    opacity: 0;
+  }
+}
+
+@keyframes cue-in {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Portfolio lightbox (replaces Framer Motion): overlay fade + image pop. Base
+   styles are the final visible state, so reduced motion (which disables
+   [class*="animate-"]) simply shows them instantly. */
+@keyframes lightbox-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes lightbox-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
   }
 }
 
@@ -114,6 +244,7 @@ h3,
   .dust-particle,
   .sz-pulse,
   .sz-ring,
+  .skeleton,
   [class*="animate-"] {
     animation: none !important;
   }

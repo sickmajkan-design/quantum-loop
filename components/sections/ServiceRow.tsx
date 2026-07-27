@@ -30,12 +30,15 @@ const ServiceRow = forwardRef<HTMLDivElement, ServiceRowProps>(
         >
           {children}
         </div>
-        <div className="md:[direction:ltr]">
-          <div className="mb-2.5 font-display text-[1.1rem] tracking-widest text-transparent [-webkit-text-stroke:1px_rgba(201,162,39,0.5)]">
+        <div className="text-center md:text-left md:[direction:ltr]">
+          <div
+            aria-hidden="true"
+            className="mb-2.5 font-display text-[1.1rem] tracking-widest text-gold2/90"
+          >
             {num}
           </div>
           <h3 className="mb-4 text-[clamp(1.8rem,4vw,3rem)]">{title}</h3>
-          <p className="max-w-120 text-[#cfcabc]">{text}</p>
+          <p className="mx-auto max-w-120 text-[#cfcabc] md:mx-0">{text}</p>
         </div>
       </div>
     );

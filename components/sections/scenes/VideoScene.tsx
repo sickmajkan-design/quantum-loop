@@ -2,18 +2,19 @@
 
 import { useEffect, useRef, type RefObject } from "react";
 import { gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/gsap";
+import { asset } from "@/lib/asset";
 
 /**
  * A video scene. The clip carries its own motion, so the scene keeps its own
  * animation minimal and meaningful: the card fades-and-rises in as it scrolls
- * into view, and — for the tint scene — the VLT counter ticks 70 → 15 once.
+ * into view.
  *
  * Loading strategy (Performance): the video is never preloaded. On desktop it
  * loads and plays only while on screen, and pauses off screen. On mobile — where
  * most traffic is and data/battery matter — nothing but the poster loads until
  * the visitor taps the play button, at which point the clip loads and plays.
  *
- * Under reduced motion the poster stays put and nothing autoplays (VLT shows 15).
+ * Under reduced motion the poster stays put and nothing autoplays.
  *
  * Drop-in media: `videoSrc` (.mp4) + `poster` (.jpg) under public/stock/.
  */
@@ -22,17 +23,14 @@ export default function VideoScene({
   videoSrc,
   poster,
   alt,
-  vltCounter,
 }: {
   rowRef: RefObject<HTMLDivElement | null>;
   videoSrc: string;
   poster: string;
   alt: string;
-  vltCounter?: boolean;
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const vltRef = useRef<HTMLSpanElement>(null);
   const playBtnRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
@@ -40,23 +38,7 @@ export default function VideoScene({
     const video = videoRef.current;
     if (!card || !video) return;
 
-    let counted = false;
-    const runVlt = () => {
-      if (!vltCounter || counted || !vltRef.current) return;
-      counted = true;
-      const o = { v: 70 };
-      gsap.to(o, {
-        v: 15,
-        duration: 2.6,
-        ease: "power1.inOut",
-        onUpdate: () => {
-          if (vltRef.current) vltRef.current.textContent = String(Math.round(o.v));
-        },
-      });
-    };
-
     if (prefersReducedMotion()) {
-      if (vltRef.current) vltRef.current.textContent = "15";
       if (playBtnRef.current) playBtnRef.current.style.display = "none";
       return;
     }
@@ -78,10 +60,7 @@ export default function VideoScene({
           trigger,
           start: "top 78%",
           end: "bottom 22%",
-          onEnter: () => {
-            video.play().catch(() => {});
-            runVlt();
-          },
+          onEnter: () => video.play().catch(() => {}),
           onEnterBack: () => video.play().catch(() => {}),
           onLeave: () => video.pause(),
           onLeaveBack: () => video.pause(),
@@ -93,10 +72,8 @@ export default function VideoScene({
     let onTap: (() => void) | null = null;
     const btn = !isDesktop ? playBtnRef.current : null;
     if (btn) {
-      if (vltCounter && vltRef.current) vltRef.current.textContent = "15";
       onTap = () => {
         video.play().catch(() => {});
-        runVlt();
         btn.style.display = "none";
       };
       btn.addEventListener("click", onTap);
@@ -106,7 +83,7 @@ export default function VideoScene({
       ctx.revert();
       if (btn && onTap) btn.removeEventListener("click", onTap);
     };
-  }, [rowRef, vltCounter]);
+  }, [rowRef]);
 
   return (
     <div
@@ -116,8 +93,8 @@ export default function VideoScene({
       <video
         ref={videoRef}
         className="h-full w-full object-cover"
-        src={videoSrc}
-        poster={poster}
+        src={asset(videoSrc)}
+        poster={asset(poster)}
         muted
         loop
         playsInline
@@ -134,12 +111,6 @@ export default function VideoScene({
       >
         <span className="ml-1 block h-0 w-0 border-y-[11px] border-l-[18px] border-y-transparent border-l-gold2" />
       </button>
-
-      {vltCounter && (
-        <div className="pointer-events-none absolute right-4 bottom-4 rounded border border-gold/40 bg-black/60 px-3 py-1.5 font-display text-lg text-gold2">
-          VLT <span ref={vltRef}>70</span>%
-        </div>
-      )}
     </div>
   );
 }

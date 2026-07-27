@@ -1,13 +1,12 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Anton, Inter } from "next/font/google";
 import "./globals.css";
-import { I18nProvider } from "@/lib/i18n-context";
-import { SITE_URL, business } from "@/lib/site";
+import { SITE_URL, IS_PREVIEW, business } from "@/lib/site";
+import { asset } from "@/lib/asset";
 import NoiseOverlay from "@/components/layout/NoiseOverlay";
 import SmoothScroll from "@/components/layout/SmoothScroll";
 import Ribbon from "@/components/layout/Ribbon";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+import GoatCounter from "@/components/analytics/GoatCounter";
 
 const anton = Anton({
   variable: "--font-anton",
@@ -20,6 +19,12 @@ const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
+
+// Cookieless, GDPR-friendly visit counter (no banner needed). Free at
+// goatcounter.com — sign up, pick a site code, then set
+// NEXT_PUBLIC_GOATCOUNTER_CODE to it (e.g. in the Pages workflow's env
+// block). Left unset by default, so nothing loads until configured.
+const GOATCOUNTER_CODE = process.env.NEXT_PUBLIC_GOATCOUNTER_CODE;
 
 const TITLE = "Quantum Loop — Dizajn koji se lijepi";
 const DESCRIPTION =
@@ -51,51 +56,80 @@ export const metadata: Metadata = {
     "window tinting",
     "signage",
   ],
-  alternates: {
-    canonical: "/",
-    languages: {
-      "sr-Latn": "/",
-      de: "/",
-      en: "/",
-      "x-default": "/",
-    },
-  },
-  openGraph: {
-    type: "website",
-    siteName: "Quantum Loop s.p.",
-    title: TITLE,
-    description: DESCRIPTION,
-    url: SITE_URL,
-    locale: "sr_Latn",
-    alternateLocale: ["de_DE", "en_US"],
-    images: [
-      {
-        url: "/og.png",
-        width: 1200,
-        height: 630,
-        alt: "Quantum Loop — Dizajn koji se lijepi.",
-      },
+  // Per-language title/description/canonical/hreflang/OG are set on each page
+  // via buildMetadata() (lib/seo.ts), since every language is its own route.
+  robots: IS_PREVIEW
+    ? { index: false, follow: false }
+    : { index: true, follow: true },
+  icons: {
+    // asset() prefixes the base path — Next does NOT auto-prefix these icon
+    // hrefs (unlike the manifest link), so on the Pages subpath they'd 404.
+    icon: [
+      { url: asset("/icon-192.png"), sizes: "192x192", type: "image/png" },
+      { url: asset("/icon-512.png"), sizes: "512x512", type: "image/png" },
     ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: TITLE,
-    description: DESCRIPTION,
-    images: ["/og.png"],
-  },
-  robots: {
-    index: true,
-    follow: true,
+    apple: [{ url: asset("/apple-icon.png"), sizes: "180x180" }],
   },
 };
+
+// Matches the body background — colors the mobile browser's UI chrome
+// (address bar / status bar) to match the site instead of default white/grey.
+export const viewport: Viewport = {
+  themeColor: "#0a0a0a",
+  colorScheme: "dark",
+};
+
+const SERVICES: { name: string; description: string }[] = [
+  {
+    name: "Grafički dizajn",
+    description:
+      "Logotipi, vizuelni identiteti i pripreme za štampu — dizajn koji brend čini prepoznatljivim.",
+  },
+  {
+    name: "Reklame i svjetleće reklame",
+    description:
+      "Svijetleće reklame, 3D slova, baneri, table i unutrašnje brendiranje kompanija — od proizvodnje do montaže.",
+  },
+  {
+    name: "Brendiranje vozila",
+    description:
+      "Kompletno i djelimično oblaganje vozila folijom — automobili, kombiji, kamioni.",
+  },
+  {
+    name: "Folije na sve površine",
+    description:
+      "Nanošenje folije na izloge, staklene površine, zidove i fasade — precizna montaža bez mjehurića.",
+  },
+  {
+    name: "Zatamnjivanje stakala",
+    description:
+      "Profesionalno zatamnjivanje stakala vozila i objekata — atestirane folije.",
+  },
+];
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
+  "@id": `${SITE_URL}/#business`,
   name: business.name,
+  legalName: business.name,
   description: DESCRIPTION,
+  slogan: "Dizajn koji se lijepi.",
   url: SITE_URL,
-  image: `${SITE_URL}/favicon.ico`,
+  image: `${SITE_URL}/og.png`,
+  logo: `${SITE_URL}/og.png`,
+  priceRange: "$$",
+  currenciesAccepted: "BAM, EUR",
+  telephone: business.phones[0].display,
+  email: business.email,
+  sameAs: [business.instagram],
+  contactPoint: business.phones.map((p) => ({
+    "@type": "ContactPoint",
+    telephone: p.display,
+    contactType: "customer service",
+    areaServed: p.region === "AT" ? "AT" : "BA",
+    availableLanguage: ["sr", "de", "en"],
+  })),
   address: {
     "@type": "PostalAddress",
     streetAddress: business.street,
@@ -103,17 +137,54 @@ const jsonLd = {
     postalCode: business.postalCode,
     addressCountry: business.countryCode,
   },
-  areaServed: ["Derventa", "Bosnia and Herzegovina", "Salzburg", "Austria"],
-  slogan: "Dizajn koji se lijepi.",
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: business.geo.lat,
+    longitude: business.geo.lng,
+  },
+  areaServed: [
+    { "@type": "City", name: "Derventa" },
+    { "@type": "Country", name: "Bosna i Hercegovina" },
+    { "@type": "City", name: "Salzburg" },
+    { "@type": "Country", name: "Austrija" },
+  ],
   knowsLanguage: ["sr", "de", "en"],
-  makesOffer: [
-    "Grafički dizajn",
-    "Reklame i svjetleće reklame",
-    "Brendiranje vozila",
-    "Folije na sve površine",
-    "Zatamnjivanje stakala",
-  ].map((name) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name } })),
+  knowsAbout: [
+    "grafički dizajn",
+    "svjetleće reklame",
+    "3D slova",
+    "brendiranje vozila",
+    "auto folije",
+    "zatamnjivanje stakala",
+    "folije na staklo",
+    "vizuelni identitet",
+  ],
+  makesOffer: SERVICES.map((s) => ({
+    "@type": "Offer",
+    itemOffered: {
+      "@type": "Service",
+      name: s.name,
+      description: s.description,
+      areaServed: ["Derventa", "Bosna i Hercegovina", "Salzburg", "Austrija"],
+      provider: { "@id": `${SITE_URL}/#business` },
+    },
+  })),
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Usluge — Quantum Loop",
+    itemListElement: SERVICES.map((s) => ({
+      "@type": "Offer",
+      itemOffered: { "@type": "Service", name: s.name, description: s.description },
+    })),
+  },
 };
+
+// First-visit language routing, inline so it runs during HTML parse — before
+// the Serbian root renders/hydrates. This makes the de/en redirect instant
+// (good LCP, no wasted render) and, because the root never hydrates for those
+// visitors, avoids focus landing on the skip link. Only acts on the root path;
+// /de and /en are left alone. LangAutoRedirect just remembers the language.
+const LANG_REDIRECT = `(function(){try{if(location.pathname!=='/')return;var k='ql_lang',t=localStorage.getItem(k);if(t!=='sr'&&t!=='de'&&t!=='en'){var L=navigator.languages||[navigator.language],i,c;t='en';for(i=0;i<L.length;i++){c=(L[i]||'').toLowerCase().slice(0,2);if(c==='de'){t='de';break;}if(c==='sr'||c==='bs'||c==='hr'){t='sr';break;}}localStorage.setItem(k,t);}if(t==='de')location.replace('/de/');else if(t==='en')location.replace('/en/');}catch(e){}})();`;
 
 export default function RootLayout({
   children,
@@ -122,19 +193,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="sr" className={`${anton.variable} ${inter.variable}`}>
-      <body>
+      <body suppressHydrationWarning>
+        <script dangerouslySetInnerHTML={{ __html: LANG_REDIRECT }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <I18nProvider>
-          <SmoothScroll />
-          <NoiseOverlay />
-          <Ribbon />
-          <Header />
-          <main>{children}</main>
-          <Footer />
-        </I18nProvider>
+        {GOATCOUNTER_CODE && <GoatCounter code={GOATCOUNTER_CODE} />}
+        {/* Language-independent chrome. The translated header/footer/floating
+            chrome and the I18nProvider live in each page's SiteChrome, so the
+            per-language routes (/, /de, /en) render server-side in their own
+            language. */}
+        <SmoothScroll />
+        <NoiseOverlay />
+        <Ribbon />
+        {children}
       </body>
     </html>
   );

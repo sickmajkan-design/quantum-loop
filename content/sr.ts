@@ -22,8 +22,14 @@ const sr: Dictionary = {
   s2_p: "Kompletno i djelimično oblaganje folijom — automobili, kombiji, kamioni. Vaše vozilo postaje reklama koja radi 24/7.",
   s3_t: "Folije na sve površine",
   s3_p: "Izlozi, staklene površine, zidovi i fasade. Precizna montaža bez mjehurića — na bilo kojoj ravnoj površini.",
+  s3_shop_label: "Izlozi & staklo",
+  s3_shop_alt: "Ruke nanose foliju na staklenu izlog površinu",
+  s3_sun_label: "Zaštita od sunca — fasade",
+  s3_ppf_label: "PPF zaštita vozila",
   s4_t: "Zatamnjivanje stakala",
   s4_p: "Profesionalno zatamnjivanje stakala vozila i objekata. Zaštita od sunca, privatnost i moderan izgled — atestirane folije.",
+  s4_before: "Čisto",
+  s4_after: "Zatamnjeno",
   s5_t: "Reklame svih vrsta",
   s5_p: "Svijetleće reklame, 3D slova, baneri, table i unutrašnje brendiranje kompanija. Od proizvodnje do montaže.",
 
@@ -38,10 +44,33 @@ const sr: Dictionary = {
 
   p_eyebrow: "Radovi",
   p_title: "Naš rad govori umjesto nas.",
+  p_insta_title: "Prati nas na Instagramu",
+  p_insta_text:
+    "Video, reels i storyji sa svakog projekta — pogledaj kako radimo, uživo.",
+  p_insta_cta: "Otvori Instagram",
+  p_soon: "Slike uskoro na sajtu",
+  p_soon_short: "Uskoro",
 
   sz_eyebrow: "Novo",
   sz_title: "Uskoro u Salzburgu.",
   sz_p: "Kvalitet dokazan u BiH stiže u Austriju. Quantum Loop uskoro otvara vrata i klijentima u Salzburgu i okolini.",
+
+  faq_eyebrow: "Pitanja",
+  faq_title: "Često postavljana pitanja.",
+  faq1_q: "Koliko traje izrada i montaža?",
+  faq1_a:
+    "Zavisi od obima posla — jednostavne naljepnice i manje reklame gotove su za par dana, dok kompletno brendiranje vozila ili veće fasadne folije mogu trajati sedmicu do dvije. Tačan rok dobijate uz ponudu.",
+  faq2_q: "Da li dajete garanciju na urađen posao?",
+  faq2_a: "Da — pisana garancija na materijal i montažu za svaki posao, bez izuzetka.",
+  faq3_q: "Da li dolazite na teren za mjerenje i montažu?",
+  faq3_a:
+    "Da, izlazimo na teren u Derventi i okolini (uskoro i u Salzburgu) — mjerenje, montaža i sve što je potrebno radimo na licu mjesta.",
+  faq4_q: "Koje oblasti pokrivate?",
+  faq4_a:
+    "Sjedište nam je u Derventi (Bosna i Hercegovina), radimo širom BiH, a uskoro otvaramo i za klijente u Salzburgu i okolini, Austrija.",
+  faq5_q: "Radite li i manje poslove, ili samo veće projekte?",
+  faq5_a:
+    "Radimo sve, od pojedinačne naljepnice ili table do kompletnog brendiranja vozila i fasada — nema posla koji je premali.",
 
   c_eyebrow: "Kontakt",
   c_title: "Zatražite besplatnu ponudu.",
@@ -49,9 +78,26 @@ const sr: Dictionary = {
 
   f_name: "Ime i prezime",
   f_email: "Email",
+  f_phone: "Telefon (opcionalno)",
+  f_service: "Usluga",
+  f_dimensions: "Dimenzije (okvirno)",
+  f_quantity: "Količina",
+  f_deadline: "Rok",
+  f_dl_flexible: "Fleksibilno",
+  f_dl_2w: "U roku 2 sedmice",
+  f_dl_1w: "U roku 1 sedmice",
+  f_dl_asap: "Hitno",
+  f_install: "Montaža",
+  f_install_yes: "Da, potrebna",
+  f_install_no: "Ne, samo izrada",
+  f_install_unsure: "Nisam siguran/na",
+  f_message: "Poruka",
   f_msg: "Opišite šta vam treba...",
   f_send: "Pošalji upit",
+  f_sending: "Šaljem…",
   form_ok: "Hvala! Javićemo vam se uskoro.",
+  form_err: "Greška — pokušajte ponovo kasnije.",
+  skip: "Preskoči na sadržaj",
   f_tag: "Dizajn · Reklame · Folije · Zatamnjivanje",
 
   svc: [
