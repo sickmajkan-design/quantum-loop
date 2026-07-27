@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState, type RefObject } from "react";
+import { useEffect, useRef, type RefObject } from "react";
 import Image from "next/image";
-import { MoveHorizontal } from "lucide-react";
-import { gsap, prefersReducedMotion } from "@/lib/gsap";
+import { gsap, ScrollTrigger, prefersReducedMotion } from "@/lib/gsap";
 import { asset } from "@/lib/asset";
 import { useI18n } from "@/lib/i18n-context";
 
@@ -11,16 +10,16 @@ import { useI18n } from "@/lib/i18n-context";
  * Vehicle-wrap scene — a "before → after" reveal that sells the transformation.
  * Two matched photos of the same vehicle at the same angle: `vehicle-wrap-before`
  * is the plain, un-branded car and `vehicle-wrap` is the finished branded wrap.
- * A wipe sweeps the branded version in on scroll, then rests slightly open so
- * the divider handle invites the visitor to drag it (mouse) and scrub the
- * reveal themselves — the graphics appear/disappear on an otherwise identical car.
  *
- * The reveal is driven by a single `--reveal` CSS variable (0 = all "before",
- * 1 = all "after") set imperatively, so dragging never re-renders React.
- * Touch devices get the scroll-in sweep only (no drag) to avoid hijacking the
- * page scroll; reduced-motion shows the finished result outright.
+ * Like the tinting scene, the split is tied to scroll position (a scrubbed
+ * ScrollTrigger): the branded wrap sweeps in from the right as the row passes
+ * through the viewport, so the graphics appear on an otherwise identical car —
+ * consistent on desktop and mobile alike. Reduced motion shows the finished
+ * result. Driven by a single `--reveal` CSS variable (0 = all "before",
+ * 1 = all "after") so updating it never re-renders React.
  */
-const REST = 0.8; // where the sweep settles: mostly branded, a sliver of "before"
+const R_MIN = 0.1; // mostly the plain car, a sliver of branding at the right
+const R_MAX = 0.9; // mostly the finished branded wrap
 
 export default function WrapScene({
   rowRef,
@@ -29,12 +28,9 @@ export default function WrapScene({
 }) {
   const { t } = useI18n();
   const cardRef = useRef<HTMLDivElement>(null);
-  const touchedRef = useRef(false);
-  const [showHint, setShowHint] = useState(true);
 
   const setReveal = (v: number) => {
-    const clamped = Math.max(0.04, Math.min(1, v));
-    cardRef.current?.style.setProperty("--reveal", String(clamped));
+    cardRef.current?.style.setProperty("--reveal", String(v));
   };
 
   useEffect(() => {
@@ -42,45 +38,40 @@ export default function WrapScene({
     if (!card) return;
 
     if (prefersReducedMotion()) {
-      setReveal(1);
+      setReveal(R_MAX);
       return;
     }
 
-    setReveal(0);
-    const proxy = { v: 0 };
+    const trigger = rowRef.current ?? card;
+    setReveal(R_MIN);
+
     const ctx = gsap.context(() => {
-      gsap
-        .timeline({
-          scrollTrigger: { trigger: rowRef.current ?? card, start: "top 82%", once: true },
-          onUpdate: () => {
-            if (!touchedRef.current) setReveal(proxy.v);
-          },
-        })
-        .to(proxy, { v: 1, duration: 1.1, ease: "power2.inOut" })
-        .to(proxy, { v: REST, duration: 0.5, ease: "power2.out" });
+      gsap.from(card, {
+        autoAlpha: 0,
+        y: 34,
+        duration: 0.9,
+        ease: "power3.out",
+        scrollTrigger: { trigger, start: "top 82%", once: true },
+      });
+
+      // Scrub the reveal as the row passes through the viewport.
+      ScrollTrigger.create({
+        trigger,
+        start: "top 78%",
+        end: "center 38%",
+        scrub: 1,
+        onUpdate: (self) => setReveal(R_MIN + (R_MAX - R_MIN) * self.progress),
+      });
     }, card);
 
     return () => ctx.revert();
   }, [rowRef]);
 
-  // Mouse-only scrubbing: hovering across the card wipes the reveal. Touch is
-  // intentionally excluded so vertical page scrolling over the image still works.
-  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (e.pointerType !== "mouse" || !cardRef.current) return;
-    if (!touchedRef.current) {
-      touchedRef.current = true;
-      setShowHint(false);
-    }
-    const rect = cardRef.current.getBoundingClientRect();
-    setReveal(1 - (e.clientX - rect.left) / rect.width);
-  };
-
   return (
     <div
       ref={cardRef}
-      onPointerMove={onPointerMove}
-      style={{ ["--reveal" as string]: 0 } as React.CSSProperties}
-      className="group relative h-full w-full overflow-hidden rounded-md bg-black2"
+      style={{ ["--reveal" as string]: R_MIN } as React.CSSProperties}
+      className="relative h-full w-full overflow-hidden rounded-md bg-black2"
     >
       {/* BEFORE — the plain, un-branded vehicle. */}
       <Image
@@ -106,31 +97,22 @@ export default function WrapScene({
       </div>
 
       {/* Corner labels */}
-      <span className="absolute top-2.5 left-2.5 rounded-full bg-black/55 px-2.5 py-1 text-[0.6rem] font-semibold tracking-[0.14em] text-white/80 uppercase backdrop-blur-sm">
+      <span className="pointer-events-none absolute top-3 left-3 rounded bg-black/45 px-2 py-0.5 text-[0.62rem] font-semibold tracking-[0.14em] text-white/85 uppercase">
         {t("s2_before")}
       </span>
-      <span className="absolute top-2.5 right-2.5 rounded-full bg-black/55 px-2.5 py-1 text-[0.6rem] font-semibold tracking-[0.14em] text-gold2 uppercase backdrop-blur-sm">
+      <span className="pointer-events-none absolute top-3 right-3 rounded bg-black/45 px-2 py-0.5 text-[0.62rem] font-semibold tracking-[0.14em] text-gold2 uppercase">
         {t("s2_after")}
       </span>
 
-      {/* Divider + handle, riding the reveal edge. */}
+      {/* Dividing edge between plain and branded, riding the reveal. */}
       <div
-        className="pointer-events-none absolute inset-y-0 w-px bg-gold2/80 shadow-[0_0_12px_rgba(229,193,88,0.5)]"
-        style={{ left: "calc((1 - var(--reveal)) * 100%)" }}
-      >
-        <span className="absolute top-1/2 left-1/2 flex size-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-gold2/70 bg-black/70 text-gold2 backdrop-blur-sm">
-          <MoveHorizontal className="size-4" />
-        </span>
-      </div>
-
-      {/* Drag hint — only meaningful on hover-capable (mouse) devices. */}
-      <span
-        className={`pointer-events-none absolute bottom-2.5 left-1/2 hidden -translate-x-1/2 rounded-full bg-black/55 px-3 py-1 text-[0.6rem] font-semibold tracking-[0.14em] text-white/75 uppercase backdrop-blur-sm transition-opacity duration-500 [@media(hover:hover)]:block ${
-          showHint ? "opacity-100" : "opacity-0"
-        }`}
-      >
-        ⟷ {t("s2_hint")}
-      </span>
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-y-0 w-[2px] bg-gold2/80"
+        style={{
+          left: "calc((1 - var(--reveal)) * 100%)",
+          boxShadow: "0 0 10px rgba(229,193,88,0.55)",
+        }}
+      />
     </div>
   );
 }
