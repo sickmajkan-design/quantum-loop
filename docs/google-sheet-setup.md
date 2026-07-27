@@ -36,6 +36,21 @@ Svaki upit sadrži ova polja: `name`, `email`, `phone`, `service`,
 const NOTIFY_EMAIL = "quantumloopbih@gmail.com"; // <-- gdje stižu obavještenja
 const SHEET_NAME = "Upiti";
 const COMPANY = "Quantum Loop s.p.";
+// Adresa sa koje mejlovi izlaze. Da bi ovo radilo, mora biti dodana kao
+// verifikovan "Send mail as" alias u nalogu pod kojim je skripta objavljena
+// (vidi uputstvo iznad). Ako alias nije podešen, skripta i dalje radi — samo
+// šalje sa podrazumijevane adrese naloga.
+const SENDER = "quantumloopbih@gmail.com";
+
+// Vrati alias samo ako je stvarno verifikovan u nalogu, inače Google baci
+// grešku pri slanju. Rezultat spajamo u opcije za MailApp.sendEmail.
+function fromAlias() {
+  try {
+    return GmailApp.getAliases().indexOf(SENDER) !== -1 ? { from: SENDER } : {};
+  } catch (err) {
+    return {};
+  }
+}
 
 // Redoslijed kolona u tabeli (mora se poklapati sa imenima polja iz forme).
 const FIELDS = [
@@ -114,12 +129,18 @@ function doPost(e) {
       (data.deadline || "?") +
       (contact ? " — " + contact : "");
     const ownerBody = FIELDS.map((f) => f + ": " + (data[f] || "-")).join("\n");
-    MailApp.sendEmail({
-      to: NOTIFY_EMAIL,
-      subject: subject,
-      body: ownerBody,
-      replyTo: data.email || NOTIFY_EMAIL,
-    });
+    MailApp.sendEmail(
+      Object.assign(
+        {
+          to: NOTIFY_EMAIL,
+          subject: subject,
+          body: ownerBody,
+          name: COMPANY,
+          replyTo: data.email || NOTIFY_EMAIL,
+        },
+        fromAlias()
+      )
+    );
 
     // --- Automatska potvrda klijentu (ako je ostavio ispravan email) ---
     if (data.email && /^\S+@\S+\.\S+$/.test(data.email)) {
@@ -129,13 +150,18 @@ function doPost(e) {
         .replace("%SERVICE%", data.service || "-")
         .replace("%DEADLINE%", data.deadline || "-")
         .replace("%MESSAGE%", data.message || "-");
-      MailApp.sendEmail({
-        to: data.email,
-        subject: c.subject,
-        body: clientBody,
-        name: COMPANY,
-        replyTo: NOTIFY_EMAIL,
-      });
+      MailApp.sendEmail(
+        Object.assign(
+          {
+            to: data.email,
+            subject: c.subject,
+            body: clientBody,
+            name: COMPANY,
+            replyTo: NOTIFY_EMAIL,
+          },
+          fromAlias()
+        )
+      );
     }
 
     return ContentService.createTextOutput("ok");
@@ -169,3 +195,24 @@ upit sa forme automatski pada u tabelu i stiže ti na mejl.
 > Napomena: ako kasnije mijenjaš kod skripte, mora se ponovo objaviti preko
 > **Deploy → Manage deployments → (olovka) → Version: New version → Deploy**,
 > inače URL i dalje vrti staru verziju.
+
+## Da mejlovi izlaze sa firminog naloga (alias)
+
+Apps Script šalje mejlove **sa naloga pod kojim je objavljen**. Ako je skripta
+napravljena na ličnom nalogu, i obavještenje i potvrda klijentu izlaze sa te
+lične adrese. Da bi izlazili sa `quantumloopbih@gmail.com` bez prebacivanja
+cijelog projekta, dodaj tu adresu kao **„Send mail as" alias** u nalogu koji
+pokreće skriptu:
+
+1. U Gmailu tog naloga: **⚙ → See all settings → Accounts and Import**.
+2. Kod **Send mail as** → **Add another email address**.
+3. Upiši `quantumloopbih@gmail.com`, ostavi **Treat as an alias** čekirano →
+   **Next → Send verification**.
+4. Otvori inbox naloga `quantumloopbih@gmail.com`, nađi Google-ov verifikacioni
+   mejl i klikni link (ili prekopiraj kod). Sad je alias verifikovan.
+5. Kod skripte već ima `SENDER = "quantumloopbih@gmail.com"` i `fromAlias()` —
+   čim je alias verifikovan, mejlovi automatski izlaze sa te adrese. (Ako alias
+   nije podešen, `fromAlias()` ga preskače pa skripta ne puca.)
+6. Ponovo objavi: **Deploy → Manage deployments → (olovka) → Version: New
+   version → Deploy** (URL ostaje isti). Pri prvom pokretanju Google traži
+   dodatnu dozvolu za Gmail — odobri je.
