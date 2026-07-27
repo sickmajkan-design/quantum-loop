@@ -30,10 +30,12 @@ Svaki upit sadrži ova polja: `name`, `email`, `phone`, `service`,
 
 ```javascript
 // === Quantum Loop — prijem upita sa sajta ===
-// Upisuje svaki upit kao red u aktivnu tabelu i šalje email obavještenje.
+// Upisuje svaki upit kao red u aktivnu tabelu, šalje obavještenje vlasniku i
+// automatsku potvrdu klijentu (na jeziku sa kojeg je upit poslat).
 
 const NOTIFY_EMAIL = "quantumloopbih@gmail.com"; // <-- gdje stižu obavještenja
 const SHEET_NAME = "Upiti";
+const COMPANY = "Quantum Loop s.p.";
 
 // Redoslijed kolona u tabeli (mora se poklapati sa imenima polja iz forme).
 const FIELDS = [
@@ -49,6 +51,35 @@ const FIELDS = [
   "lang",
   "page",
 ];
+
+// Automatska potvrda klijentu — tekst po jeziku (sr/de/en).
+// Zamjene: %NAME% %SERVICE% %DEADLINE% %MESSAGE%
+const CONFIRM = {
+  sr: {
+    subject: "Primili smo vaš upit — Quantum Loop",
+    body:
+      "Poštovani/a %NAME%,\n\n" +
+      "Hvala na upitu! Primili smo vaše podatke i javićemo vam se u najkraćem roku sa ponudom.\n\n" +
+      "Usluga: %SERVICE%\nRok: %DEADLINE%\nVaša poruka: %MESSAGE%\n\n" +
+      "Srdačan pozdrav,\nQuantum Loop s.p.\n+387 65 577 672",
+  },
+  de: {
+    subject: "Wir haben Ihre Anfrage erhalten — Quantum Loop",
+    body:
+      "Sehr geehrte/r %NAME%,\n\n" +
+      "vielen Dank für Ihre Anfrage! Wir haben Ihre Angaben erhalten und melden uns schnellstmöglich mit einem Angebot.\n\n" +
+      "Leistung: %SERVICE%\nFrist: %DEADLINE%\nIhre Nachricht: %MESSAGE%\n\n" +
+      "Mit freundlichen Grüßen,\nQuantum Loop s.p.\n+43 667 336 1966",
+  },
+  en: {
+    subject: "We received your request — Quantum Loop",
+    body:
+      "Dear %NAME%,\n\n" +
+      "Thank you for your request! We've received your details and will get back to you shortly with a quote.\n\n" +
+      "Service: %SERVICE%\nDeadline: %DEADLINE%\nYour message: %MESSAGE%\n\n" +
+      "Best regards,\nQuantum Loop s.p.\n+387 65 577 672",
+  },
+};
 
 function doPost(e) {
   try {
@@ -73,16 +104,39 @@ function doPost(e) {
     const row = [new Date()].concat(FIELDS.map((f) => data[f] || ""));
     sheet.appendRow(row);
 
-    // Email obavještenje.
+    // --- Obavještenje vlasniku ---
+    // Naslov odmah pokazuje uslugu, rok i kontakt (telefon ili email).
+    const contact = data.phone || data.email || "";
     const subject =
-      "Novi upit sa sajta — " + (data.name || "nepoznato") + " (" + (data.service || "") + ")";
-    const body = FIELDS.map((f) => f + ": " + (data[f] || "-")).join("\n");
+      "Upit: " +
+      (data.service || "?") +
+      " — " +
+      (data.deadline || "?") +
+      (contact ? " — " + contact : "");
+    const ownerBody = FIELDS.map((f) => f + ": " + (data[f] || "-")).join("\n");
     MailApp.sendEmail({
       to: NOTIFY_EMAIL,
       subject: subject,
-      body: body,
+      body: ownerBody,
       replyTo: data.email || NOTIFY_EMAIL,
     });
+
+    // --- Automatska potvrda klijentu (ako je ostavio ispravan email) ---
+    if (data.email && /^\S+@\S+\.\S+$/.test(data.email)) {
+      const c = CONFIRM[data.lang] || CONFIRM.sr;
+      const clientBody = c.body
+        .replace("%NAME%", data.name || "")
+        .replace("%SERVICE%", data.service || "-")
+        .replace("%DEADLINE%", data.deadline || "-")
+        .replace("%MESSAGE%", data.message || "-");
+      MailApp.sendEmail({
+        to: data.email,
+        subject: c.subject,
+        body: clientBody,
+        name: COMPANY,
+        replyTo: NOTIFY_EMAIL,
+      });
+    }
 
     return ContentService.createTextOutput("ok");
   } catch (err) {

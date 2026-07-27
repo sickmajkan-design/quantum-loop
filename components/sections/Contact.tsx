@@ -5,6 +5,7 @@ import { Phone, Mail, Loader2 } from "lucide-react";
 import { useI18n } from "@/lib/i18n-context";
 import { business } from "@/lib/site";
 import InstagramIcon from "@/components/ui/InstagramIcon";
+import WhatsAppIcon from "@/components/ui/WhatsAppIcon";
 import Reveal from "@/components/ui/Reveal";
 
 // The form posts to a no-backend email service. By default it uses FormSubmit
@@ -30,6 +31,9 @@ const SHEET_ENDPOINT = process.env.NEXT_PUBLIC_SHEET_ENDPOINT;
 const MAPS_CID = "11305872248226432655";
 const MAP_SRC = `https://www.google.com/maps?cid=${MAPS_CID}&z=17&output=embed`;
 const MAPS_VIEW_URL = `https://maps.google.com/?cid=${MAPS_CID}`;
+
+// WhatsApp chats only on the BiH number (the AT line has no messaging app).
+const WHATSAPP_URL = `https://wa.me/${business.phones[0].tel.replace("+", "")}`;
 
 type Status = "idle" | "sending" | "success" | "error";
 
@@ -155,6 +159,17 @@ export default function Contact() {
                 className="text-gold2 underline-offset-2 hover:underline"
               >
                 @quantumloopbih
+              </a>
+            </div>
+            <div className="flex items-center gap-2.5">
+              <WhatsAppIcon className="size-4 shrink-0 text-gold2" />
+              <a
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gold2 underline-offset-2 hover:underline"
+              >
+                WhatsApp
               </a>
             </div>
           </div>
