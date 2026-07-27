@@ -9,11 +9,11 @@ import { useI18n } from "@/lib/i18n-context";
 
 /**
  * Vehicle-wrap scene — a "before → after" reveal that sells the transformation.
- * There is only one source photo (the finished branded wrap), so the "before"
- * is that same image rendered desaturated + dimmed (reads as a raw, unbranded
- * vehicle) while the "after" is the full-colour branded result. A wipe sweeps
- * the colour in on scroll, then rests slightly open so the divider handle
- * invites the visitor to drag it (mouse) and scrub the reveal themselves.
+ * Two matched photos of the same vehicle at the same angle: `vehicle-wrap-before`
+ * is the plain, un-branded car and `vehicle-wrap` is the finished branded wrap.
+ * A wipe sweeps the branded version in on scroll, then rests slightly open so
+ * the divider handle invites the visitor to drag it (mouse) and scrub the
+ * reveal themselves — the graphics appear/disappear on an otherwise identical car.
  *
  * The reveal is driven by a single `--reveal` CSS variable (0 = all "before",
  * 1 = all "after") set imperatively, so dragging never re-renders React.
@@ -82,13 +82,13 @@ export default function WrapScene({
       style={{ ["--reveal" as string]: 0 } as React.CSSProperties}
       className="group relative h-full w-full overflow-hidden rounded-md bg-black2"
     >
-      {/* BEFORE — same photo, desaturated + dimmed (raw / unbranded look). */}
+      {/* BEFORE — the plain, un-branded vehicle. */}
       <Image
-        src={asset("/stock/vehicle-wrap.jpg")}
+        src={asset("/stock/vehicle-wrap-before.jpg")}
         alt=""
         fill
         sizes="(max-width: 768px) 90vw, 45vw"
-        className="object-cover [filter:grayscale(1)_brightness(0.5)_contrast(1.05)]"
+        className="object-cover"
       />
 
       {/* AFTER — full colour, clipped to the revealed (right-hand) portion. */}
