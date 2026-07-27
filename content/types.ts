@@ -74,6 +74,17 @@ export interface Dictionary {
   f_email: string;
   f_phone: string;
   f_service: string;
+  f_dimensions: string;
+  f_quantity: string;
+  f_deadline: string;
+  f_dl_flexible: string;
+  f_dl_2w: string;
+  f_dl_1w: string;
+  f_dl_asap: string;
+  f_install: string;
+  f_install_yes: string;
+  f_install_no: string;
+  f_install_unsure: string;
   f_message: string;
   f_msg: string;
   f_send: string;

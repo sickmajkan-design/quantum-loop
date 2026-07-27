@@ -37,6 +37,10 @@ jobs:
       # site code, and put it here to turn it on — dashboard lives at
       # https://<code>.goatcounter.com. Empty = analytics off.
       NEXT_PUBLIC_GOATCOUNTER_CODE: "quantum-loop"
+      # Google Apps Script Web App URL (…/exec) that writes each quote request
+      # to a Google Sheet and emails the owner. Paste the deployed /exec URL
+      # here to turn it on. Empty = form falls back to plain email delivery.
+      NEXT_PUBLIC_SHEET_ENDPOINT: ""
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

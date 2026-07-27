@@ -17,6 +17,13 @@ const FORM_ENDPOINT =
   process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT ??
   `https://formsubmit.co/ajax/${business.email}`;
 
+// Preferred path when set: a Google Apps Script Web App that appends each
+// request as a row in a Google Sheet and emails the owner. It doesn't return
+// CORS headers, so we post no-cors (fire-and-forget) and can't read the
+// response — a completed request is treated as success. When unset, the form
+// falls back to the plain email endpoint above.
+const SHEET_ENDPOINT = process.env.NEXT_PUBLIC_SHEET_ENDPOINT;
+
 // Pinned to the real "Quantum loop" Google Business listing (CID, decoded from
 // its maps.google.com place URL) rather than a geocoded address string — the
 // address-text embed kept drifting to the wrong building (see git history).
@@ -38,7 +45,7 @@ const FLOAT_STATIC =
   "pointer-events-none absolute left-3.5 top-1.5 text-[0.62rem] font-semibold tracking-[0.12em] text-grey uppercase";
 
 export default function Contact() {
-  const { t, d } = useI18n();
+  const { t, d, lang } = useI18n();
   const [status, setStatus] = useState<Status>("idle");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -47,6 +54,33 @@ export default function Contact() {
     const formData = new FormData(form);
 
     setStatus("sending");
+
+    // Google Sheet path (Apps Script Web App): post the request no-cors so it
+    // lands as a row in the Sheet and triggers the owner's email. We can't read
+    // an opaque no-cors response, so a request that completes without throwing
+    // counts as success.
+    if (SHEET_ENDPOINT) {
+      try {
+        const body = new URLSearchParams();
+        formData.forEach((value, key) => {
+          if (typeof value === "string") body.append(key, value);
+        });
+        body.append("page", window.location.pathname);
+        await fetch(SHEET_ENDPOINT, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body,
+        });
+        setStatus("success");
+        form.reset();
+      } catch {
+        setStatus("error");
+      }
+      return;
+    }
+
+    // Fallback: plain email endpoint (FormSubmit / Formspree), no Sheet.
     try {
       const res = await fetch(FORM_ENDPOINT, {
         method: "POST",
@@ -159,6 +193,8 @@ export default function Contact() {
           />
           <input type="hidden" name="_template" value="table" />
           <input type="hidden" name="_captcha" value="false" />
+          {/* language the request was submitted in (helps triage in the Sheet) */}
+          <input type="hidden" name="lang" value={lang} />
           {/* honeypot — bots fill it, humans never see it */}
           <input
             type="text"
@@ -222,6 +258,58 @@ export default function Contact() {
             <label htmlFor="cf-service" className={FLOAT_STATIC}>
               {t("f_service")}
             </label>
+          </div>
+
+          <div className="grid gap-3.5 sm:grid-cols-2">
+            <div className="relative">
+              <input
+                type="text"
+                id="cf-dimensions"
+                name="dimensions"
+                placeholder=" "
+                className={FIELD}
+              />
+              <label htmlFor="cf-dimensions" className={FLOAT}>
+                {t("f_dimensions")}
+              </label>
+            </div>
+            <div className="relative">
+              <input
+                type="text"
+                inputMode="numeric"
+                id="cf-quantity"
+                name="quantity"
+                placeholder=" "
+                className={FIELD}
+              />
+              <label htmlFor="cf-quantity" className={FLOAT}>
+                {t("f_quantity")}
+              </label>
+            </div>
+          </div>
+
+          <div className="grid gap-3.5 sm:grid-cols-2">
+            <div className="relative">
+              <select id="cf-deadline" name="deadline" className={FIELD}>
+                <option>{t("f_dl_flexible")}</option>
+                <option>{t("f_dl_2w")}</option>
+                <option>{t("f_dl_1w")}</option>
+                <option>{t("f_dl_asap")}</option>
+              </select>
+              <label htmlFor="cf-deadline" className={FLOAT_STATIC}>
+                {t("f_deadline")}
+              </label>
+            </div>
+            <div className="relative">
+              <select id="cf-install" name="install" className={FIELD}>
+                <option>{t("f_install_yes")}</option>
+                <option>{t("f_install_no")}</option>
+                <option>{t("f_install_unsure")}</option>
+              </select>
+              <label htmlFor="cf-install" className={FLOAT_STATIC}>
+                {t("f_install")}
+              </label>
+            </div>
           </div>
 
           <div className="relative">
