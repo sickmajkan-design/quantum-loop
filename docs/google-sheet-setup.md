@@ -1,36 +1,38 @@
-# Upiti u Google tabelu (Google Sheet konfigurator)
+# Upiti u Google tabelu (Google Sheet)
 
-Kontakt forma na sajtu može svaki upit da upiše kao red u Google tabelu **i**
-da ti pošalje email obavještenje — bez servera i bez ikakvog naloga na
-plaćenim servisima. Radi preko **Google Apps Script Web App-a**: sajt pošalje
-podatke na tvoj skript, skript doda red u tabelu i pošalje mejl.
+Kontakt forma na sajtu svaki upit upiše kao red u Google tabelu **i** pošalje
+ti email obavještenje — bez servera i bez ikakvog plaćenog naloga. Radi preko
+**Google Apps Script Web App-a**: sajt pošalje podatke skripti, a skripta doda
+red u tabelu i pošalje mejl vlasniku.
 
-Dok endpoint nije podešen, forma i dalje radi — samo šalje običan email (preko
-FormSubmit-a). Kad ubaciš URL skripte, upiti počinju da padaju i u tabelu.
+Kupcu se **ne** šalje nikakav email — potvrda mu se prikaže odmah na sajtu
+("Zaprimili smo vaš upit i javićemo vam se u najkraćem roku."). Dok endpoint
+nije podešen, forma i dalje radi preko običnog emaila (FormSubmit); kad ubaciš
+URL skripte, upiti počinju da padaju i u tabelu.
 
 ## Šta se šalje iz forme
 
-Svaki upit sadrži ova polja: `name`, `email`, `phone`, `service`,
-`dimensions`, `quantity`, `deadline`, `install`, `message`, `lang`
-(jezik: sr/de/en), `page` (sa koje stranice je poslato) i `_honey`
-(skriveno anti-spam polje — ljudi ga nikad ne popune).
+Svaki upit sadrži: `name`, `email`, `phone`, `service`, `dimensions`,
+`quantity`, `deadline`, `install`, `message`, `lang` (jezik: sr/de/en),
+`page` (sa koje stranice je poslato) i `_honey` (skriveno anti-spam polje).
 
 ## Korak 1 — napravi tabelu
 
 1. Otvori <https://sheets.google.com> i napravi novu praznu tabelu.
 2. Nazovi je npr. **Quantum Loop — Upiti**.
-3. Ništa drugo ne treba — skript sam upisuje zaglavlje pri prvom upitu.
+3. Ništa drugo ne treba — skripta sama upisuje zaglavlje pri prvom upitu.
 
 ## Korak 2 — dodaj skriptu
 
 1. U tabeli: **Extensions → Apps Script** (Ekstenzije → Apps Script).
 2. Obriši sav kod koji je tamo i nalijepi kod odozdo (`Code.gs`).
-3. U vrhu koda promijeni `NOTIFY_EMAIL` na email na koji želiš obavještenja.
-4. Klikni **Save** (ikonica diskete).
+3. U vrhu koda po želji promijeni `NOTIFY_EMAIL` (gdje stižu obavještenja).
+4. Klikni **Save** (💾).
 
 ```javascript
 // === Quantum Loop — prijem upita sa sajta ===
-// Upisuje svaki upit kao red u aktivnu tabelu i šalje email obavještenje.
+// Upisuje svaki upit kao red u aktivnu tabelu i šalje obavještenje vlasniku.
+// Kupcu se ne šalje email — njemu potvrdu prikazuje sam sajt.
 
 const NOTIFY_EMAIL = "quantumloopbih@gmail.com"; // <-- gdje stižu obavještenja
 const SHEET_NAME = "Upiti";
@@ -70,17 +72,20 @@ function doPost(e) {
       sheet.appendRow(["Datum"].concat(FIELDS));
     }
 
-    const row = [new Date()].concat(FIELDS.map((f) => data[f] || ""));
-    sheet.appendRow(row);
+    sheet.appendRow([new Date()].concat(FIELDS.map((f) => data[f] || "")));
 
-    // Email obavještenje.
+    // Obavještenje vlasniku — naslov vodi sa uslugom, rokom i kontaktom.
+    const contact = data.phone || data.email || "";
     const subject =
-      "Novi upit sa sajta — " + (data.name || "nepoznato") + " (" + (data.service || "") + ")";
-    const body = FIELDS.map((f) => f + ": " + (data[f] || "-")).join("\n");
+      "Upit: " +
+      (data.service || "?") +
+      " — " +
+      (data.deadline || "?") +
+      (contact ? " — " + contact : "");
     MailApp.sendEmail({
       to: NOTIFY_EMAIL,
       subject: subject,
-      body: body,
+      body: FIELDS.map((f) => f + ": " + (data[f] || "-")).join("\n"),
       replyTo: data.email || NOTIFY_EMAIL,
     });
 
@@ -93,25 +98,21 @@ function doPost(e) {
 
 ## Korak 3 — objavi kao Web App
 
-1. Gore desno klikni **Deploy → New deployment**.
-2. Kraj **Select type** klikni zupčanik i izaberi **Web app**.
+1. Gore desno: **Deploy → New deployment**.
+2. Kraj **Select type** klikni zupčanik ⚙ i izaberi **Web app**.
 3. Podesi:
-   - **Description**: `Quantum Loop upiti`
-   - **Execute as**: **Me** (tvoj nalog)
+   - **Execute as**: **Me**
    - **Who has access**: **Anyone** (mora ovako da bi sajt mogao da šalje)
-4. Klikni **Deploy**.
-5. Google će tražiti dozvolu — klikni **Authorize access**, izaberi svoj
-   nalog, pa **Advanced → Go to … (unsafe)** → **Allow**. (Skript je tvoj,
-   pa je bezbjedno.)
-6. Kopiraj **Web app URL** — izgleda ovako:
-   `https://script.google.com/macros/s/AKfy.../exec`
+4. **Deploy** → **Authorize access** → izaberi nalog → **Advanced → Go to … →
+   Allow**.
+5. Kopiraj **Web app URL**: `https://script.google.com/macros/s/AKfy.../exec`
 
 ## Korak 4 — javi mi URL
 
-Pošalji mi taj `/exec` URL i ja ću ga ubaciti u sajt (u
-`NEXT_PUBLIC_SHEET_ENDPOINT` u GitHub Actions workflow-u). Nakon toga svaki
-upit sa forme automatski pada u tabelu i stiže ti na mejl.
+Pošalji mi taj `/exec` URL i ubaciću ga u sajt
+(`NEXT_PUBLIC_SHEET_ENDPOINT`). Nakon toga svaki upit pada u tabelu i stiže ti
+na mejl.
 
-> Napomena: ako kasnije mijenjaš kod skripte, mora se ponovo objaviti preko
-> **Deploy → Manage deployments → (olovka) → Version: New version → Deploy**,
-> inače URL i dalje vrti staru verziju.
+> Napomena: ako kasnije mijenjaš kod, ponovo objavi preko
+> **Deploy → Manage deployments → ✏️ → Version: New version → Deploy**
+> (URL ostaje isti), inače se vrti stara verzija.

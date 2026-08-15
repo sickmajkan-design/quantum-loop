@@ -19,6 +19,9 @@ export interface Dictionary {
   s1_p: string;
   s2_t: string;
   s2_p: string;
+  s2_before: string;
+  s2_after: string;
+  s2_hint: string;
   s3_t: string;
   s3_p: string;
   s3_shop_label: string;
