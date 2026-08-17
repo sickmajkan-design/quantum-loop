@@ -18,9 +18,6 @@ const { chromium } = require("playwright");
     await declineCookies.click().catch(() => {});
     await page.waitForTimeout(500);
   }
-  const closeChat = page.locator('text=Hi, how can I help you?').locator("xpath=../button, xpath=..//button").first();
-  if (await closeChat.count() > 0) await closeChat.click().catch(() => {});
-
   console.log("URL:", page.url());
   await page.screenshot({ path: "C:\\Users\\BIO-TE~1\\AppData\\Local\\Temp\\claude\\d--quantum-loop-VSCode\\6e62c44a-3224-4da0-bc98-5045a73d860b\\scratchpad\\stas-nav-00-dashboard.png", fullPage: true });
 
