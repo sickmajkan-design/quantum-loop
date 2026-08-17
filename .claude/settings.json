@@ -15,7 +15,9 @@
       "Bash(node .stas-login7.tmp.js)",
       "Bash(rm -f \"d:/quantum-loop VSCode/.stas-navmap.tmp.js\")",
       "Bash(cp \"C:\\\\Users\\\\BIO-TE~1\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\d--quantum-loop-VSCode\\\\6e62c44a-3224-4da0-bc98-5045a73d860b\\\\scratchpad\\\\stas-navmap.js\" \"d:/quantum-loop VSCode/.stas-navmap.tmp.js\")",
-      "Bash(node .stas-navmap.tmp.js)"
+      "Bash(node .stas-navmap.tmp.js)",
+      "Bash(cp \"C:\\\\Users\\\\BIO-TE~1\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\d--quantum-loop-VSCode\\\\6e62c44a-3224-4da0-bc98-5045a73d860b\\\\scratchpad\\\\stas-tour.js\" \"d:/quantum-loop VSCode/.stas-tour.tmp.js\")",
+      "Bash(node .stas-tour.tmp.js)"
     ]
   }
 }
