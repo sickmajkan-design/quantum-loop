@@ -24,7 +24,18 @@
       "Bash(rm -f \"d:/quantum-loop VSCode/.stas-navmap2.tmp.js\")",
       "Bash(cp \"C:\\\\Users\\\\BIO-TE~1\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\d--quantum-loop-VSCode\\\\6e62c44a-3224-4da0-bc98-5045a73d860b\\\\scratchpad\\\\stas-tour2.js\" \"d:/quantum-loop VSCode/.stas-tour2.tmp.js\")",
       "Bash(node .stas-tour2.tmp.js)",
-      "Bash(rm -f \"d:/quantum-loop VSCode/.stas-tour2.tmp.js\" \"C:\\\\Users\\\\BIO-TE~1\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\d--quantum-loop-VSCode\\\\6e62c44a-3224-4da0-bc98-5045a73d860b\\\\scratchpad\\\\stas-login\"*.js \"C:\\\\Users\\\\BIO-TE~1\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\d--quantum-loop-VSCode\\\\6e62c44a-3224-4da0-bc98-5045a73d860b\\\\scratchpad\\\\stas-navmap\"*.js \"C:\\\\Users\\\\BIO-TE~1\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\d--quantum-loop-VSCode\\\\6e62c44a-3224-4da0-bc98-5045a73d860b\\\\scratchpad\\\\stas-tour\"*.js \"C:\\\\Users\\\\BIO-TE~1\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\d--quantum-loop-VSCode\\\\6e62c44a-3224-4da0-bc98-5045a73d860b\\\\scratchpad\\\\stas-session.json\" *)"
+      "Bash(rm -f \"d:/quantum-loop VSCode/.stas-tour2.tmp.js\" \"C:\\\\Users\\\\BIO-TE~1\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\d--quantum-loop-VSCode\\\\6e62c44a-3224-4da0-bc98-5045a73d860b\\\\scratchpad\\\\stas-login\"*.js \"C:\\\\Users\\\\BIO-TE~1\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\d--quantum-loop-VSCode\\\\6e62c44a-3224-4da0-bc98-5045a73d860b\\\\scratchpad\\\\stas-navmap\"*.js \"C:\\\\Users\\\\BIO-TE~1\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\d--quantum-loop-VSCode\\\\6e62c44a-3224-4da0-bc98-5045a73d860b\\\\scratchpad\\\\stas-tour\"*.js \"C:\\\\Users\\\\BIO-TE~1\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\d--quantum-loop-VSCode\\\\6e62c44a-3224-4da0-bc98-5045a73d860b\\\\scratchpad\\\\stas-session.json\" *)",
+      "Bash(cd \"D:\\\\PlanConcept-STAS-organizer\" && grep -ril \"vacation\\\\|leave request\\\\|absence\\\\|paidvacation\" --include=\"*.cs\" src 2>/dev/null | head -80)",
+      "Read(//d/PlanConcept-STAS-organizer/**)",
+      "Bash(cd \"D:\\\\PlanConcept-STAS-organizer\" && echo \"=== Absence.cs ===\" && cat -n src/Construction.Domain/Entities/Absence.cs && echo \"=== AbsenceType.cs ===\" && cat -n src/Construction.Domain/Enums/AbsenceType.cs && echo \"=== AbsenceStatus.cs ===\" && cat -n src/Construction.Domain/Enums/AbsenceStatus.cs)",
+      "Bash(cd \"D:\\\\PlanConcept-STAS-organizer\" && echo \"=== Employee.cs \\(grep vacation/leave/balance/allowance\\) ===\" && grep -n -i \"vacation\\\\|leave\\\\|balance\\\\|allowance\\\\|days\" src/Construction.Domain/Entities/Employee.cs *)",
+      "Bash(cd \"D:\\\\PlanConcept-STAS-organizer\" && echo \"=== GetAbsencesQuery.cs ===\" && cat -n src/Construction.Application/Features/Absences/Queries/GetAbsences/GetAbsencesQuery.cs *)",
+      "Bash(cd \"D:\\\\PlanConcept-STAS-organizer\" && grep -ril \"absence\\\\|vacation\\\\|leave\" src/construction_admin/src 2>/dev/null *)",
+      "Bash(cd \"D:\\\\PlanConcept-STAS-organizer\" && grep -n \"review\\\\|Review\\\\|onApprove\\\\|onReject\\\\|approve\\\\|reject\" src/construction_admin/src/pages/absences/AbsencesListPage.tsx | head -40)",
+      "Bash(cd \"D:\\\\PlanConcept-STAS-organizer\" && grep -n \"class Employee\" -A 40 src/Construction.Domain/Entities/Employee.cs | head -50 *)",
+      "Read(//d/PlanConcept-STAS-organizer/src/Construction.Domain/Entities/**)",
+      "Read(//d/PlanConcept-STAS-organizer/src/Construction.Application/Features/Absences/**)",
+      "Read(//d/PlanConcept-STAS-organizer/src/Construction.Application/Features/Absences/Queries/GetAbsences/**)"
     ],
     "additionalDirectories": [
       "C:\\Users\\BIO-TE~1\\AppData\\Local\\Temp\\claude\\d--quantum-loop-VSCode\\6e62c44a-3224-4da0-bc98-5045a73d860b\\scratchpad"
