@@ -35,10 +35,14 @@
       "Bash(cd \"D:\\\\PlanConcept-STAS-organizer\" && grep -n \"class Employee\" -A 40 src/Construction.Domain/Entities/Employee.cs | head -50 *)",
       "Read(//d/PlanConcept-STAS-organizer/src/Construction.Domain/Entities/**)",
       "Read(//d/PlanConcept-STAS-organizer/src/Construction.Application/Features/Absences/**)",
-      "Read(//d/PlanConcept-STAS-organizer/src/Construction.Application/Features/Absences/Queries/GetAbsences/**)"
+      "Read(//d/PlanConcept-STAS-organizer/src/Construction.Application/Features/Absences/Queries/GetAbsences/**)",
+      "Bash(rm \"D:\\\\PlanConcept-STAS-organizer\\\\src\\\\construction_mobile\\\\lib\\\\features\\\\tools\\\\presentation\\\\tool_lookup_screen.dart\")",
+      "Bash(python3 -c ' *)"
     ],
     "additionalDirectories": [
-      "C:\\Users\\BIO-TE~1\\AppData\\Local\\Temp\\claude\\d--quantum-loop-VSCode\\6e62c44a-3224-4da0-bc98-5045a73d860b\\scratchpad"
+      "C:\\Users\\BIO-TE~1\\AppData\\Local\\Temp\\claude\\d--quantum-loop-VSCode\\6e62c44a-3224-4da0-bc98-5045a73d860b\\scratchpad",
+      "D:\\PlanConcept-STAS-organizer\\src\\construction_mobile\\lib\\features\\tools\\presentation",
+      "D:\\PlanConcept-STAS-organizer\\src\\construction_mobile\\lib\\features\\scan\\presentation"
     ]
   }
 }
