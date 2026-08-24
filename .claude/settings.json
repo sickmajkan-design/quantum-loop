@@ -52,7 +52,8 @@
       "D:\\PlanConcept-STAS-organizer\\src\\Construction.Application\\Features\\NotificationGroups\\Models",
       "D:\\PlanConcept-STAS-organizer\\src\\Construction.Application\\Features\\NotificationGroups\\Queries\\GetNotificationGroups",
       "D:\\PlanConcept-STAS-organizer\\src\\Construction.Application\\Features\\NotificationGroups\\Queries\\GetNotificationGroupById",
-      "D:\\PlanConcept-STAS-organizer\\src\\Construction.Application\\Features\\NotificationGroups\\Commands\\CreateNotificationGroup"
+      "D:\\PlanConcept-STAS-organizer\\src\\Construction.Application\\Features\\NotificationGroups\\Commands\\CreateNotificationGroup",
+      "D:\\PlanConcept-STAS-organizer\\src\\Construction.Application\\Features\\Vehicles\\Models"
     ]
   }
 }
