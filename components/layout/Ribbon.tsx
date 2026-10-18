@@ -106,7 +106,7 @@ export default function Ribbon() {
       id="ribbon"
       aria-hidden="true"
       preserveAspectRatio="none"
-      className="pointer-events-none absolute top-0 left-0 z-1 hidden w-full opacity-70 md:block"
+      className="pointer-events-none absolute top-0 left-0 z-1 hidden w-full opacity-45 md:block"
     >
       <defs>
         <linearGradient id="ribbon-grad" x1="0" y1="0" x2="0" y2="1">
@@ -121,16 +121,16 @@ export default function Ribbon() {
         ref={glowRef}
         fill="none"
         stroke="var(--color-gold2)"
-        strokeWidth="9"
+        strokeWidth="7"
         strokeLinecap="round"
-        opacity="0.18"
+        opacity="0.12"
         style={{ filter: "blur(6px)" }}
       />
       <path
         ref={pathRef}
         fill="none"
         stroke="url(#ribbon-grad)"
-        strokeWidth="3"
+        strokeWidth="2"
         strokeLinecap="round"
       />
       <circle

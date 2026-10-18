@@ -83,7 +83,7 @@ export default function Guarantee() {
 
       <div ref={pinRef}>
         <div className="font-display text-[clamp(6rem,20vw,15rem)] leading-none text-gold">
-          <span ref={yearsRef}>0</span>
+          <span ref={yearsRef}>20</span>
           <small className="align-top text-[0.35em] text-gold2">+</small>
         </div>
 
