@@ -55,6 +55,25 @@ export default function VideoScene({
         scrollTrigger: { trigger, start: "top 82%", once: true },
       });
 
+      // Consistent scroll-linked zoom so the scene reacts to scroll like the
+      // before/after scenes (wrap / tint) — the whole services set then reads
+      // as one scroll-driven system. Subtle (scale stays >=1 so object-cover
+      // never shows a gap) and tied to scroll progress through the viewport.
+      gsap.fromTo(
+        video,
+        { scale: 1.08 },
+        {
+          scale: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger,
+            start: "top bottom",
+            end: "center center",
+            scrub: true,
+          },
+        }
+      );
+
       if (isDesktop) {
         ScrollTrigger.create({
           trigger,

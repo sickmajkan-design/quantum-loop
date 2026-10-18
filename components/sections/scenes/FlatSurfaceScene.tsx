@@ -24,19 +24,35 @@ export default function FlatSurfaceScene({
 }) {
   const { t } = useI18n();
   const cardRef = useRef<HTMLDivElement>(null);
+  const photoRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const card = cardRef.current;
     if (!card || prefersReducedMotion()) return;
 
+    const trigger = rowRef.current ?? card;
     const ctx = gsap.context(() => {
       gsap.from(card, {
         autoAlpha: 0,
         y: 34,
         duration: 0.9,
         ease: "power3.out",
-        scrollTrigger: { trigger: rowRef.current ?? card, start: "top 82%", once: true },
+        scrollTrigger: { trigger, start: "top 82%", once: true },
       });
+
+      // Same scroll-linked zoom as the other scenes so the services set reacts
+      // to scroll consistently (the info panels stay static on purpose).
+      if (photoRef.current) {
+        gsap.fromTo(
+          photoRef.current,
+          { scale: 1.08 },
+          {
+            scale: 1,
+            ease: "none",
+            scrollTrigger: { trigger, start: "top bottom", end: "center center", scrub: true },
+          }
+        );
+      }
     }, card);
 
     return () => ctx.revert();
@@ -48,13 +64,15 @@ export default function FlatSurfaceScene({
       className="grid h-full w-full grid-cols-2 gap-1 overflow-hidden rounded-md bg-black2"
     >
       <div className="relative row-span-2 overflow-hidden">
-        <Image
-          src={asset("/stock/flat-surface.jpg")}
-          alt={t("s3_shop_alt")}
-          fill
-          sizes="(max-width: 768px) 45vw, 23vw"
-          className="object-cover"
-        />
+        <div ref={photoRef} className="absolute inset-0">
+          <Image
+            src={asset("/stock/flat-surface.jpg")}
+            alt={t("s3_shop_alt")}
+            fill
+            sizes="(max-width: 768px) 45vw, 23vw"
+            className="object-cover"
+          />
+        </div>
         <span className="absolute bottom-2 left-2 rounded bg-black/60 px-2 py-1 text-[0.7rem] tracking-[0.06em] text-gold2 uppercase">
           {t("s3_shop_label")}
         </span>
